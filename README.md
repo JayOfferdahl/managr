@@ -60,3 +60,4 @@ A superuser needs to be added through Django, run
 python manage.py createsuperuser
 fill out the information (can leave email blank)
 
+*Gitignore notes
