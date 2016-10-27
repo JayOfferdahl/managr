@@ -23,7 +23,7 @@ Once Postgres is installed, create a local Postgres database for development
 * `sudo -u postgres createdb <db_name>`
 * Example: `sudo -u postgres createdb managr_local_dev`
 
-PostgreSQL allows for multiple database creation. One machine can have many databases on it. To switch between databases -
+PostgreSQL allows for multiple database creation. One machine can have many databases on it. To switch between databases:
 * `sudo -u postgres psql` 
 * `\connect <name_of_db_to_connect_to>`
 
