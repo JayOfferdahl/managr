@@ -31,7 +31,7 @@ Django requires a special admin user in the PostgreSQL database and specifies ce
 * Open a Postgres shell - `sudo -u postgres psql`
 * Connect to the newly created local database
 * Issue the following commands:
-    * `CREATE USER <desired_username> WITH PASSWORD '<desired_password>'` (this password need not be secure)
+    * `CREATE USER <desired_username> WITH PASSWORD '<desired_password>';` (this password need not be secure)
     * `ALTER ROLE <username> SET client_encoding TO 'utf8';` (username = desired_username from above)
     * `ALTER ROLE <username> SET default_transaction_isolation TO 'read committed';`
     * `ALTER ROLE <username> SET timezone TO 'UTC';`
