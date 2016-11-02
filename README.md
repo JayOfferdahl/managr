@@ -69,4 +69,4 @@ Run:
 * fill out the information (can leave email blank)
 
 ### .Gitignore
-The .gitignore currently ignores `local_settings.py` in order for everyone to maintain their own local development settings. It also ignores files ending with `.pyc` which are compiled files that are generated on the fly. These will always be changing with no relevant impact to source code of the project so they are ignored (more to come).
+The .gitignore currently ignores `local_settings.py` in order for everyone to maintain their own local development settings. It also ignores files ending with `.pyc` which are compiled files that are generated on the fly (**NOTE:** Do NOT commit any files ending with .pyc). These will always be changing with no relevant impact to source code of the project so they are ignored (more to come).
