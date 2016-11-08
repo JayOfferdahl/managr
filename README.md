@@ -14,6 +14,8 @@ Pull down this repository, open a terminal, and navigate to the repository
 
 In order to make sure everything is running properly, navigate inside the outer project folder to see the 'manage.py' file. Run "python manage.py runserver", open a browser, and go to http://127.0.0.1:8000. A confirmation message should be presented (to run the server on a different port, specify the port number after "runserver").
 
+**Note:** This may create a SQLite3.db file in the Django project. Delete this file and make sure to **not** commit the file.
+
 #### PostgreSQL Setup
 Managr uses a PostgreSQL relational database to store data. In order to install PostgreSQL, use a package manager (i.e. apt-get for Ubuntu, homebrew for Mac OS) and follow the instructions below:
 
