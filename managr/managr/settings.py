@@ -27,7 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-AUTH_USER_MODEL = 'managr_user.ManagrUser'
+AUTH_USER_MODEL = 'managr_entities.ManagrUser'
 
 # Application definition
 
@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'managr_user.apps.ManagrUserConfig',
+    'managr_entities.apps.ManagrEntitiesConfig',
     'rest_framework',
 ]
 
