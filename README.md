@@ -38,6 +38,7 @@ Django requires a special admin user in the PostgreSQL database and specifies ce
     * `ALTER ROLE <username> SET client_encoding TO 'utf8';` (username = desired_username from above)
     * `ALTER ROLE <username> SET default_transaction_isolation TO 'read committed';`
     * `ALTER ROLE <username> SET timezone TO 'UTC';`
+    * `CREATE EXTENSION hstore;`
     * `GRANT ALL PRIVILEGES ON DATABASE <db_name> TO <username>;`
 
 Next, navigate to settings.py inside the the Django project (project_name_folder/project_name_folder/(settings.py will be sitting here)). In this same directory, create a file named "local_settings.py". The contents of this file will contain all local settings necessary for development on a local machine. This allows for the project to be connected to a production database when it's in its production environment (i.e. AWS) but connected to a local database when it's in a local environment.
