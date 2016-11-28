@@ -1,24 +1,57 @@
 .App {
-  text-align: center;
   background-color: #ECF0F1;
-}
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
-}
-
-.App-navbar {
-  background-color: #34495E;
+  font-family: 'Libre Franklin', sans-serif;
 }
 
 .App-header {
   background-color: #FFF;
-  height: 150px;
-  padding: 20px;
+  height: 120px;
+  color: white;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.App-body {
+  background-color: #FFF;
+}
+
+.navbar {
+  background-color: #34495E;
+  height: 1000px;
   color: white;
 }
 
-.App-intro {
-  font-size: large;
+.navigation {
+  font-size: 18px;
+}
+
+.nav-icon {
+  margin-right: 15px;
+  color: white;
+}
+
+.project-overview-section {
+  width: 90%;
+  height: 200px;
+  background-color: #FFF;
+  padding: 20px;
+}
+
+.avatar-section {
+  margin-top: 20px;
+}
+
+.avatar-icon {
+  padding-right: 10px;
+  vertical-align: top;
+}
+
+.avatar-text {
+  display: inline-block;
+  margin-top: 5px;
+}
+
+.project-title {
+  font-size: 24px;
+  font-weight: 700;
 }
