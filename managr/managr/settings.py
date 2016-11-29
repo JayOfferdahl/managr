@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.postgres',
     'managr_entities.apps.ManagrEntitiesConfig',
+    'project_proposal.apps.ProjectProposalConfig',
+    'project_management.apps.ProjectManagementConfig',
     'rest_framework',
 ]
 
