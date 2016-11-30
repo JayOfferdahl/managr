@@ -63,7 +63,7 @@ DATABASES = {
 After `local_settings.py` is configured, open a terminal to where the manage.py file is located for the project.
 
 Run:
-* `python manage.py makemigrations`
+* `python manage.py migrate managr_entities`
 * `python manage.py migrate`
 
 Finally, a superuser needs to be added through Django
