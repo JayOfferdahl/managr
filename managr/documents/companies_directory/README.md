@@ -1,0 +1,1 @@
+This directory holds the files uploaded by a given company, for a given project. The structure for how files are stored for a company is as follows: 'companies_directory/<SomeCompany>/projects/<SomeProject>/<name_of_document>'

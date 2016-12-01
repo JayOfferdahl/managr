@@ -17,4 +17,4 @@ class Document(models.Model):
 	viewers = models.ManyToManyField(ManagrUser, related_name = 'viewers')
 	edit_link = models.URLField(max_length = 500, null = True)
 	view_link = models.URLField(max_length = 500, null = True)
-	uploaded_file = models.FileField(upload_to = 'documents/', null = True)
+	uploaded_file = models.FileField(upload_to = 'documents/temp_uploaded_documents/', null = True)
