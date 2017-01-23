@@ -24,7 +24,7 @@ Managr uses a PostgreSQL relational database to store data. In order to install 
 
 **Note:** Fedora/RHEL and some other linux distributions have different packages for postgres, which are mentioned below. The following link may be useful: https://fedoraproject.org/wiki/PostgreSQL
 
-* 'sudo dnf install postgresql-server postgresql-contrib postgresql-devel'
+* `sudo dnf install postgresql-server postgresql-contrib postgresql-devel`
 
 After install these packages, you'll have to start and initialize the database with the following command:
 
