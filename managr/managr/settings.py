@@ -38,7 +38,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.postgres',
     'managr_entities.apps.ManagrEntitiesConfig',
+    'project_proposal.apps.ProjectProposalConfig',
+    'project_management.apps.ProjectManagementConfig',
+    'documents.apps.DocumentsConfig',
     'rest_framework',
 ]
 
