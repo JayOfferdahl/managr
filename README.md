@@ -41,7 +41,7 @@ Django requires a special admin user in the PostgreSQL database and specifies ce
     * `CREATE EXTENSION hstore;`
     * `GRANT ALL PRIVILEGES ON DATABASE <db_name> TO <username>;`
     
-**Note:** If you're getin an "Ident authentication failed for user" error when attempting to run the development server, edit the file either in /etc/postgresql/<version>/main/pg_hba.conf or /var/lib/pgsql/data/pg_hba.conf and set all instances of "ident" to "md5".
+**Note:** If you're getting an "Ident authentication failed for user" error when attempting to run the development server, edit the file either in /etc/postgresql/<version>/main/pg_hba.conf or /var/lib/pgsql/data/pg_hba.conf and set all instances of "ident" to "md5".
 
 Next, navigate to settings.py inside the the Django project (project_name_folder/project_name_folder/(settings.py will be sitting here)). In this same directory, create a file named "local_settings.py". The contents of this file will contain all local settings necessary for development on a local machine. This allows for the project to be connected to a production database when it's in its production environment (i.e. AWS) but connected to a local database when it's in a local environment.
 
