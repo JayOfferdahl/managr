@@ -8,14 +8,14 @@ class Company(models.Model):
 	company_uuid = models.UUIDField(default = uuid.uuid4, editable = False)
 
 	COMPANY_TYPE_CHOICES = (
-		(0, 'Construction'),
-		(1, 'Client'),
+		(0, 'construction'),
+		(1, 'client'),
 	)
 	company_type = models.IntegerField(choices = COMPANY_TYPE_CHOICES, default = 0)
 
 	COMPANY_ATTRIBUTE_FIELDS = [ # List of keys accepted in 'attributes' hstore
-		'Location',
-		'Description',
-		'Email Address',
+		'location',
+		'description',
+		'email_address',
 	]
 	attributes = HStoreField()
