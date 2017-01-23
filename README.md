@@ -28,20 +28,20 @@ Managr uses a PostgreSQL relational database to store data. In order to install 
 
 After install these packages, you'll have to start and initialize the database with the following command:
 
-* 'sudo postgresql-setup --initdb --unit postgresql'
-* 'sudo systemctl enable postgresql'
-* 'sudo systemctl start postgresql'
+* `sudo postgresql-setup --initdb --unit postgresql`
+* `sudo systemctl enable postgresql`
+* `sudo systemctl start postgresql`
 
 Once Postgres is installed, create a local Postgres database for development
 * `sudo -u postgres createdb <db_name>`
 * Example: `sudo -u postgres createdb managr_local_dev`
    * If this does not work, try the following:
-      * 'sudo -u postgres psql'
-      * '\password postgres'
+      * `sudo -u postgres psql`
+      * `\password postgres`
          * Sets a password for the postgres user
-      * 'create user <user_name> with password '<password>';'
-      * 'create database <db_name> owner <user_name>;'
-      * Proceed as normal
+      * `create user <user_name> with password '<password>';`
+      * `create database <db_name> owner <user_name>;`
+      * Proceed as normal (skip user creation below)
 
 PostgreSQL allows for multiple database creation. One machine can have many databases on it. To switch between databases:
 * `sudo -u postgres psql` 
