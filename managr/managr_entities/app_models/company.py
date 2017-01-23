@@ -1,7 +1,10 @@
 import uuid
 
 from django.contrib.postgres.fields import HStoreField
+from django.core.exceptions import ValidationError
 from django.db import models
+
+from helpers.hstore_helper import *
 
 class Company(models.Model):
 	name = models.CharField(max_length = 255)
@@ -19,3 +22,11 @@ class Company(models.Model):
 		'email_address',
 	]
 	attributes = HStoreField()
+
+	def clean(self, *args, **kwargs):
+		has_valid_company_attributes = verify_keys_before_save(self.attributes, self.COMPANY_ATTRIBUTE_FIELDS)
+		if has_valid_company_attributes == True:
+			super(Company, self).clean(*args, **kwargs)
+		else:
+			raise ValidationError('Invalid company attribute(s): (' + has_valid_company_attributes +')')
+		
