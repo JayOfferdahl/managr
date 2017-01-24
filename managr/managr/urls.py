@@ -22,10 +22,10 @@ from . import views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', views.index, name = 'index'),
+    url(r'^about/mission/?$', TemplateView.as_view(template_name = 'base/about/mission.html')),
+    url(r'^about/careers/?$', TemplateView.as_view(template_name = 'base/about/careers.html')),
+    url(r'^customers/?$', TemplateView.as_view(template_name = 'base/customers.html')),
     url(r'^solutions/client/?$', TemplateView.as_view(template_name = 'base/solutions/client.html')),
     url(r'^solutions/contractor/?$', TemplateView.as_view(template_name = 'base/solutions/contractor.html')),
     url(r'^solutions/enterprise/?$', TemplateView.as_view(template_name = 'base/solutions/enterprise.html')),
-    url(r'^customers/?$', TemplateView.as_view(template_name = 'base/customers.html')),
-    url(r'^about/mission/?$', TemplateView.as_view(template_name = 'base/about/mission.html')),
-    url(r'^about/careers/?$', TemplateView.as_view(template_name = 'base/about/careers.html')),
 ]
