@@ -31,6 +31,14 @@ body {
 	padding: 20px 0px 10px 0px;
 }
 
+.base-footer a {
+	color: #fff;
+}
+
+.base-footer a:hover {
+	text-decoration: underline;
+}
+
 /* Navbar styles/overrides */
 
 .navbar-brand-logo {

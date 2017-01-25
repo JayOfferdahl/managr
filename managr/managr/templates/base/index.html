@@ -59,10 +59,14 @@
         {% endblock %}
 
         {% block content %}
-            <div class="container">
-                <h2>Managr Base Site Home Pages</h2>
-                <p>This page will contain a few "stock" pictures and some random information about our company and mission.</p>
+            <div class="wrapper-with-base-footer">
+                <div class="container container-with-base-footer">
+                    <h2>Managr Base Site Home Pages</h2>
+                    <p>This page will contain a few "stock" pictures and some random information about our company and mission.</p>
+                </div>
             </div>
+
+            {% include 'base/footer.html' %}
         {% endblock %}
         <analytics></analytics>
     </body>
