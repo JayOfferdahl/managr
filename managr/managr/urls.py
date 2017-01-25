@@ -15,7 +15,19 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from django.views.generic import TemplateView
+
+from . import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^$', views.index, name = 'index'),
+    url(r'^about/mission/?$', TemplateView.as_view(template_name = 'base/about/mission.html')),
+    url(r'^about/careers/?$', TemplateView.as_view(template_name = 'base/about/careers.html')),
+    url(r'^customers/?$', TemplateView.as_view(template_name = 'base/customers.html')),
+    url(r'^legal/usage/?$', TemplateView.as_view(template_name = 'base/legal/termsOfUse.html')),
+    url(r'^legal/privacy/?$', TemplateView.as_view(template_name = 'base/legal/privacyPolicy.html')),
+    url(r'^solutions/client/?$', TemplateView.as_view(template_name = 'base/solutions/client.html')),
+    url(r'^solutions/contractor/?$', TemplateView.as_view(template_name = 'base/solutions/contractor.html')),
+    url(r'^solutions/enterprise/?$', TemplateView.as_view(template_name = 'base/solutions/enterprise.html')),
 ]

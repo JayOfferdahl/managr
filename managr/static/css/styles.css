@@ -1,0 +1,54 @@
+body {
+    padding-top: 50px;
+}
+
+html,
+body {
+	margin:0;
+	padding:0;
+	height:100%;
+}
+
+.wrapper-with-base-footer {
+	min-height:100%;
+	position:relative;
+}
+
+.container-with-base-footer {
+	padding-top: 50px;
+	padding-bottom:150px; /* Height of the footer element */
+}
+
+/* Sticky footer from: http://www.cssreset.com/demos/layouts/how-to-keep-footer-at-bottom-of-page-with-css/# */
+.base-footer {
+	background: #f0ad4e;
+	width: 100%;
+	height: 150px;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	color: #fff;
+	padding: 20px 0px 10px 0px;
+}
+
+.base-footer a {
+	color: #fff;
+}
+
+.base-footer a:hover {
+	text-decoration: underline;
+}
+
+/* Navbar styles/overrides */
+
+.navbar-brand-logo {
+    height: 36px;
+}
+
+.navbar-brand {
+    padding: 7px 15px;
+}
+
+.navbar-btn {
+    margin: 8px 15px;
+}
