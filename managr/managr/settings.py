@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'project_management.apps.ProjectManagementConfig',
     'documents.apps.DocumentsConfig',
     'rest_framework',
+    'webpack_loader'
 ]
 
 MIDDLEWARE = [
@@ -131,7 +132,15 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
     '/var/www/static/',
+    os.path.join(BASE_DIR, 'assets'),
 ]
+
+WEBPACK_LOADER = {
+    'DEFAULT': {
+        'BUNDLE_DIR_NAME': 'bundles/',
+        'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats.json'),
+    }
+}
 
 try:
     from .local_settings import *
