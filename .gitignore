@@ -1,2 +1,4 @@
 local_settings.py
 *.pyc
+node_modules
+bundle
