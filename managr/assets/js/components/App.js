@@ -21,23 +21,21 @@ export default class App extends Component {
       <div className="App">
         <div className="App-body">
           <Grid fluid={true}>
-            <Row>
-              <Col className="navbar" xs={4} md={2}>
+              <Col className="left navbar" xs={4} md={2}>
                 <NavBar/>
-                <div className="buttons">
+                <div className="nav-buttons-container">
                   <LinkContainer to="/pastprojects">
-                    <Button className="my-button" bsSize="large" bsStyle="warning">View Past Projects</Button>
+                    <Button className="nav-button" bsSize="large" bsStyle="warning">View Past Projects</Button>
                   </LinkContainer>
                   <LinkContainer to="/createnewbid">
-                    <Button className="my-button" bsSize="large" bsStyle="success">Create New Bid</Button>
+                    <Button className="nav-button" bsSize="large" bsStyle="success">Create New Bid</Button>
                   </LinkContainer>
                 </div>
               </Col>
-              <Col xs={14} md={10}>
+              <Col className="right" xs={14} md={10}>
                 <Header />
                 {this.props.children}
               </Col>
-            </Row>
           </Grid>
         </div>
       </div>
