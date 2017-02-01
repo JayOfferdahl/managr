@@ -23,5 +23,6 @@ from . import views
 urlpatterns = [
     # admin stays, good
     url(r'^admin/', admin.site.urls),
-    url(r'^home/', views.index, name='index')
+    url(r'^home/', views.index, name='index'),
+    url(r'^accounts/', include('allauth.urls')),
 ]

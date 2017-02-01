@@ -49,7 +49,7 @@ INSTALLED_APPS = [
     'rest_framework',
     
     # Needed for Reactjs
-    'webpack_loader'
+    'webpack_loader',
 
     # Allauth
     'allauth',
