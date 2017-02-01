@@ -13,7 +13,7 @@ import projectIcon from "../../img/project-icon.png";
 export default class NavBar extends Component {
   render() {
     return (
-        <Nav>
+        <Nav className="nav-links-container">
           <LinkContainer to="/overview">
             <NavItem eventKey={1}>
               <img src={projectIcon} className="nav-icon" alt="project" />
