@@ -1,6 +1,16 @@
 # Managr
 MANAGR is a tool to simplify the management process for ALL project stakeholders: the project managers, the clients, and the construction workers.
 
+### Notes on Frontend Setup
+
+#### NPM
+We'll use npm and webpack to handle module dependencies -- React, Webpack, loaders, and other stuff. While in the base directory of our project run `npm install` to install all necessary dependencies.
+
+#### Webpack
+Webpack is used to bundle all our javascript code into a single file called "bundle.js." This bundled file is mounted in the index.html Django template (templates/base/index.html). [React Router](https://github.com/ReactTraining/react-router) handles routing within the app. To build a *single* instance of the bundle, run `webpack` from the command line. To enable the *live reloading* of a bundle every time you make a change to a React components, run `webpack --watch`. Check out the webpack.config.js file to see how/where bundling happens.
+
+After the bundle is created, you can run `python manage.py runserver` as usual, and navigate to localhost:8000/home to see the dashboard.
+
 ### Environment Setup
 Setting up the the development environment works best in Mac OS/Linux because running and connecting a local PostgreSQL server is more friendly to these operating systems (for Windows setup see PostgreSQL for Windows).
 
@@ -44,7 +54,7 @@ Once Postgres is installed, create a local Postgres database for development
       * Proceed as normal (skip user creation below)
 
 PostgreSQL allows for multiple database creation. One machine can have many databases on it. To switch between databases:
-* `sudo -u postgres psql` 
+* `sudo -u postgres psql`
 * `\connect <name_of_db_to_connect_to>`
 
 Django requires a special admin user in the PostgreSQL database and specifies certain properties for the user to have in order for optimal interaction between the middleware and database (see below).
@@ -57,7 +67,7 @@ Django requires a special admin user in the PostgreSQL database and specifies ce
     * `ALTER ROLE <username> SET timezone TO 'UTC';`
     * `CREATE EXTENSION hstore;`
     * `GRANT ALL PRIVILEGES ON DATABASE <db_name> TO <username>;`
-    
+
 **Note:** If you're getting an "Ident authentication failed for user" error when attempting to run the development server, edit the file either in /etc/postgresql/<version>/main/pg_hba.conf or /var/lib/pgsql/data/pg_hba.conf and set all instances of "ident" to "md5".
 
 Next, navigate to settings.py inside the the Django project (project_name_folder/project_name_folder/(settings.py will be sitting here)). In this same directory, create a file named "local_settings.py". The contents of this file will contain all local settings necessary for development on a local machine. This allows for the project to be connected to a production database when it's in its production environment (i.e. AWS) but connected to a local database when it's in a local environment.

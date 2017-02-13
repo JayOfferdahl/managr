@@ -37,13 +37,24 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'django.contrib.sites',
     'django.contrib.staticfiles',
     'django.contrib.postgres',
     'managr_entities.apps.ManagrEntitiesConfig',
     'project_proposal.apps.ProjectProposalConfig',
     'project_management.apps.ProjectManagementConfig',
     'documents.apps.DocumentsConfig',
+
+    # Django Rest Framework
     'rest_framework',
+    
+    # Needed for Reactjs
+    'webpack_loader',
+
+    # Allauth
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
 ]
 
 MIDDLEWARE = [
@@ -71,10 +82,19 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
+                # Needed for allauth
+                'django.template.context_processors.request',
             ],
         },
     },
 ]
+
+AUTHENTICATION_BACKENDS = (
+    # Allauth needs these to login by username and email
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
 
 WSGI_APPLICATION = 'managr.wsgi.application'
 
@@ -131,9 +151,19 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
     '/var/www/static/',
+    os.path.join(BASE_DIR, 'assets'),
 ]
+
+WEBPACK_LOADER = {
+    'DEFAULT': {
+        'BUNDLE_DIR_NAME': 'bundles/',
+        'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats.json'),
+    }
+}
 
 try:
     from .local_settings import *
 except ImportError:
     from .__local_settings import *
+
+SITE_ID = 1

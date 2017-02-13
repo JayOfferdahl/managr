@@ -1,0 +1,27 @@
+{% block footer %}
+	<div class="base-footer">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-3 col-md-3 col-sm-3 hidden-xs">
+					<p><strong>Solutions</strong></p>
+					<p><a href="/solutions/client/">For Clients</a></p>
+					<p><a href="/solutions/contractor/">For Contractors</a></p>
+					<p><a href="/solutions/enterprise/">For Businesses</a></p>
+				</div>
+				<div class="col-lg-3 col-md-3 col-sm-3 hidden-xs">
+					<p><a href="/customers/"><strong>Our Customers</strong></a></p>
+				</div>
+				<div class="col-lg-3 col-md-3 col-sm-3 hidden-xs">
+					<p><strong>About Us</strong></p>
+					<p><a href="/about/mission/">Our Mission</a></p>
+					<p><a href="/about/careers/">Careers</a></p>
+				</div>
+				<div class="col-lg-3 col-md-3 col-sm-3">
+					<p>Copyright &copy; {% now "Y" %} Managr</p>
+					<p><a href="/legal/usage/">Terms of Use</a></p>
+					<p><a href="/legal/privacy/">Privacy Policy</a></p>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}
