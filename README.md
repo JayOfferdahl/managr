@@ -17,9 +17,7 @@ Setting up the the development environment works best in Mac OS/Linux because ru
 #### Initial Environment Setup
 * Install latest version of Python (should be 3.5.2+)
 * Install Python package manager "pip" (Linux users install "pip3")
-* Install Django with `pip install Django==<latest_django-version>` (Linux users use "pip3")
-* Install Django-Rest-Framework `pip install djangorestframework`
-* Install Django-Cors-Headers 'pip install django-cors-headers'
+* Install Django with `pip install Django==<latest_django-version> djangorestframework django-cors-headers` (May need to use pip3)
 
 Pull down this repository, open a terminal, and navigate to the repository
 
