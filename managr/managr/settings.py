@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.sites',
-    #'django.contrib.staticfiles',
+    'django.contrib.staticfiles',
     'django.contrib.postgres',
     'managr_entities.apps.ManagrEntitiesConfig',
     'project_proposal.apps.ProjectProposalConfig',
@@ -47,14 +47,6 @@ INSTALLED_APPS = [
 
     # Django Rest Framework
     'rest_framework',
-    
-    # Needed for Reactjs
-    'webpack_loader',
-
-    # Allauth
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
 
     # Cors Headers
     'corsheaders',
@@ -89,18 +81,14 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-
-                # Needed for allauth
-                'django.template.context_processors.request',
             ],
         },
     },
 ]
 
 AUTHENTICATION_BACKENDS = (
-    # Allauth needs these to login by username and email
+    # Needed to login by username and email
     'django.contrib.auth.backends.ModelBackend',
-    'allauth.account.auth_backends.AuthenticationBackend',
 )
 
 WSGI_APPLICATION = 'managr.wsgi.application'
@@ -148,6 +136,15 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+# Static files (CSS, JavaScript, Images) 
+# https://docs.djangoproject.com/en/1.10/howto/static-files/ 
+ 
+STATIC_URL = '/static/' 
+ 
+STATICFILES_DIRS = [ 
+    '/var/www/static/', 
+] 
 
 CORS_ORIGIN_WHITELIST = (
     'managr.dev.biz:8000',

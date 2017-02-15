@@ -5,7 +5,7 @@ import { djangoDataFetch } from '../actions/AppActions'
 
 class App extends React.Component {
 	componentDidMount() {
-		this.props.fetchData('http://managr.dev.biz:8000/home/');
+		this.props.fetchData('http://managr.dev.biz:8000');
 	}
 
 	render() {
