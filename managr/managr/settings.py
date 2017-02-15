@@ -25,7 +25,7 @@ SECRET_KEY = 'mgux64qh-o)o6y2(jdkfmko1ll#fh*123guly3#zrbc8h_%_dh'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['managr.dev.biz']
 
 AUTH_USER_MODEL = 'managr_entities.ManagrUser'
 
