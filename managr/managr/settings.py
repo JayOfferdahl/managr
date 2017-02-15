@@ -25,7 +25,7 @@ SECRET_KEY = 'mgux64qh-o)o6y2(jdkfmko1ll#fh*123guly3#zrbc8h_%_dh'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['managr.dev.biz']
 
 AUTH_USER_MODEL = 'managr_entities.ManagrUser'
 
@@ -47,14 +47,9 @@ INSTALLED_APPS = [
 
     # Django Rest Framework
     'rest_framework',
-    
-    # Needed for Reactjs
-    'webpack_loader',
 
-    # Allauth
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
+    # Cors Headers
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -65,6 +60,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    # For corsheaders app
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 ]
 
 ROOT_URLCONF = 'managr.urls'
@@ -82,18 +81,14 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-
-                # Needed for allauth
-                'django.template.context_processors.request',
             ],
         },
     },
 ]
 
 AUTHENTICATION_BACKENDS = (
-    # Allauth needs these to login by username and email
+    # Needed to login by username and email
     'django.contrib.auth.backends.ModelBackend',
-    'allauth.account.auth_backends.AuthenticationBackend',
 )
 
 WSGI_APPLICATION = 'managr.wsgi.application'
@@ -142,24 +137,23 @@ USE_L10N = True
 
 USE_TZ = True
 
+# Static files (CSS, JavaScript, Images) 
+# https://docs.djangoproject.com/en/1.10/howto/static-files/ 
+ 
+STATIC_URL = '/static/' 
+ 
+STATICFILES_DIRS = [ 
+    '/var/www/static/', 
+] 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.10/howto/static-files/
+CORS_ORIGIN_WHITELIST = (
+    'managr.dev.biz:8000',
+    'managr.dev.biz:8080'
+)
 
-STATIC_URL = '/static/'
-
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
-    '/var/www/static/',
-    os.path.join(BASE_DIR, 'assets'),
-]
-
-WEBPACK_LOADER = {
-    'DEFAULT': {
-        'BUNDLE_DIR_NAME': 'bundles/',
-        'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats.json'),
-    }
-}
+CSRF_TRUSTED_ORIGINS = (
+    'managr.dev.biz:8080'
+)
 
 try:
     from .local_settings import *
