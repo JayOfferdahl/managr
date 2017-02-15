@@ -8,10 +8,11 @@ export function djangoDataFetchSuccess(django_string) {
 
 export function djangoDataFetch(api_endpoint) {
 	return (dispatch) => {
-		fetch(api_endpoint, {mode: 'no-cors'})
+		fetch(api_endpoint)
 			.then((response) => {
-				console.log(response.status);
+				return response;
 			})
-			.then((django_string) => dispatch(djangoDataFetchSuccess(django_string)));
+			.then((response) => response.json())
+			.then((data) => dispatch(djangoDataFetchSuccess(data['django_string'])));
 	};
 }

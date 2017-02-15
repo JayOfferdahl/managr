@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.sites',
-    'django.contrib.staticfiles',
+    #'django.contrib.staticfiles',
     'django.contrib.postgres',
     'managr_entities.apps.ManagrEntitiesConfig',
     'project_proposal.apps.ProjectProposalConfig',
@@ -55,6 +55,9 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+
+    # Cors Headers
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -65,6 +68,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    # For corsheaders app
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 ]
 
 ROOT_URLCONF = 'managr.urls'
@@ -142,24 +149,14 @@ USE_L10N = True
 
 USE_TZ = True
 
+CORS_ORIGIN_WHITELIST = (
+    'managr.dev.biz:8000',
+    'managr.dev.biz:8080'
+)
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.10/howto/static-files/
-
-STATIC_URL = '/static/'
-
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
-    '/var/www/static/',
-    os.path.join(BASE_DIR, 'assets'),
-]
-
-WEBPACK_LOADER = {
-    'DEFAULT': {
-        'BUNDLE_DIR_NAME': 'bundles/',
-        'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats.json'),
-    }
-}
+CSRF_TRUSTED_ORIGINS = (
+    'managr.dev.biz:8080'
+)
 
 try:
     from .local_settings import *
