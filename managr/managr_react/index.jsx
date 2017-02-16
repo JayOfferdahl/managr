@@ -11,4 +11,5 @@ const store = configureStore({});
 render(
 	<Provider store={store}>
 		<Router routes={routes} history={hashHistory} />
-	</Provider>, document.getElementById('app'));
+	</Provider>, document.getElementById('app')
+);
