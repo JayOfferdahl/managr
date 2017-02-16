@@ -22,11 +22,9 @@ export default {
 
 	module: {
 		loaders: [
-			{
-				test: /\.jsx$/,
-				include: path.join(__dirname, 'managr_react'),
-				loaders: ['react-hot', 'babel']
-			}
+			{ test: /\.jsx$/, include: path.join(__dirname, 'managr_react'), loaders: ['react-hot', 'babel'] },
+			{ test: /\.css$/, loader: 'style-loader!css-loader' },
+			{ test: /\.(png|jpg|gif|jpeg)$/, loader: 'url-loader?limit=8192'}
 		]
 	},
 
