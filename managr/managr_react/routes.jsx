@@ -23,7 +23,7 @@ import SignupPage from './components/signup/SignupPage'
 
 export default (
 	<Route path="/" component={App}>
-		<Route path="signup" component={SignupPage}>
+		<Route path="/signup" component={SignupPage}>
 
 		</Route> {/* End SignupPage */}
 		<Route path="/overview" component={Overview}>
