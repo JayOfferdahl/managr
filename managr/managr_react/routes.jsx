@@ -19,8 +19,13 @@ import PastProjectsList from './components/project_history/PastProjectsList'
 
 import Finance from './components/reports/Finance'
 
+import SignupPage from './components/signup/SignupPage'
+
 export default (
 	<Route path="/" component={App}>
+		<Route path="signup" component={SignupPage}>
+
+		</Route> {/* End SignupPage */}
 		<Route path="/overview" component={Overview}>
 			<Route path="/summary" component={Summary} />
 	        <Route path="/equipment" component={Equipment} />
