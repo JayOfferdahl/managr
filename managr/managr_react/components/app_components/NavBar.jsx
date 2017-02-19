@@ -15,27 +15,39 @@ class NavBar extends React.Component {
         return (
             <Nav className="nav-links-container">
                 <LinkContainer to="/overview">
-                    <NavItem eventKey={1}>
+                    <NavItem className="nav-text"eventKey={1}>
                         <img src={projectIcon} className="nav-icon" alt="project" />
                         Project Overview
                     </NavItem>
                 </LinkContainer>
                 <LinkContainer to="/milestones">
-                    <NavItem eventKey={2}>
+                    <NavItem className="nav-text"eventKey={2}>
                         <img src={milestoneIcon} className="nav-icon" alt="milestoens" />
                         Milestones
                     </NavItem>
                 </LinkContainer>
                 <LinkContainer to="/finance">
-                    <NavItem eventKey={3}>
+                    <NavItem className="nav-text"eventKey={3}>
                         <img src={financeIcon} className="nav-icon" alt="finance" />
                         Finance
                     </NavItem>
                 </LinkContainer>
                 <LinkContainer to="/documents">
-                    <NavItem eventKey={4}>
+                    <NavItem className="nav-text"eventKey={4}>
                         <img src={docsIcon} className="nav-icon" alt="documents" />
                         Documents
+                    </NavItem>
+                </LinkContainer>
+                <LinkContainer to="/createnewbid">
+                    <NavItem className="nav-text"eventKey={4}>
+                        <img src={docsIcon} className="nav-icon" alt="createnewbid" />
+                        Create New Bid
+                    </NavItem>
+                </LinkContainer>
+                <LinkContainer to="/pastprojects">
+                    <NavItem className="nav-text"eventKey={4}>
+                        <img src={docsIcon} className="nav-icon" alt="pastprojects" />
+                        Past Projects
                     </NavItem>
                 </LinkContainer>
             </Nav>

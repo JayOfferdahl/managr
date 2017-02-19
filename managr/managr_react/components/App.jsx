@@ -19,26 +19,13 @@ class App extends React.Component {
 	render() {
 		return (
 			<div className="App">
-				{this.props.django_string}
-				<div className="App-body">
-					<Grid fluid={true}>
-						<Col className="left navbar" xs={4} md={2}>
+						<Col className="navbar" sm={3}>
 							<NavBar/>
-							<div className="nav-buttons-container">
-								<LinkContainer to="/pastprojects">
-				                	<Button className="nav-button" bsSize="large" bsStyle="warning">View Past Projects</Button>
-				                </LinkContainer>
-				                <LinkContainer to="/createnewbid">
-				                	<Button className="nav-button" bsSize="large" bsStyle="success">Create New Bid</Button>
-				                </LinkContainer>
-							</div>
 						</Col>
-						<Col className="right" xs={14} md={10}>
+						<Col sm={9}>
 							<Header />
-                			{this.props.children}
+              {this.props.children}
 						</Col>
-					</Grid>
-				</div>
 			</div>
 		);
 	}
