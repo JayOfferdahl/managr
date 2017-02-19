@@ -10,19 +10,19 @@ class NestedNavBar extends React.Component {
         return (
             <Nav bsStyle="tabs" justified>
                 <LinkContainer to="/summary">
-                    <NavItem eventKey={5}>Summary</NavItem>
+                    <NavItem style={{color: 'black'}} eventKey={5}>Summary</NavItem>
                 </LinkContainer>
                 <LinkContainer to="/equipment">
-                    <NavItem eventKey={6}>Equipment</NavItem>
+                    <NavItem style={{color: 'black'}} eventKey={6}>Equipment</NavItem>
                 </LinkContainer>
                 <LinkContainer to="/labor">
-                    <NavItem eventKey={7}>Labor</NavItem>
+                    <NavItem style={{color: 'black'}} eventKey={7}>Labor</NavItem>
                 </LinkContainer>
                 <LinkContainer to="/materials">
-                    <NavItem eventKey={8}>Materials</NavItem>
+                    <NavItem style={{color: 'black'}} eventKey={8}>Materials</NavItem>
                 </LinkContainer>
                 <LinkContainer to="/activity">
-                    <NavItem eventKey={9}>Acitivty</NavItem>
+                    <NavItem style={{color: 'black'}} eventKey={9}>Activity</NavItem>
                 </LinkContainer>
             </Nav>
         )

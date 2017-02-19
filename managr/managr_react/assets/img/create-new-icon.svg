@@ -1,0 +1,9 @@
+<svg width="46px" height="47px" viewBox="0 0 46 47" overflow="visible" enable-background="new 0 0 46 47">
+<defs>
+</defs>
+<polyline fill="none" stroke="#666666" stroke-width="2" stroke-miterlimit="10" points="37,17 37,45 1,45 1,9 29,9 "/>
+<polyline fill="none" stroke="#666666" stroke-width="2" stroke-miterlimit="10" points="39,4 17,26 17,29 20,29 42,7 "/>
+<line fill="none" stroke="#666666" stroke-width="2" stroke-miterlimit="10" x1="17" y1="26" x2="20" y2="29"/>
+<path fill="#666666" stroke="#666666" stroke-width="2" stroke-miterlimit="10" d="M44.7,3.3c0.4,0.4,0.4,1,0,1.4l0,0L44,5.4L40.6,2
+	l0.7-0.7c0.4-0.4,1-0.4,1.4,0L44.7,3.3z"/>
+</svg>

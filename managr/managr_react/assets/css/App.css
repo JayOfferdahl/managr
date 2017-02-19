@@ -88,6 +88,23 @@ html, body {
     margin-bottom: 20px;
 }
 
+.nav>li>a {
+  color: white;
+}
+
+.nav>li>a:hover {
+  color: #4B6A88;
+}
+
+.nav-tabs.nav-justified>li>a {
+  color: black;
+}
+
+.create-new-icon {
+  background: url('../img/create-new-icon.svg') center right no-repeat;
+  padding:0 16px 0 0;
+}
+
 .left {
     position: fixed;
     top:0; left:0;
