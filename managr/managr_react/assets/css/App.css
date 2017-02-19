@@ -3,10 +3,8 @@ html, body {
 }
 
 .App {
-    font-family: 'Libre Franklin', sans-serif;
-}
-
-.App-body {
+  min-height: 100%;
+  font-family: 'Open Sans', sans-serif;
 }
 
 .App-header {
@@ -26,10 +24,10 @@ html, body {
 }
 
 .navbar {
-    height: 100%;
-    background-color: #34495E;
+    background-color: #4B6A88;
+    margin-bottom: -9999px;
+    padding-bottom: 9999px;
     color: white;
-    font-size: 18px;
     overflow: hidden;
 }
 
@@ -37,28 +35,14 @@ html, body {
     margin-top: 30px;
 }
 
-.nav-buttons-container {
-    position: absolute;
-    bottom: 10px;
-    width: 90%;
-    margin: auto;
-    padding: 10px;
-}
-
-.nav-button {
-    padding: 10px;
-    margin: 10px;
-}
-
 .nav-icon {
-    margin-right: 15px;
+    margin-right: 10px;
     color: white;
 }
 
-.nav-item {
-    padding: 20px;
-    font-size: 18px;
-    font-weight: bold;
+.nav-text {
+    font-size: 16px;
+    color: white;
 }
 
 .project-content-section {
@@ -106,9 +90,9 @@ html, body {
 
 .left {
     position: fixed;
-    padding: 10px;
     top:0; left:0;
-    height:100%; width: 300px;
+    height:100%;
+    width: 300px;
 }
 
 .right {
