@@ -24,7 +24,7 @@ class NavBar extends React.Component {
                 </LinkContainer>
                 <LinkContainer to="/milestones">
                     <NavItem className="nav-text" eventKey={2}>
-                        <img src={milestoneIcon} className="nav-icon" alt="milestoens" />
+                        <img src={milestoneIcon} className="nav-icon" alt="milestones" />
                         Milestones
                     </NavItem>
                 </LinkContainer>

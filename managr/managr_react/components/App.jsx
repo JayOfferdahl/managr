@@ -12,23 +12,25 @@ import { djangoDataFetch } from '../actions/AppActions';
 import '../assets/css/App.css';
 
 class App extends React.Component {
-	componentDidMount() {
-		this.props.fetchData('http://managr.dev.biz:8000');
-	}
+    componentDidMount() {
+        this.props.fetchData('http://managr.dev.biz:8000');
+    }
 
-	render() {
-		return (
-			<div className="App">
-						<Col className="navbar" sm={3}>
-							<NavBar/>
-						</Col>
-						<Col sm={9}>
-							<Header />
-              {this.props.children}
-						</Col>
-			</div>
-		);
-	}
+    render() {
+        return (
+            <Grid className="App" fluid={true}>
+                <Row>
+                    <Col className="navbar" sm={2}>
+                        <NavBar/>
+                    </Col>
+                    <Col sm={10}>
+                        <Header />
+                        {this.props.children}
+                    </Col>
+                </Row>
+            </Grid>
+        );
+    }
 }
 
 const mapStateToProps = (state) => {
