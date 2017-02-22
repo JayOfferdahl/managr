@@ -3,6 +3,8 @@ import uuid
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
+from managr_entities.app_managers.managr_user import ManagrUserManager
+
 class ManagrUser(AbstractUser):
 	user_uuid = models.UUIDField(default = uuid.uuid4, editable = False)
 	USER_TYPE_CHOICES = (
@@ -11,3 +13,5 @@ class ManagrUser(AbstractUser):
 		(2, 'Construction Worker'),
 	)
 	user_type = models.IntegerField(choices = USER_TYPE_CHOICES, default = 0)
+
+	objects = ManagrUserManager()

@@ -18,11 +18,16 @@ from django.conf.urls import url
 from django.contrib import admin
 from django.views.generic import TemplateView
 
-from . import views
+from . import views as managr_views
+from managr_entities import views as registration_views
 
 urlpatterns = [
-    # admin stays, good
+    # Organize these url patterns by which views they belong to
     url(r'^admin/', admin.site.urls),
-    url(r'^accounts/signup', views.register, name='register'),
-    url(r'^', views.index, name='index'),
+
+    # Begin registration_views
+    url(r'^accounts/signup', registration_views.register, name='register'),
+
+    # Begin managr_views
+    url(r'^', managr_views.index, name='index'),
 ]

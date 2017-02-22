@@ -18,12 +18,12 @@ class RegistrationForm extends React.Component {
 	render() {
 		return (
 			<form onSubmit={this.handleSubmit.bind(this)}>
-				<Textfield placeholder="First Name" onChange={this.handleChange.bind(this)} current_text={this.props.first_name} fieldName="first_name" />
-				<Textfield placeholder="Last Name" onChange={this.handleChange.bind(this)} current_text={this.props.last_name} fieldName="last_name" />
-				<Textfield placeholder="Username" onChange={this.handleChange.bind(this)} current_text={this.props.username} fieldName="username" />
-				<Textfield placeholder="Email" onChange={this.handleChange.bind(this)} current_text={this.props.username} fieldName="email" />
-				<Textfield placeholder="Password" onChange={this.handleChange.bind(this)} current_text={this.props.username} fieldName="password" />
-				<Textfield placeholder="Confirm Password" onChange={this.handleChange.bind(this)} current_text={this.props.username} fieldName="password_confirmation" />
+				<Textfield type="text" placeholder="First Name" onChange={this.handleChange.bind(this)} currentText={this.props.first_name} fieldName="first_name" />
+				<Textfield type="text" placeholder="Last Name" onChange={this.handleChange.bind(this)} currentText={this.props.last_name} fieldName="last_name" />
+				<Textfield type="text" placeholder="Username" onChange={this.handleChange.bind(this)} currentText={this.props.username} fieldName="username" />
+				<Textfield type="text" placeholder="Email" onChange={this.handleChange.bind(this)} currentText={this.props.email} fieldName="email" />
+				<Textfield type="password" placeholder="Password" onChange={this.handleChange.bind(this)} currentText={this.props.password} fieldName="password" />
+				<Textfield type="password" placeholder="Confirm Password" onChange={this.handleChange.bind(this)} currentText={this.props.password_confirmation} fieldName="password_confirmation" />
 				<div className="form-group">
 					<button className="btn btn-primary btn-lg">
 						Sign Up

@@ -13,10 +13,3 @@ def index(request):
     	'django_string': 'Hello from the Managr Server'
     }
     return JsonResponse(data)
-
-@csrf_exempt
-def register(request):
-	data = JSONParser().parse(BytesIO(request.body))
-	print('User tried to signup with the following attributes')
-	print(data['first_name'], data['last_name'], data['username'], data['email'], data['password'], data['password_confirmation'])
-	return JsonResponse(data)
