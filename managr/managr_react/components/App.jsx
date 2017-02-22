@@ -19,10 +19,10 @@ class App extends React.Component {
 	render() {
 		return (
 			<div className="App">
-						<Col className="navbar" sm={3}>
+						<Col className="navbar" sm={2}>
 							<NavBar/>
 						</Col>
-						<Col sm={9}>
+						<Col sm={10}>
 							<Header />
               {this.props.children}
 						</Col>
