@@ -10,7 +10,8 @@ class RegistrationForm extends React.Component {
 		this.props.updateField(fieldUpdate.target.name, fieldUpdate.target.value);
 	}
 
-	handleSubmit() {
+	handleSubmit(submitEvent) {
+		submitEvent.preventDefault();
 		this.props.submitRegistration(this.props);
 	}
 
