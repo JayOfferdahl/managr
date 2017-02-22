@@ -23,5 +23,6 @@ from . import views
 urlpatterns = [
     # admin stays, good
     url(r'^admin/', admin.site.urls),
+    url(r'^accounts/signup', views.register, name='register'),
     url(r'^', views.index, name='index'),
 ]
