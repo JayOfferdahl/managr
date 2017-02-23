@@ -52,3 +52,12 @@ export function password_confirmation(state = '', action) {
 			return state;
 	}
 }
+
+export function registration_success(state = false, action) {
+	switch(action.type) {
+		case 'MANAGR_REGISTRATION_SUCCESS':
+			return action.success;
+		default:
+			return state;
+	}
+}

@@ -6,10 +6,16 @@ export function updateRegistrationFormField(field_name, field_value) {
 	};
 }
 
-export function managrRegistrationSuccess(success_message) {
+export function managrRegistrationSuccess(success = true) {
 	return {
 		type: 'MANAGR_REGISTRATION_SUCCESS',
-		success_message
+		success
+	}
+}
+
+export function managrRegistrationFailure(errors_data) {
+	return {
+		type: 'MANAGR_REGISTRATION_FAILURE'
 	}
 }
 
@@ -25,12 +31,19 @@ export function registerWithServer(form_fields_info) {
 		fetch('http://managr.dev.biz:8000/accounts/signup', request_params)
 			.then((response) => {
 				if (!response.ok) {
-					// Call some action with error message(s)
+					// Server response was not okay
 				}
 
 				return response;
 			})
 			.then((response) => response.json())
-			.then((data) => dispatch(managrRegistrationSuccess(data['success_message'])));
+			//.then((data) => dispatch(managrRegistrationSuccess(data)));
+			.then((data) => {
+				if (data['success']) {
+					dispatch(managrRegistrationSuccess());
+				} else {
+					dispatch(managrRegistrationFailure(data));
+				}
+			});
 	};
 }

@@ -14,7 +14,4 @@ class ManagrUserManager(UserManager):
 		return super(ManagrUserManager, self).create_superuser(username, email, password, **extra_fields)
 
 	def register_user(self, new_user_data):
-		managr_user = self.model(first_name = new_user_data['first_name'], last_name = new_user_data['last_name'], username = new_user_data['username'], email = new_user_data['email'])
-		managr_user.set_password(new_user_data['password'])
-		managr_user.save()
-		return managr_user
+		return super(ManagrUserManager, self).create_user(new_user_data['username'], new_user_data['email'], new_user_data['password'], first_name = new_user_data['first_name'], last_name = new_user_data['last_name'])

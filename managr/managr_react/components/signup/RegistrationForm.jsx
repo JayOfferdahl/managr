@@ -17,7 +17,7 @@ class RegistrationForm extends React.Component {
 
 	render() {
 		return (
-			<form onSubmit={this.handleSubmit.bind(this)}>
+			<form className="registration-form" onSubmit={this.handleSubmit.bind(this)}>
 				<Textfield type="text" placeholder="First Name" onChange={this.handleChange.bind(this)} currentText={this.props.first_name} fieldName="first_name" />
 				<Textfield type="text" placeholder="Last Name" onChange={this.handleChange.bind(this)} currentText={this.props.last_name} fieldName="last_name" />
 				<Textfield type="text" placeholder="Username" onChange={this.handleChange.bind(this)} currentText={this.props.username} fieldName="username" />
@@ -41,7 +41,8 @@ const mapStateToProps = (state) => {
 		username: state.username,
 		email: state.email,
 		password: state.password,
-		password_confirmation: state.password_confirmation
+		password_confirmation: state.password_confirmation,
+		registration_success: state.registration_success
 	};
 };
 

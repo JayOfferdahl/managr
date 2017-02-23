@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import { django_string } from './AppReducer';
-import { first_name, last_name, username, email, password, password_confirmation } from './RegistrationReducer';
+import { first_name, last_name, username, email, password, password_confirmation, registration_success } from './RegistrationReducer';
 
 export default combineReducers ({
 	django_string,
@@ -9,5 +9,6 @@ export default combineReducers ({
 	username,
 	email,
 	password,
-	password_confirmation
+	password_confirmation,
+	registration_success
 });
