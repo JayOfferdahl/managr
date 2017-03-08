@@ -8,7 +8,7 @@ import '../../assets/css/App.css';
 class NestedNavBar extends React.Component {
     render() {
         return (
-            <Nav bsStyle="tabs" justified>
+            <Nav bsStyle="tabs" activeKey={1} justified>
                 <LinkContainer to="/summary">
                     <NavItem style={{color: 'black'}} eventKey={5}>Summary</NavItem>
                 </LinkContainer>

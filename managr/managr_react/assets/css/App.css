@@ -124,6 +124,23 @@ html, body, #app {
   padding:0 16px 0 0;
 }
 
+.item-overview-tab {
+  height: 50px;
+}
+
+.graph-section {
+  display: inline-block;
+}
+
+.overview-body {
+  padding-top: 20px;
+  height: 200px;
+}
+
+.summary-section {
+  background-color: #F0F0F0;
+}
+
 .left {
     position: fixed;
     top:0; left:0;

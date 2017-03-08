@@ -1,43 +1,33 @@
 import React from 'react';
 import { Row, Col, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
+import SimpleLineChart from '../graphs/SimpleLineChart'
+import SimplePieChart from '../graphs/SimplePieChart'
+import ItemOverview from './ItemOverview'
 
 import '../../assets/css/App.css';
 
 class Summary extends React.Component {
     render () {
         return (
-            <div>
+          <div>
                 <Row className="project-3col-section">
                     <Col md={4}>
-                        <div className="content-block">
-                            <h1>Content Block</h1>
-                            <p>This will be a content block displaying a list of Active milestones.</p>
-                        </div>
+                      <ItemOverview active="4" total="17" type="Milestones" />
                     </Col>
-
                     <Col md={4}>
-                        <div className="content-block">
-                            <h1>Content Block</h1>
-                            <p>This will be a content block displaying a list of Active Workers and their time logs.</p>
-                        </div>
+                      <ItemOverview active="24" total="119" type="Workers" />
                     </Col>
-
                     <Col md={4}>
-                        <div className="content-block">
-                            <h1>Content Block</h1>
-                            <p>This will be a content block displaying a list of Active Equipment and  their time logs.</p>
-                        </div>
+                      <ItemOverview active="19" total="88" type="Equipment" />
                     </Col>
                 </Row>
-                <Row className="project-1col-section">
-                    <Col md={12}>
-                        <div className="content-block">
-                            <h1>Wide Content Block</h1>
-                            <p>This will show a weekly summary graph and total logged hours. and other stuff.</p>
-                        </div>
-                    </Col>
+                <Row className="graph-section">
+                      <h3>Weekly Summary Graph</h3>
+                      <SimpleLineChart />
+                      <SimplePieChart />
                 </Row>
             </div>
+
         );
     }
 }
