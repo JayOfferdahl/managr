@@ -1,43 +1,47 @@
-html, body {
+html, body, #app {
+    height: 100%;
+    margin: 0;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.app-container {
+    display: flex;
+    flex-flow: row;
     height: 100%;
 }
 
-.App {
-  min-height: 100%;
-  font-family: 'Open Sans', sans-serif;
+.app-content-main {
+    display: flex;
+    flex-flow: column;
+    height: 100%;
+    width: 100%;
 }
 
-.App-header {
-    background-color: #f0f0f0;
-    height: 120px;
-    color: white;
-    text-align: center;
+.app-content-main .flex-header{
+    flex: 0 1 auto;
+}
+.app-content-main .flex-content {
+    flex: 1;
+    position: relative;
 }
 
-.App-logo {
-    display: inline-block;
-    margin-top: 20px;
-}
-
-.placeholder {
-    padding: 100px;
-}
-
-.navbar {
+.app-nav-main {
+    flex: 0 1 210px;
+    background-color: #000;
     background-color: #4B6A88;
-    margin-bottom: -9999px;
-    padding-bottom: 9999px;
     color: white;
-    overflow: hidden;
+}
+
+.row {
+    margin: 0;
 }
 
 .nav-links-container {
-    margin-top: 30px;
+    margin-top: 20px;
 }
 
-.nav-icon {
+.nav-links-container span.glyphicon {
     margin-right: 10px;
-    color: white;
 }
 
 .nav-text {
@@ -45,18 +49,19 @@ html, body {
     color: white;
 }
 
-.project-content-section {
-    width: 100%;
-    padding: 20px 0px 20px 40px;
-    font-size: 16px;
+.app-header {
+    background-color: #f0f0f0;
+    height: 110px;
+    color: white;
+    text-align: center;
 }
 
-.project-overview-section {
-    height: 180px;
+.app-logo {
+    margin-top: 25px;
 }
 
-.project-3col-section {
-    margin-top: 20px;
+.placeholder {
+    padding: 100px;
 }
 
 .avatar-section {
@@ -74,6 +79,20 @@ html, body {
 .avatar-text {
     display: inline-block;
     margin-top: 5px;
+}
+
+.project-content-section {
+    width: 100%;
+    padding: 20px 0px 20px 40px;
+    font-size: 16px;
+}
+
+.project-overview-section {
+    height: 180px;
+}
+
+.project-3col-section {
+    margin-top: 20px;
 }
 
 .project-title {

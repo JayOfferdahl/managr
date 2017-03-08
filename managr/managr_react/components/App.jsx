@@ -18,17 +18,19 @@ class App extends React.Component {
 
     render() {
         return (
-            <Grid className="App" fluid={true}>
-                <Row>
-                    <Col className="navbar" sm={2}>
-                        <NavBar/>
-                    </Col>
-                    <Col sm={10}>
+            <div className="app-container">
+                <Col className="app-nav-main">
+                    <NavBar/>
+                </Col>
+                <Col className="app-content-main">
+                    <div className="flex-header">
                         <Header />
+                    </div>    
+                    <div className="flex-content">
                         {this.props.children}
-                    </Col>
-                </Row>
-            </Grid>
+                    </div>
+                </Col>
+            </div>
         );
     }
 }
