@@ -141,6 +141,10 @@ html, body, #app {
   background-color: #F0F0F0;
 }
 
+.summary-table {
+  margin: 30px 10px 10px 10px;
+}
+
 .left {
     position: fixed;
     top:0; left:0;
