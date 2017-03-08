@@ -1,11 +1,18 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+import ErrorsList from '../app_components/ErrorsList'
 import Textfield from '../app_components/Textfield';
 
-import { updateRegistrationForm, registerWithServer } from '../../actions/RegistrationActions';
+import { updateRegistrationForm, registerWithServer, loginAfterRegistration } from '../../actions/RegistrationActions';
 
 class RegistrationForm extends React.Component {
+	componentDidUpdate(prevProps, prevState) {
+		if (this.props.registration_success == true && prevProps.registration_success == false) {
+			this.context.router.push('/overview');
+		}
+	}
+
 	handleChange(fieldUpdate) {
 		this.props.updateField(fieldUpdate.target.name, fieldUpdate.target.value);
 	}
@@ -18,6 +25,7 @@ class RegistrationForm extends React.Component {
 	render() {
 		return (
 			<form className="registration-form" onSubmit={this.handleSubmit.bind(this)}>
+				<ErrorsList errors={this.props.registration_errors} />
 				<Textfield type="text" placeholder="First Name" onChange={this.handleChange.bind(this)} currentText={this.props.first_name} fieldName="first_name" />
 				<Textfield type="text" placeholder="Last Name" onChange={this.handleChange.bind(this)} currentText={this.props.last_name} fieldName="last_name" />
 				<Textfield type="text" placeholder="Username" onChange={this.handleChange.bind(this)} currentText={this.props.username} fieldName="username" />
@@ -34,6 +42,10 @@ class RegistrationForm extends React.Component {
 	}
 }
 
+RegistrationForm.contextTypes = {
+  	router: React.PropTypes.object.isRequired
+}
+
 const mapStateToProps = (state) => {
 	return {
 		first_name: state.first_name,
@@ -42,6 +54,7 @@ const mapStateToProps = (state) => {
 		email: state.email,
 		password: state.password,
 		password_confirmation: state.password_confirmation,
+		registration_errors: state.registration_errors,
 		registration_success: state.registration_success
 	};
 };

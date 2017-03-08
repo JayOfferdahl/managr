@@ -21,9 +21,4 @@ const mapStateToProps = (state, ownProps) => {
     };
 };
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-    return {
-    };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Textfield);
+export default connect(mapStateToProps)(Textfield);

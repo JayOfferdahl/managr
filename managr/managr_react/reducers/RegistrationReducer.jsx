@@ -39,6 +39,8 @@ export function password(state = '', action) {
 	switch(action.type) {
 		case 'UPDATE_REGISTRATION_PASSWORD_FIELD':
 			return action.field_value;
+		case 'UPDATE_LOGIN_PASSWORD_FIELD':
+			return action.field_value;
 		default:
 			return state;
 	}
@@ -48,6 +50,15 @@ export function password_confirmation(state = '', action) {
 	switch(action.type) {
 		case 'UPDATE_REGISTRATION_PASSWORD_CONFIRMATION_FIELD':
 			return action.field_value;
+		default:
+			return state;
+	}
+}
+
+export function registration_errors(state = {}, action) {
+	switch(action.type) {
+		case 'MANAGR_REGISTRATION_FAILURE':
+			return action.errors_data;
 		default:
 			return state;
 	}

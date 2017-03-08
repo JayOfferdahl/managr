@@ -6,6 +6,13 @@ import NestedNavBar from './NestedNavBar';
 import '../../assets/css/App.css';
 
 class Overview extends React.Component {
+    componentWillMount() {
+        if (this.props.location == null) {
+            // Component rendered as redirect
+            this.context.router.push('/overview');
+        }
+    }
+
     render () {
         return (
             <Row className="project-content-section">
@@ -27,6 +34,10 @@ class Overview extends React.Component {
             </Row>
         )
     }
+}
+
+Overview.contextTypes = {
+    router: React.PropTypes.object.isRequired
 }
 
 export default Overview;

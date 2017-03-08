@@ -5,7 +5,7 @@ from django.forms import ModelForm
 from managr_entities.app_models.managr_user import ManagrUser
 
 class RegistrationForm(ModelForm):
-	password_confirmation = forms.CharField(max_length = 30, error_messages={'required': 'Password confirmation is required'})
+	password_confirmation = forms.CharField(max_length = 128, error_messages={'required': 'Password confirmation is required', 'max_length': 'The password confirmation given is too long'})
 
 	class Meta:
 		model = ManagrUser
@@ -14,9 +14,15 @@ class RegistrationForm(ModelForm):
 		error_messages = {
             'username': {
                 'required': ("Username is required"),
+                'max_length': ("The username given is too long"),
+            },
+            'email': {
+            	'invalid': ("Invalid email address"),
+            	'max_length': ("The email given is too long"),
             },
             'password': {
             	'required': ("Password is required"),
+            	'max_length': ("The password given is too long"),
             }
         }
 

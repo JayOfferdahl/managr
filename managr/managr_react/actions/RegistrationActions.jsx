@@ -15,7 +15,8 @@ export function managrRegistrationSuccess(success = true) {
 
 export function managrRegistrationFailure(errors_data) {
 	return {
-		type: 'MANAGR_REGISTRATION_FAILURE'
+		type: 'MANAGR_REGISTRATION_FAILURE',
+		errors_data
 	}
 }
 
@@ -33,13 +34,12 @@ export function registerWithServer(form_fields_info) {
 				if (!response.ok) {
 					// Server response was not okay
 				}
-
 				return response;
 			})
 			.then((response) => response.json())
-			//.then((data) => dispatch(managrRegistrationSuccess(data)));
 			.then((data) => {
 				if (data['success']) {
+					localStorage.setItem('managr_session_token', data['success']);
 					dispatch(managrRegistrationSuccess());
 				} else {
 					dispatch(managrRegistrationFailure(data));

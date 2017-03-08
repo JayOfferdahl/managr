@@ -26,7 +26,9 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
 
     # Begin registration_views
+    url(r'^accounts/login', registration_views.login, name='login'),
     url(r'^accounts/signup', registration_views.register, name='register'),
+    url(r'^accounts/ensure-auth', registration_views.ensureAuth, name='ensure_auth'),
 
     # Begin managr_views
     url(r'^', managr_views.index, name='index'),

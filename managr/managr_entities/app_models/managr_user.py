@@ -13,5 +13,6 @@ class ManagrUser(AbstractUser):
 		(2, 'Construction Worker'),
 	)
 	user_type = models.IntegerField(choices = USER_TYPE_CHOICES, default = 0)
+	session_token = models.UUIDField(null = True, editable = True)
 
 	objects = ManagrUserManager()
