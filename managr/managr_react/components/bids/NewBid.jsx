@@ -1,12 +1,17 @@
 import React from 'react';
-import { Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
+//import { connect } from 'react-redux';
 
-import '../../assets/css/App.css';
+import BidForm from './BidForm'
+//import Overview from '../project/Overview'
+
+//import { authenticateWithManagrServer, setAuthenticatedState } from '../../actions/AuthenticationActions';
 
 class NewBid extends React.Component {
-    render () {
-        return <h3 className="placeholder">This will be the Create New Bid tab</h3>
-    }
+	render() {
+    <div className="newbid-container">
+      <BidForm button_text="Create New Bid" />
+    </div>
+	}
 }
 
 export default NewBid;

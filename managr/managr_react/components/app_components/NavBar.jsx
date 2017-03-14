@@ -5,43 +5,50 @@ import { LinkContainer } from 'react-router-bootstrap';
 
 import '../../assets/css/App.css';
 
+import milestoneIcon from "../../assets/img/top_charts.png";
+import financeIcon from "../../assets/img/ledger.png";
+import docsIcon from "../../assets/img/file_graph.png";
+import overviewIcon from "../../assets/img/world_times.png";
+import createNewIcon from "../../assets/img/new.png";
+import pastProjectsIcon from "../../assets/img/past.png";
+
 class NavBar extends React.Component {
     render() {
         return (
             <Nav className="nav-links-container">
                 <LinkContainer to="/overview">
                     <NavItem className="nav-text" eventKey={1}>
-                        <span className="glyphicon glyphicon-home"></span>
+                        <img src={overviewIcon} className="nav-icon" alt="project" />
                         Project Overview
                     </NavItem>
                 </LinkContainer>
                 <LinkContainer to="/milestones">
                     <NavItem className="nav-text" eventKey={2}>
-                        <span className="glyphicon glyphicon-tasks"></span>
+                        <img src={milestoneIcon} className="nav-icon" alt="milestoens" />
                         Milestones
                     </NavItem>
                 </LinkContainer>
                 <LinkContainer to="/finance">
                     <NavItem className="nav-text" eventKey={3}>
-                        <span className="glyphicon glyphicon-usd"></span>
+                        <img src={financeIcon} className="nav-icon" alt="finance" />
                         Finance
                     </NavItem>
                 </LinkContainer>
                 <LinkContainer to="/documents">
                     <NavItem className="nav-text" eventKey={4}>
-                        <span className="glyphicon glyphicon-file"></span>
+                        <img src={docsIcon} className="nav-icon" alt="documents" />
                         Documents
                     </NavItem>
                 </LinkContainer>
                 <LinkContainer to="/createnewbid">
                     <NavItem className="nav-text" eventKey={5}>
-                        <span className="glyphicon glyphicon-edit"></span>
+                        <img src={createNewIcon} className="nav-icon" alt="createnew" />
                         Create New Bid
                     </NavItem>
                 </LinkContainer>
                 <LinkContainer to="/pastprojects">
                     <NavItem className="nav-text" eventKey={6}>
-                        <span className="glyphicon glyphicon-folder-close"></span>
+                        <img src={pastProjectsIcon} className="nav-icon" alt="pastprojects" />
                         Past Projects
                     </NavItem>
                 </LinkContainer>

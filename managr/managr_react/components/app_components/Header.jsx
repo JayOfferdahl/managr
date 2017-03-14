@@ -1,5 +1,6 @@
 import React from 'react';
 import { Row } from 'react-bootstrap';
+import '../../assets/css/App.css';
 
 import logo from '../../assets/img/logo.png';
 import avatar from '../../assets/img/avatar.png';
@@ -7,8 +8,8 @@ import avatar from '../../assets/img/avatar.png';
 class Header extends React.Component {
     render() {
         return (
-            <Row className="app-header">
-                <img src={logo} className="app-logo" alt="logo" />
+            <Row className="App-header">
+                <img src={logo} className="App-logo" alt="logo" />
                 <div className="avatar-section">
                     <div className="avatar-text">
                         <p><b>John Smith</b></p>
