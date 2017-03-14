@@ -3,7 +3,7 @@ import { Table } from 'react-bootstrap'
 
 import '../../assets/css/App.css';
 
-class SummaryTable extends React.Component {
+class MaterialsTable extends React.Component {
 
   _makeTD(str){
       return <td key={str}>{str}</td>
@@ -12,11 +12,11 @@ class SummaryTable extends React.Component {
   _renderRow(row,i){
     var ans = [];
     ans.push(this._makeTD(i))
-    ans.push(this._makeTD(row['Equipment Name']))
-    ans.push(this._makeTD(row['Total Usage']))
-    ans.push(this._makeTD("$" + row['Hourly Cost']))
-
-    let total_cost = "$" + row['Hourly Cost'] * row['Total Usage']
+    ans.push(this._makeTD(row['Material Name']))
+    ans.push(this._makeTD(row['Unit']))
+    ans.push(this._makeTD("$" + row['Cost Per Unit']))
+    ans.push(this._makeTD(row['Total Usage'] + " " + row['Unit']))
+    let total_cost = "$" + row['Cost Per Unit'] * row['Total Usage']
 
     //dynamic calculation of total expense
     ans.push(this._makeTD(total_cost))
@@ -47,4 +47,4 @@ class SummaryTable extends React.Component {
   }
 }
 
-export default SummaryTable
+export default MaterialsTable
