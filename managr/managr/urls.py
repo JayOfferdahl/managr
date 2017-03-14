@@ -20,6 +20,7 @@ from django.views.generic import TemplateView
 
 from . import views as managr_views
 from managr_entities import views as managr_entities_views
+from project_management import views as project_management_views
 from project_proposal import views as project_proposal_views
 
 urlpatterns = [
@@ -49,4 +50,9 @@ urlpatterns = [
     url(r'^bids/show-proposals', project_proposal_views.showProposals, name='show_proposals'),
     url(r'^bids/update', project_proposal_views.updateBid, name='update_bid'),
     # End project_proposal_views
+
+    # Begin project_management_views
+    url(r'^milestones/get$', project_management_views.getMilestones, name='get_milestones'),
+    url(r'^milestones/update$', project_management_views.updateMilestones, name='update_milestones'),
+    # End project_management_views
 ]

@@ -1,41 +1,40 @@
 import React from 'react';
-import { Row, Col} from 'react-bootstrap';
 
-import '../../assets/dhtmlx/dhtmlxgantt.css'
-import '../../assets/dhtmlx/dhtmlxgantt.js'
+import { connect } from 'react-redux';
+import { loadMilestonesFromServer } from '../../actions/MilestonesActions';
+import GanttChart from './GanttChart';
+
 import '../../assets/css/milestones.css';
 
 class Milestones extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-    componentDidMount() {
-        const tasks =  {
-            data:[
-                {id:1, text:"Project #2", start_date:"01-04-2013", duration:18,order:10,
-                    progress:0.4, open: true},
-                {id:2, text:"Task #1",    start_date:"02-04-2013", duration:8, order:10,
-                    progress:0.6, parent:1},
-                {id:3, text:"Task #2",    start_date:"11-04-2013", duration:8, order:20,
-                    progress:0.6, parent:1}
-            ],
-            links:[
-                { id:1, source:1, target:2, type:"1"},
-                { id:2, source:2, target:3, type:"0"},
-                { id:3, source:3, target:4, type:"0"},
-                { id:4, source:2, target:5, type:"2"},
-            ]
-        };
-
-        gantt.init("gantt_chart");
-        gantt.parse(tasks);
+    componentWillMount() {
+        // The mock milestones in the server have project uuid 10.
+        this.props.loadMilestonesFromServer(10);
     }
 
     render () {
-        return (
-            <div className="gantter" id="gantt_chart" />
-        );
+        if(Object.keys(this.props.milestones).length != 0) {
+            return (
+                <GanttChart data={this.props.milestones} />
+            );
+        }
+        else {
+            return (
+                <div>Loading...</div>
+            );
+        }
     };
 }
+const mapStateToProps = (state) => {
+    return {
+        milestones: state.milestones,
+    };
+};
 
-export default Milestones;
+const mapDispatchToProps = (dispatch) => {
+    return {
+        loadMilestonesFromServer: (project_uuid) => dispatch(loadMilestonesFromServer(project_uuid))
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Milestones);
