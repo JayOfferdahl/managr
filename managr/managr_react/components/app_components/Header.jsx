@@ -1,6 +1,10 @@
 import React from 'react';
 import { Row } from 'react-bootstrap';
 
+import LogoutButton from '../signup/LogoutButton'
+
+import '../../assets/css/App.css';
+
 import logo from '../../assets/img/logo.png';
 import avatar from '../../assets/img/avatar.png';
 
@@ -14,6 +18,7 @@ class Header extends React.Component {
                         <p><b>John Smith</b></p>
                     </div>
                     <img src={avatar} className="avatar-icon" alt="avatar" />
+                    <LogoutButton />
                 </div>
             </Row>
         )
