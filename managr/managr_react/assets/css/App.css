@@ -81,6 +81,10 @@ html, body, #app {
     margin-top: 5px;
 }
 
+.logout-container {
+  display: inline-block;
+}
+
 .project-content-section {
     width: 100%;
     padding: 20px 0px 20px 40px;

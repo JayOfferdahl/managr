@@ -50,6 +50,19 @@ def login(request):
 		return JsonResponse(errors)
 
 @csrf_exempt
+def logout(request):
+	session_token = JSONParser().parse(BytesIO(request.body))
+	try:
+		managr_user = ManagrUser.objects.get(session_token = session_token)
+	except ManagrUser.DoesNotExist:
+		# Logout attempted on session id that doesn't exist, still return success for security reasons
+		return JsonResponse({'success': 'Successful logout'})
+
+	managr_user.session_token = None
+	managr_user.save()
+	return JsonResponse({'success': 'Successful logout'})
+
+@csrf_exempt
 def ensureAuth(request):
 	session_token = JSONParser().parse(BytesIO(request.body))
 	try:

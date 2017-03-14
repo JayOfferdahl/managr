@@ -19,16 +19,17 @@ from django.contrib import admin
 from django.views.generic import TemplateView
 
 from . import views as managr_views
-from managr_entities import views as registration_views
+from managr_entities import views as managr_entities_views
 
 urlpatterns = [
     # Organize these url patterns by which views they belong to
     url(r'^admin/', admin.site.urls),
 
-    # Begin registration_views
-    url(r'^accounts/login', registration_views.login, name='login'),
-    url(r'^accounts/signup', registration_views.register, name='register'),
-    url(r'^accounts/ensure-auth', registration_views.ensureAuth, name='ensure_auth'),
+    # Begin managr_entities_views
+    url(r'^accounts/login', managr_entities_views.login, name='login'),
+    url(r'^accounts/logout', managr_entities_views.logout, name='logout'),
+    url(r'^accounts/signup', managr_entities_views.register, name='register'),
+    url(r'^accounts/ensure-auth', managr_entities_views.ensureAuth, name='ensure_auth'),
 
     # Begin managr_views
     url(r'^', managr_views.index, name='index'),

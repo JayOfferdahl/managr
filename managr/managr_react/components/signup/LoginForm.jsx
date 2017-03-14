@@ -4,11 +4,12 @@ import { connect } from 'react-redux';
 import ErrorsList from '../app_components/ErrorsList'
 import Textfield from '../app_components/Textfield';
 
-import { updateLoginForm, loginWithServer } from '../../actions/LoginActions';
+import { updateLoginForm, loginWithServer, resetLoginForm } from '../../actions/LoginActions';
 
 class LoginForm extends React.Component {
 	componentDidUpdate(prevProps, prevState) {
 		if (this.props.login_success == true && prevProps.login_success == false) {
+			this.props.handleReset();
 			this.context.router.push('/overview');
 		}
 	}
@@ -54,7 +55,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
     	updateField: (field_name, field_value) => dispatch(updateLoginForm(field_name, field_value)),
-    	submitLogin: (form_fields_info) => dispatch(loginWithServer(form_fields_info))
+    	submitLogin: (form_fields_info) => dispatch(loginWithServer(form_fields_info)),
+    	handleReset: () => dispatch(resetLoginForm())
     };
 };
 

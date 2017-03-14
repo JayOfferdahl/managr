@@ -41,6 +41,8 @@ export function password(state = '', action) {
 			return action.field_value;
 		case 'UPDATE_LOGIN_PASSWORD_FIELD':
 			return action.field_value;
+		case 'CLEAN_LOGIN_FORM':
+			return '';
 		default:
 			return state;
 	}
