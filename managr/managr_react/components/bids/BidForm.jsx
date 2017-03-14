@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import ErrorsList from '../app_components/ErrorsList'
 import Textfield from '../app_components/Textfield';
 
-import { updateBidForm } from '../../actions/BidActions';
+//import { updateBidForm } from '../../actions/BidActions';
 
 class BidForm extends React.Component {
 	/*
@@ -53,14 +53,14 @@ const mapStateToProps = (state) => {
 	  bid_success: state.bid_success
 	};
 };
-
+/*
 const mapDispatchToProps = (dispatch) => {
     return {
     	updateField: (field_name, field_value) => dispatch(updateBidForm(field_name, field_value)),
     	submitBid: (form_fields_info) => dispatch(updateBidWithServer(form_fields_info))
     };
 };
-
-export default connect(mapStateToProps, mapDispatchToProps)(BidForm);
+*/
+export default connect(mapStateToProps)(BidForm);
 
 //export default BidForm;
