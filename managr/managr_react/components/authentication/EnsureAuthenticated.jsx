@@ -18,7 +18,7 @@ class EnsureAuthenticated extends React.Component {
 	render() {
 		if (this.props.is_authenticated == true) {
 			return (
-				<div className="authenticated-container">
+				<div className="authenticated-container App">
 					{this.props.children}
 				</div>
 			);

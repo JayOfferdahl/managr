@@ -5,19 +5,23 @@ import Header from './Header'
 import NavBar from './NavBar'
 
 class NavAndHeader extends React.Component {
-	render () {
-		return (
-			<div className="nav-and-header-container">
-				<Col className="navbar" sm={2}>
-					<NavBar />
-				</Col>
-				<Col sm={10}>
-					<Header />
-					{this.props.children}
-				</Col>
-			</div>
-		);
-	}
+    render () {
+        return (
+            <div className="app-container">
+                <Col className="app-nav-main">
+                    <NavBar/>
+                </Col>
+                <Col className="app-content-main">
+                    <div className="flex-header">
+                        <Header />
+                    </div>    
+                    <div className="flex-content">
+                        {this.props.children}
+                    </div>
+                </Col>
+            </div>
+        );
+    }
 }
 
 export default NavAndHeader;
