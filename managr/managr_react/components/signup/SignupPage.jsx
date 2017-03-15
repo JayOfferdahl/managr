@@ -1,7 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
-import { LinkContainer } from 'react-router-bootstrap';
 
 import RegistrationForm from './RegistrationForm'
 
@@ -17,10 +15,6 @@ class SignupPage extends React.Component {
                         <img src={logo} className="registration-logo" alt="logo" />
                     </div>
                     <RegistrationForm />
-                    
-                    <LinkContainer to="/login" className="registration-form-no-account">
-                        <p>Already have an account? <Link className="link-normal">Login here.</Link></p>
-                    </LinkContainer>
                 </div>
             </div>
 		);

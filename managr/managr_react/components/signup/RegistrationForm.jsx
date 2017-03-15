@@ -1,14 +1,17 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router';
+import { LinkContainer } from 'react-router-bootstrap';
 
 import ErrorsList from '../app_components/ErrorsList'
 import Textfield from '../app_components/Textfield';
 
-import { updateRegistrationForm, registerWithServer, loginAfterRegistration } from '../../actions/RegistrationActions';
+import { updateRegistrationForm, registerWithServer, loginAfterRegistration, resetRegistrationForm } from '../../actions/RegistrationActions';
 
 class RegistrationForm extends React.Component {
 	componentDidUpdate(prevProps, prevState) {
 		if (this.props.registration_success == true && prevProps.registration_success == false) {
+			// Potentially reset the form here
 			this.context.router.push('/overview');
 		}
 	}
@@ -37,6 +40,9 @@ class RegistrationForm extends React.Component {
 						Sign Up
 					</button>
 				</div>
+				<LinkContainer to="/login" className="registration-form-no-account" onClick={this.props.handleReset.bind(this)}>
+                    <p>Already have an account? <Link className="link-normal">Login here.</Link></p>
+                </LinkContainer>
 			</form>
 		);
 	}
@@ -62,7 +68,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
     	updateField: (field_name, field_value) => dispatch(updateRegistrationForm(field_name, field_value)),
-    	submitRegistration: (form_fields_info) => dispatch(registerWithServer(form_fields_info))
+    	submitRegistration: (form_fields_info) => dispatch(registerWithServer(form_fields_info)),
+    	handleReset: () => dispatch(resetRegistrationForm())
     };
 };
 
