@@ -1,0 +1,57 @@
+.registration-container-parent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    background-image: url(../../assets/img/128-168.jpg);
+    background-repeat: repeat;
+}
+
+.registration-container {
+    background-color: #eee;
+    border: 2px solid #aaa;
+    border-radius: 20px;
+    padding: 20px;
+}
+
+.registration-logo {
+    padding-bottom: 30px;
+    padding-top: 3px;
+}
+
+.registration-form input {
+    width: 100%;
+    padding: 8px;
+    font-size: 18px;
+}
+
+.registration-submit-button {
+    background-color: #FDB713;
+    width: 100%;
+    padding: 10px 20px;
+    font-size: 16px;
+}
+
+.registration-submit-button:hover {
+    background-color: #F0AA06;
+}
+
+.registration-form-no-account {
+    text-align: center;
+    margin-bottom: -6px;
+}
+
+.link-normal {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 50px white inset;
+    -webkit-text-fill-color: #333;
+}
+
+input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 50px white inset;
+    -webkit-text-fill-color: #333;
+} 

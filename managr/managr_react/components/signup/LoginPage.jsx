@@ -3,8 +3,13 @@ import { connect } from 'react-redux';
 
 import LoginForm from './LoginForm'
 import Overview from '../project/Overview'
+import { Link } from 'react-router';
+import { LinkContainer } from 'react-router-bootstrap';
 
 import { authenticateWithManagrServer, setAuthenticatedState } from '../../actions/AuthenticationActions';
+
+import '../../assets/css/signup.css';
+import logo from '../../assets/img/logo.png';
 
 class LoginPage extends React.Component {
 	componentWillMount() {
@@ -28,8 +33,16 @@ class LoginPage extends React.Component {
 			);
 		} else if (this.props.is_authenticated == false) {
 			return (
-				<div className="login-container">
-					<LoginForm />
+				<div className="registration-container-parent">
+                    <div className="registration-container">
+                        <img src={logo} className="registration-logo" alt="logo" />
+
+                        <LoginForm />
+
+                        <LinkContainer to="/signup" className="registration-form-no-account">
+                            <p>Don't have an account? <Link className="link-normal">Sign up here.</Link></p>
+                        </LinkContainer>
+                    </div>
 				</div>
 			);
 		} else if (this.props.is_authenticated == 'undetermined') {

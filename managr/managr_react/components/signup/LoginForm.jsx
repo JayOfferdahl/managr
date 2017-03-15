@@ -24,13 +24,15 @@ class LoginForm extends React.Component {
 	}
 
 	render() {
+		// TODO: May need to add labels to these textfields because if the browser remembers credentials, users
+		// may have no idea which field is what unless they clear it. Something to think about.
 		return (
-			<form className="login-form" onSubmit={this.handleSubmit.bind(this)}>
+			<form className="registration-form" onSubmit={this.handleSubmit.bind(this)}>
 				<ErrorsList errors={this.props.login_errors} />
 				<Textfield type="text" placeholder="Username/Email" onChange={this.handleChange.bind(this)} currentText={this.props.username_or_email} fieldName="username_or_email" />
 				<Textfield type="password" placeholder="Password" onChange={this.handleChange.bind(this)} currentText={this.props.password} fieldName="password" />
 				<div className="form-group">
-					<button className="btn btn-primary btn-lg">
+					<button className="btn registration-submit-button">
 						Login
 					</button>
 				</div>

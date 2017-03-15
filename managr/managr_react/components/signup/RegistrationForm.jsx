@@ -33,7 +33,7 @@ class RegistrationForm extends React.Component {
 				<Textfield type="password" placeholder="Password" onChange={this.handleChange.bind(this)} currentText={this.props.password} fieldName="password" />
 				<Textfield type="password" placeholder="Confirm Password" onChange={this.handleChange.bind(this)} currentText={this.props.password_confirmation} fieldName="password_confirmation" />
 				<div className="form-group">
-					<button className="btn btn-primary btn-lg">
+					<button className="btn registration-submit-button">
 						Sign Up
 					</button>
 				</div>
