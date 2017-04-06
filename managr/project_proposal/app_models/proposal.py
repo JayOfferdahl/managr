@@ -11,7 +11,7 @@ class Proposal(models.Model):
 	contact_number = models.CharField(max_length = 10)
 	start_date = models.DateField()
 	end_date = models.DateField()
-	budget = models.DecimalField(decimal_places = 2)
+	budget = models.DecimalField(max_digits = 12, decimal_places = 2)
 	DETAILS_FIELDS = [ # List of keys accepted in 'details' hstore
 		'Description',
 	]
