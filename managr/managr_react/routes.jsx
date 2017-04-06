@@ -8,6 +8,7 @@ import EnsureAuthenticated from './components/authentication/EnsureAuthenticated
 
 import NewBid from './components/bids/NewBid'
 import CreateProposal from './components/proposals/CreateProposal'
+import UpdateProposal from './components/proposals/UpdateProposal'
 
 import DocumentsList from './components/documents/DocumentsList'
 
