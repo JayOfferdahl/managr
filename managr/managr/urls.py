@@ -20,6 +20,7 @@ from django.views.generic import TemplateView
 
 from . import views as managr_views
 from managr_entities import views as managr_entities_views
+from project_proposal import views as project_proposal_views
 
 urlpatterns = [
     # Organize these url patterns by which views they belong to
@@ -30,6 +31,10 @@ urlpatterns = [
     url(r'^accounts/logout', managr_entities_views.logout, name='logout'),
     url(r'^accounts/signup', managr_entities_views.register, name='register'),
     url(r'^accounts/ensure-auth', managr_entities_views.ensureAuth, name='ensure_auth'),
+
+    url(r'^project/new', project_proposal_views.newProject, name='new_project'),
+    url(r'^project/update', project_proposal_views.updateProject, name='update_project'),
+
 
     # Begin managr_views
     url(r'^', managr_views.index, name='index'),
