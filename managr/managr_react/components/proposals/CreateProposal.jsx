@@ -1,6 +1,6 @@
 import React from 'react';
 
-class Proposal extends React.Component {
+class CreateProposal extends React.Component {
     render () {
         return (
             <div>
@@ -16,4 +16,4 @@ class Proposal extends React.Component {
     };
 }
 
-export default Proposal;
+export default CreateProposal;
