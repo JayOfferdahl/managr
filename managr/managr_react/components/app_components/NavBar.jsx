@@ -45,6 +45,12 @@ class NavBar extends React.Component {
                         Past Projects
                     </NavItem>
                 </LinkContainer>
+                <LinkContainer to="/createnewproposal">
+                    <NavItem className="nav-text bottom" eventKey={7}>
+                        <span className="glyphicon glyphicon-plus"></span>
+                        New Proposal
+                    </NavItem>
+                </LinkContainer>
             </Nav>
         );
     }

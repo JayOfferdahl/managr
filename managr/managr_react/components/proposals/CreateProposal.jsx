@@ -1,5 +1,7 @@
 import React from 'react';
 
+import ProposalForm from './ProposalForm'
+
 class CreateProposal extends React.Component {
     render () {
         return (
@@ -11,6 +13,8 @@ class CreateProposal extends React.Component {
                     <li>Connect the form from the front end to the server (which will create the proposal object.</li>
                     <li>Style the page.</li>
                 </ul>
+
+                <ProposalForm />
             </div>
         )
     };
