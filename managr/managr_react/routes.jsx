@@ -7,6 +7,7 @@ import NavAndHeader from './components/app_components/NavAndHeader'
 import EnsureAuthenticated from './components/authentication/EnsureAuthenticated'
 
 import NewBid from './components/bids/NewBid'
+import Proposal from './components/proposals/Proposal'
 
 import DocumentsList from './components/documents/DocumentsList'
 
@@ -42,6 +43,7 @@ export default (
 				<Route path="/finance" component={Finance}/>
 				<Route path="/documents" component={DocumentsList}/>
 				<Route path="/createnewbid" component={NewBid}/>
+				<Route path="/createnewproject" component={Proposal} />
 				<Route path="/pastprojects" component={PastProjectsList}/>
 			</Route> {/* End NavAndHeader */}
 		</Route> {/* End EnsureAuthenticated */}
