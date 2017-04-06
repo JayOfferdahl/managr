@@ -43,7 +43,7 @@ export default (
 				<Route path="/finance" component={Finance}/>
 				<Route path="/documents" component={DocumentsList}/>
 				<Route path="/createnewbid" component={NewBid}/>
-				<Route path="/new-project" component={Proposal} />
+				<Route path="/createnewproject" component={Proposal} />
 				<Route path="/pastprojects" component={PastProjectsList}/>
 			</Route> {/* End NavAndHeader */}
 		</Route> {/* End EnsureAuthenticated */}
