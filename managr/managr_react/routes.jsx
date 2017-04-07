@@ -6,7 +6,8 @@ import NavAndHeader from './components/app_components/NavAndHeader'
 
 import EnsureAuthenticated from './components/authentication/EnsureAuthenticated'
 
-import NewBid from './components/bids/NewBid'
+import CreateBid from './components/bids/CreateBid'
+import UpdateBid from './components/bids/UpdateBid'
 import CreateProposal from './components/proposals/CreateProposal'
 import UpdateProposal from './components/proposals/UpdateProposal'
 
@@ -40,12 +41,14 @@ export default (
 			        <Route path="/materials" component={Materials} />
 			        <Route path="/activity" component={Activity} />
 				</Route> {/* End Overview */}
-				<Route path="/milestones" component={Milestones}/>
-				<Route path="/finance" component={Finance}/>
-				<Route path="/documents" component={DocumentsList}/>
-				<Route path="/createnewbid" component={NewBid}/>
-				<Route path="/createnewproposal" component={CreateProposal} />
-				<Route path="/pastprojects" component={PastProjectsList}/>
+				<Route path="/milestones" component={Milestones} />
+				<Route path="/finance" component={Finance} />
+				<Route path="/documents" component={DocumentsList} />
+				<Route path="/create-bid" component={CreateBid} />
+				<Route path="/update-bid" component={UpdateBid} />
+				<Route path="/create-proposal" component={CreateProposal} />
+				<Route path="/update-proposal" component={UpdateProposal} />
+				<Route path="/past-projects" component={PastProjectsList} />
 			</Route> {/* End NavAndHeader */}
 		</Route> {/* End EnsureAuthenticated */}
 	</Route>

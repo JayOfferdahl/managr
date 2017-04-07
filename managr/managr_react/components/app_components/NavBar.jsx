@@ -33,19 +33,19 @@ class NavBar extends React.Component {
                         Documents
                     </NavItem>
                 </LinkContainer>
-                <LinkContainer to="/createnewbid">
+                <LinkContainer to="/create-bid">
                     <NavItem className="nav-text" eventKey={5}>
                         <span className="glyphicon glyphicon-edit"></span>
                         Create New Bid
                     </NavItem>
                 </LinkContainer>
-                <LinkContainer to="/pastprojects">
+                <LinkContainer to="/past-projects">
                     <NavItem className="nav-text" eventKey={6}>
                         <span className="glyphicon glyphicon-folder-close"></span>
                         Past Projects
                     </NavItem>
                 </LinkContainer>
-                <LinkContainer to="/createnewproposal">
+                <LinkContainer to="/create-proposal">
                     <NavItem className="nav-text bottom" eventKey={7}>
                         <span className="glyphicon glyphicon-plus"></span>
                         New Proposal
@@ -55,13 +55,5 @@ class NavBar extends React.Component {
         );
     }
 }
-
-/*
-<NavDropdown eventKey={5} title="Authorization" id="basic-nav-dropdown">
-    <LinkContainer to="/logout">
-        <MenuItem eventKey={5.1}>Logout</MenuItem>
-    </LinkContainer>
-</NavDropdown>
-*/
 
 export default NavBar;
