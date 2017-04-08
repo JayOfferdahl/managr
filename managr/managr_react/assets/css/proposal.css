@@ -1,0 +1,80 @@
+.proposal-content {
+    padding: 30px;
+    margin: 0 auto;
+}
+
+.proposal-content h2 {
+    margin-top: 0px;
+}
+
+.full {
+    width: 100%;
+}
+
+.todo {
+    color: red;
+}
+
+.proposal-form {
+    font-size: 15px;
+    max-width: 790px;
+}
+
+.proposal-form label {
+    width: 175px;
+}
+
+.proposal-form input {
+    width: 200px;
+    padding: 7px;
+}
+
+.budget-form-group {
+    display: table;
+}
+
+.budget-form-group label {
+    padding: 7px 0px;
+    margin: 0;
+}
+
+.input-group {
+    width: 200px;
+    float: right;
+}
+
+.input-group input {
+    font-size: 15px;
+    height: 39px;
+}
+
+.input-tel input{
+    width: auto;
+}
+
+.proposal-form-section {
+    width: 375px;
+    float: left;
+}
+
+.proposal-form-section:first-child {
+    margin-right: 40px;
+}
+
+.proposal-form-description label {
+    clear: left;
+    float: left;
+}
+
+.proposal-form textarea {
+    display: inline-block;
+    width: 615px;
+    height: 300px;
+    padding: 7px;
+}
+
+.proposal-form-submit {
+    padding: 10px;
+    width: 100%;
+    margin: 5px 0px;
+}
