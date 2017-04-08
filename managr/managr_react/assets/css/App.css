@@ -23,6 +23,7 @@ html, body, #app, .App {
 .app-content-main .flex-content {
     flex: 1;
     position: relative;
+    overflow: auto;
 }
 
 .app-nav-main {
