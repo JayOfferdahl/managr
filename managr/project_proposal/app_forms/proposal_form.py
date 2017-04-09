@@ -1,7 +1,6 @@
 import re
 
 from django import forms
-from django.contrib.postgres.forms import HStoreField
 from django.core.exceptions import ValidationError
 from django.forms import ModelForm
 
@@ -10,7 +9,7 @@ from project_proposal.app_models.proposal import Proposal
 class ProposalForm(ModelForm):
     class Meta:
         model = Proposal
-        fields = ['title', 'contact_number', 'address', 'budget', 'start_date', 'end_date', 'details']
+        fields = ['title', 'contact_number', 'address', 'budget', 'start_date', 'end_date']
 
         error_messages = {
             'title': {
@@ -68,16 +67,14 @@ class ProposalForm(ModelForm):
             raise ValidationError("End date required")
         return end_date
 
-    def clean_details(self):
-        details = self.cleaned_data['description']
-        if not details:
-            raise ValidationError("Description required")
-        return details
-
     def clean(self):
         cleaned_data = super(ProposalForm, self).clean()
         start_date = cleaned_data.get('start_date')
         end_date = cleaned_data.get('end_date')
+
+        print(cleaned_data.get('details'))
+        print(cleaned_data)
+        print("----")
 
         if start_date > end_date:
             self.add_error('start_date', "Start date cannot be after the end date")

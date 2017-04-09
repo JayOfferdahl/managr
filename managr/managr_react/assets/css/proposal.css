@@ -57,7 +57,7 @@
     float: left;
 }
 
-.proposal-form-section:first-child {
+.proposal-form-section:nth-child(2) {
     margin-right: 40px;
 }
 
