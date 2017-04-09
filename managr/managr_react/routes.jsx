@@ -27,7 +27,7 @@ import Finance from './components/reports/Finance'
 
 import LoginPage from './components/signup/LoginPage'
 import SignupPage from './components/signup/SignupPage'
-
+import ShowProposals from './components/bids/ShowProposals'
 export default (
 	<Route path="/" component={App}>
 		<Route path="/signup" component={SignupPage}></Route>
@@ -49,6 +49,7 @@ export default (
 				<Route path="/create-proposal" component={CreateProposal} />
 				<Route path="/update-proposal" component={UpdateProposal} />
 				<Route path="/past-projects" component={PastProjectsList} />
+				<Route path="/show-proposals" component={ShowProposals} />
 			</Route> {/* End NavAndHeader */}
 		</Route> {/* End EnsureAuthenticated */}
 	</Route>

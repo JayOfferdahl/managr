@@ -35,6 +35,7 @@ urlpatterns = [
     url(r'^proposals/new', project_proposal_views.newProposal, name='new_proposal'),
     url(r'^proposals/update', project_proposal_views.updateProposal, name='update_proposal'),
 
+    url(r'^bids/showproposals', project_proposal_views.showProposals, name='show_proposals'),
 
     # Begin managr_views
     url(r'^', managr_views.index, name='index'),

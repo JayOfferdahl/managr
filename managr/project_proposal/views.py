@@ -8,6 +8,7 @@ from project_proposal.app_forms.proposal_form import ProposalForm
 
 from rest_framework.parsers import JSONParser
 from django.utils.six import BytesIO
+from django.core import serializers
 
 @csrf_exempt
 def newProposal(request):
@@ -28,3 +29,12 @@ def newProposal(request):
 @csrf_exempt
 def updateProposal(request):
     pass
+
+#def buildProposalsDictionary():
+#    proposals = Proposal.objects.all()
+#    proposalDict = dict()
+#    for()
+@csrf_exempt
+def showProposals(request):
+#    return JsonResponse(buildProposalsDictionary())
+    return JsonResponse(serializers.serialize('json', Proposal.objects.all(), fields = 'title'), safe = False)
