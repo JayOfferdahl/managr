@@ -46,6 +46,7 @@ def login(request):
 		return JsonResponse({'success': str(managr_user.session_token)})
 	else:
 		errors = dict([(key, [str(error) for error in value]) for key, value in login_form.errors.items()])
+		# TODO: Necessary print statement here or debug?
 		print(errors)
 		return JsonResponse(errors)
 
