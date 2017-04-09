@@ -30,11 +30,20 @@ def newProposal(request):
 def updateProposal(request):
     pass
 
-#def buildProposalsDictionary():
-#    proposals = Proposal.objects.all()
-#    proposalDict = dict()
-#    for()
+def buildProposalsList():
+    proposals = Proposal.objects.all()
+    proposalList = list()
+    for proposal in proposals:
+        proposalList.append({
+            "name":     proposal.title,
+            "location": proposal.address,
+            "budget":   proposal.budget,
+            "start":    proposal.start_date,
+            "end":      proposal.end_date
+            })
+    print(proposalList)
+    return proposalList
 @csrf_exempt
 def showProposals(request):
-#    return JsonResponse(buildProposalsDictionary())
-    return JsonResponse(serializers.serialize('json', Proposal.objects.all(), fields = 'title'), safe = False)
+    return JsonResponse(buildProposalsList(), safe = False)
+    #return JsonResponse(serializers.serialize('json', Proposal.objects.all(), fields = 'title, address, budget, start_date, end_date'), safe = False)
