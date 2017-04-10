@@ -13,7 +13,9 @@ class SignupPage extends React.Component {
 		return (
             <div className="registration-container-parent">
                 <div className="registration-container">
-                    <img src={logo} className="registration-logo" alt="logo" />
+                    <div className="registration-logo">
+                        <img src={logo} className="registration-logo" alt="logo" />
+                    </div>
                     <RegistrationForm />
                     
                     <LinkContainer to="/login" className="registration-form-no-account">

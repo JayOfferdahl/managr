@@ -5,7 +5,7 @@ class ManagrError extends React.Component {
 	render () {
 		return (
 			<div className="managr-error">
-				{this.props.error_text}
+				* {this.props.error_text}
 			</div>
 		);
 	}

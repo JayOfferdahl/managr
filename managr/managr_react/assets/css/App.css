@@ -170,3 +170,11 @@ html, body, #app, .App {
     position:relative;
     margin-left: 290px;
 }
+
+.errors-list {
+    padding: 0px 0px 10px 0px;
+}
+
+.managr-error {
+    color: red;
+}
