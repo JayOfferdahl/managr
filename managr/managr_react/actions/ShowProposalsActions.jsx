@@ -12,8 +12,7 @@ export function proposalsLoadFailure(error) {
     }
 }
 
-export function loadProposalsFromServer(project_uuid) {
-    //const request_params = { method: 'POST', body: JSON.stringify(project_uuid) };
+export function loadProposalsFromServer() {
     return (dispatch) => {
         fetch('http://managr.dev.biz:8000/bids/showproposals')
             .then((response) => {

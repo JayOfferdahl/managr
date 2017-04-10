@@ -8,7 +8,6 @@ import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 
 class ShowProposals extends React.Component {
   componentWillMount() {
-    // The mock milestones in the server have project uuid 10.
     this.props.loadProposalsFromServer();
   };
   render () {
@@ -31,9 +30,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        loadProposalsFromServer: (project_uuid) => dispatch(loadProposalsFromServer())
+        loadProposalsFromServer: () => dispatch(loadProposalsFromServer())
     };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ShowProposals);
-//export default ShowProposals;
