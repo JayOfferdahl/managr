@@ -18,7 +18,8 @@ class ProposalForm extends React.Component {
 
     handleSubmit(submitEvent) {
         submitEvent.preventDefault();
-        this.props.submitNewProposal(this.props);
+        var sessionCookie = localStorage.getItem("managr_session_token");
+        this.props.submitNewProposal(this.props, sessionCookie);
     }
 
     render() {
@@ -101,7 +102,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         updateField: (field_name, field_value) => dispatch(updateProposalForm(field_name, field_value)),
-        submitNewProposal: (form_fields_info) => dispatch(submitProposal(form_fields_info)),
+        submitNewProposal: (form_fields_info, session_cookie) => dispatch(submitProposal(form_fields_info, session_cookie)),
         handleReset: () => dispatch(resetProposalForm())
     };
 };

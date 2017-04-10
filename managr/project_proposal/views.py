@@ -3,6 +3,7 @@ from django.shortcuts import render
 
 from django.views.decorators.csrf import csrf_exempt
 
+from managr_entities.app_models.managr_user import ManagrUser
 from project_proposal.app_models.proposal import Proposal
 from project_proposal.app_forms.proposal_form import ProposalForm
 
@@ -17,7 +18,8 @@ def newProposal(request):
 
     if proposal_form.is_valid():
         print("Proposal request - valid (Debug statement - project_proposal/views.py)")
-        proposal = Proposal.objects.create_proposal(proposal_data)
+        user = ManagrUser.objects.get(session_token=proposal_data['token'])
+        proposal = Proposal.objects.create_proposal(user, proposal_data)
         return JsonResponse({'success': 'Your project proposal was successfully created!'})
     else:
         print("Proposal request - invalid (Debug statement - project_proposal/views.py)")
