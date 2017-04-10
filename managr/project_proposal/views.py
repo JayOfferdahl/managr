@@ -15,14 +15,12 @@ def newProposal(request):
     proposal_data = JSONParser().parse(BytesIO(request.body))
     proposal_form = ProposalForm(proposal_data)
 
-    print("We have received a proposal request.")
-
     if proposal_form.is_valid():
-        print("ASDF!!")
+        print("Proposal request - valid (Debug statement - project_proposal/views.py)")
         proposal = Proposal.objects.create_proposal(proposal_data)
         return JsonResponse({'success': 'Your project proposal was successfully created!'})
     else:
-        print("SADF??")
+        print("Proposal request - invalid (Debug statement - project_proposal/views.py)")
         errors = dict([(key, [str(error) for error in value]) for key, value in proposal_form.errors.items()])
         return JsonResponse(errors)
 

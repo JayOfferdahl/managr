@@ -20,7 +20,7 @@ class Proposal(models.Model):
 	DETAILS_FIELDS = [ # List of keys accepted in 'details' hstore
 		'description',
 	]
-	details = HStoreField(null = True)
+	details = HStoreField()
 
 	def clean(self, *args, **kwargs):
 		if self.details != None:

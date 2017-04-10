@@ -11,7 +11,6 @@ class CreateProposal extends React.Component {
             <Row className="proposal-content">
                 <h2>Create a new project proposal</h2>
                 <p>To create a new proposal, fill out the following form, and your proposal will be able to accept bids from our network!</p>
-                <br/>
                 <ProposalForm />
                 <br/>
 
@@ -19,7 +18,8 @@ class CreateProposal extends React.Component {
                     <p>We need to complete the following tasks here:</p>
                     <ul>
                         <li><strike>Add form which accepts relevant project input.</strike></li>
-                        <li>Connect the form from the front end to the server (which will create the proposal object)</li>
+                        <li><strike>Connect the form from the front end to the server (which will create the proposal object)</strike></li>
+                        <li>Correctly validate the form & provide meaningful error messages.</li>
                         <li>style the page.</li>
                         <ul>
                             <li><strike>style initial form.</strike></li>

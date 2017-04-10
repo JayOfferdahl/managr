@@ -3,9 +3,15 @@ import { connect } from 'react-redux';
 
 import ErrorsList from '../app_components/ErrorsList'
 
-import { submitProposal, updateProposalForm } from '../../actions/ProposalActions'
+import { submitProposal, updateProposalForm, resetProposalForm } from '../../actions/ProposalActions'
 
 class ProposalForm extends React.Component {
+    componentDidUpdate(previous_props, previous_state) {
+        if(this.props.proposal_success && !previous_props.proposal_success) {
+            this.props.handleReset();
+        }
+    }
+
     handleChange(fieldUpdate) {
         this.props.updateField(fieldUpdate.target.name, fieldUpdate.target.value);
     }
@@ -18,7 +24,7 @@ class ProposalForm extends React.Component {
     render() {
         return (
             <form onSubmit={this.handleSubmit.bind(this)} className="proposal-form">
-                <ErrorsList errors={this.props.registration_errors} />
+                <ErrorsList errors={this.props.proposal_errors} />
                 <div className="proposal-form-section">
                     <div className="form-group">   
                         <label htmlFor="title">Title</label>
@@ -74,6 +80,10 @@ class ProposalForm extends React.Component {
     }
 }
 
+ProposalForm.contextTypes = {
+    router: React.PropTypes.object.isRequired
+}
+
 const mapStateToProps = (state) => {
     return {
         title: state.title,
@@ -91,7 +101,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         updateField: (field_name, field_value) => dispatch(updateProposalForm(field_name, field_value)),
-        submitNewProposal: (form_fields_info) => dispatch(submitProposal(form_fields_info))
+        submitNewProposal: (form_fields_info) => dispatch(submitProposal(form_fields_info)),
+        handleReset: () => dispatch(resetProposalForm())
     };
 };
 

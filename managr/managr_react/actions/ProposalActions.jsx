@@ -25,10 +25,20 @@ export function updateProposalForm(field_name, field_value) {
     };
 }
 
+export function cleanProposalForm() {
+    return {
+        type: 'CLEAN_PROPOSAL_FORM'
+    }
+}
+
+export function resetProposalForm() {
+    return (dispatch) => {
+        dispatch(cleanProposalForm());
+    };
+}
 
 export function submitProposal(proposal_data) {
     const request_params = { method: 'POST', body: JSON.stringify(proposal_data) };
-    console.log(proposal_data);
     return (dispatch) => {
         fetch('http://managr.dev.biz:8000/proposals/new', request_params)
             .then((response) => {
@@ -40,11 +50,11 @@ export function submitProposal(proposal_data) {
             .then((response) => response.json())
             .then((data) => {
                 if (data['success']) {
-                    console.log("Proposal successfully submitted.");
+                    console.log("Proposal successfully submitted. (Debug statement - ProposalActions.jsx)");
                     dispatch(proposalSuccess());
                 } else {
-                    localStorage.removeItem('managr_session_token');
-                    dispatch(proposalFailure(false));
+                    console.log("Error: %o (Debug statement - ProposalActions.jsx)", data);
+                    dispatch(proposalFailure(data));
                 }
             });
     };

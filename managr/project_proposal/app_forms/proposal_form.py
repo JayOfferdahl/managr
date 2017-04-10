@@ -1,4 +1,5 @@
 import re
+from datetime import date
 
 from django import forms
 from django.core.exceptions import ValidationError
@@ -18,65 +19,75 @@ class ProposalForm(ModelForm):
             },
             'contact_number': {
                 'required': 'No address given',
-                'max_length': 'The address is too long (max 255 characters)'
+                'max_length': 'The number is too long, please use the form \"(xxx) xxx-xxxx\"'
             },
             'address': {
                 'required': 'No contact number given',
-                'max_length': 'The number is too long, please use the form \"(xxx) xxx-xxxx\"'
+                'max_length': 'The address is too long (max 255 characters)'
             },
             'budget': {
                 'required': 'No budget given',
                 'max_digits': 'The budget it too big, please limit to 10 digits'
+            },
+            'start_date': {
+                'required': 'No start date given',
+            },
+            'end_date': {
+                'required': 'No end date given',
             }
         }
 
-    def clean_title(self):
-        title = self.cleaned_data['title']
-        if not title:
-            raise ValidationError("Project title required")
-        return title
-
+    # Validating the contact number requires a 10 digit number which is then formatted for consistency
     def clean_contact_number(self):
         contact_number = self.cleaned_data['contact_number']
-        if not contact_number:
-            raise ValidationError("Contact number required")
-        return contact_number
+        
+        # Count number of digits in the input (10 digit numbers accepted - not internationalized yet)
+        # Formats allowed: (xxx) xxx-xxxx
+        digits = sum(c.isdigit() for c in contact_number)
 
-    def clean_address(self):
-        address = self.cleaned_data['address']
-        if not address:
-            raise ValidationError("Location/address required")
-        return address
+        if digits != 10:
+            raise ValidationError("Invalid contact number format: 10 digit number expected")
+        
+        # Format the number to store as a 14 character string (xxx) xxx-xxxx
+        formatted_contact_number = "("
+        i = 0
+
+        for c in contact_number:
+            if c.isdigit():
+                formatted_contact_number += c
+                i += 1
+                if i == 3:
+                    formatted_contact_number += ") "
+                elif i == 6:
+                    formatted_contact_number += "-"
+
+        return formatted_contact_number
 
     def clean_budget(self):
         budget = self.cleaned_data['budget']
-        # TODO make sure budget is greater than 0
-        if not budget:
-            raise ValidationError("Budget required")
+
+        # Verify that the budget is a positive number
+        if budget <= 0:
+            raise ValidationError("Budget must be greater than $0.")
         return budget
 
     def clean_start_date(self):
         start_date = self.cleaned_data['start_date']
-        if not start_date:
-            raise ValidationError("Start date required")
-        return start_date
+        today = date.today()
 
-    def clean_end_date(self):
-        end_date = self.cleaned_data['end_date']
-        if not end_date:
-            raise ValidationError("End date required")
-        return end_date
+        # Verify the start date is on or after the current day
+        if start_date < today:
+            raise ValidationError("A project cannot start before today")
+        return start_date
 
     def clean(self):
         cleaned_data = super(ProposalForm, self).clean()
+
+        # Verify start date comes before end date
         start_date = cleaned_data.get('start_date')
         end_date = cleaned_data.get('end_date')
 
-        print(cleaned_data.get('details'))
-        print(cleaned_data)
-        print("----")
-
-        if start_date > end_date:
+        if start_date and end_date and start_date > end_date:
             self.add_error('start_date', "Start date cannot be after the end date")
 
         return cleaned_data        

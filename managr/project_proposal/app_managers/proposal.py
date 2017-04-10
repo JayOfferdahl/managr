@@ -4,10 +4,10 @@ from managr_entities.app_models.managr_user import ManagrUser
 
 class ProposalManager(models.Manager):
     def create_proposal(self, proposal_data):
-        print("inside the manager")
         # THIS IS VERY BAD: TODO -> Get current user and bind the proposal to them
         user = ManagrUser.objects.all()[0]
-        print(user)
+        print("Creating proposal object (Debug statement - project_proposal/app_managers/proposal.py)")
+        print("DANGER - using arbitrary user to create proposal. Fix immeadiately.")
 
         proposal = self.create(
             owner = user,
@@ -19,7 +19,6 @@ class ProposalManager(models.Manager):
             budget = proposal_data['budget'],
             details = {'description': proposal_data['description']}
         )
-        print(proposal)
 
         proposal.save()
         return proposal
