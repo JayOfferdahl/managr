@@ -19,11 +19,11 @@ class CreateProposal extends React.Component {
                     <ul>
                         <li><strike>Add form which accepts relevant project input.</strike></li>
                         <li><strike>Connect the form from the front end to the server (which will create the proposal object)</strike></li>
-                        <li>Correctly validate the form & provide meaningful error messages.</li>
-                        <li>style the page.</li>
+                        <li><strike>Correctly validate the form & provide meaningful error messages.</strike></li>
+                        <li><strike>style the page.</strike></li>
                         <ul>
                             <li><strike>style initial form.</strike></li>
-                            <li>style form response/errors.</li>
+                            <li><strike>style form response/errors.</strike></li>
                         </ul>
                     </ul>
                 </div>

@@ -21,17 +21,22 @@ class ErrorsList extends React.Component {
 	}
 
 	render () {
-		return (
-			<div className="errors-list">
-			{
-				_.map(this.buildUniqueKeys(this.props.errors), (value) => {
-					return (
-						<ManagrError errorText={value} />
-					);
-				})
-			}
-			</div>
-		);
+		if(!Object.keys(this.props.errors).length) {
+			return false;
+		}
+		else {
+			return (
+				<div className="bg-danger errors-list">
+				{
+					_.map(this.buildUniqueKeys(this.props.errors), (value) => {
+						return (
+							<ManagrError errorText={value} />
+						);
+					})
+				}
+				</div>
+			);
+		}
 	}
 }
 

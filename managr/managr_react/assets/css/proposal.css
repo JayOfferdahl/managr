@@ -57,7 +57,7 @@
     float: left;
 }
 
-.proposal-form-section:nth-child(2) {
+.proposal-form-section.proposal-form-section-left {
     margin-right: 40px;
 }
 
@@ -77,4 +77,9 @@
     padding: 10px;
     width: 100%;
     margin: 5px 0px;
+}
+
+.proposal-success {
+    padding: 10px;
+    margin: 0px 0px 10px 0px;
 }

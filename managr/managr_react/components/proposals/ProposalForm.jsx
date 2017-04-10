@@ -6,9 +6,16 @@ import ErrorsList from '../app_components/ErrorsList'
 import { submitProposal, updateProposalForm, resetProposalForm } from '../../actions/ProposalActions'
 
 class ProposalForm extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            proposal_form_success: false,
+        }
+    }
     componentDidUpdate(previous_props, previous_state) {
         if(this.props.proposal_success && !previous_props.proposal_success) {
             this.props.handleReset();
+            this.setState({ proposal_form_success: true });
         }
     }
 
@@ -18,15 +25,22 @@ class ProposalForm extends React.Component {
 
     handleSubmit(submitEvent) {
         submitEvent.preventDefault();
+        this.setState({ proposal_form_success: false });
         var sessionCookie = localStorage.getItem("managr_session_token");
         this.props.submitNewProposal(this.props, sessionCookie);
     }
 
     render() {
+        var successMessage;
+        if(this.state.proposal_form_success) {
+            successMessage = <div className="alert alert-success proposal-success">Your proposal has been successfully created!</div>;
+        }
+
         return (
             <form onSubmit={this.handleSubmit.bind(this)} className="proposal-form">
                 <ErrorsList errors={this.props.proposal_errors} />
-                <div className="proposal-form-section">
+                {successMessage}
+                <div className="proposal-form-section proposal-form-section-left">
                     <div className="form-group">   
                         <label htmlFor="title">Title</label>
                         <input type="text" name="title" maxLength="255" required 

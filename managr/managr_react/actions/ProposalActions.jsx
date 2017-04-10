@@ -41,7 +41,7 @@ export function submitProposal(proposal_data, session_token) {
     // Add the session token to the request body
     var data = JSON.parse(JSON.stringify(proposal_data))
     data.token = session_token;
-    
+
     const request_params = { method: 'POST', body: JSON.stringify(data)};
     return (dispatch) => {
         fetch('http://managr.dev.biz:8000/proposals/new', request_params)
