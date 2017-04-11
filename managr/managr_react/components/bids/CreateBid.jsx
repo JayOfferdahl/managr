@@ -3,7 +3,7 @@ import AutoSuggestExample from './AutoSuggestExample'
 
 import '../../assets/css/App.css';
 
-class NewBid extends React.Component {
+class CreateBid extends React.Component {
     render () {
         return (
           <div>
@@ -15,4 +15,4 @@ class NewBid extends React.Component {
     }
 }
 
-export default NewBid;
+export default CreateBid;

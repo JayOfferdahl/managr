@@ -6,7 +6,10 @@ import NavAndHeader from './components/app_components/NavAndHeader'
 
 import EnsureAuthenticated from './components/authentication/EnsureAuthenticated'
 
-import NewBid from './components/bids/NewBid'
+import CreateBid from './components/bids/CreateBid'
+import UpdateBid from './components/bids/UpdateBid'
+import CreateProposal from './components/proposals/CreateProposal'
+import UpdateProposal from './components/proposals/UpdateProposal'
 
 import DocumentsList from './components/documents/DocumentsList'
 
@@ -24,7 +27,7 @@ import Finance from './components/reports/Finance'
 
 import LoginPage from './components/signup/LoginPage'
 import SignupPage from './components/signup/SignupPage'
-
+import ShowProposals from './components/bids/ShowProposals'
 export default (
 	<Route path="/" component={App}>
 		<Route path="/signup" component={SignupPage}></Route>
@@ -38,11 +41,15 @@ export default (
 			        <Route path="/materials" component={Materials} />
 			        <Route path="/activity" component={Activity} />
 				</Route> {/* End Overview */}
-				<Route path="/milestones" component={Milestones}/>
-				<Route path="/finance" component={Finance}/>
-				<Route path="/documents" component={DocumentsList}/>
-				<Route path="/createnewbid" component={NewBid}/>
-				<Route path="/pastprojects" component={PastProjectsList}/>
+				<Route path="/milestones" component={Milestones} />
+				<Route path="/finance" component={Finance} />
+				<Route path="/documents" component={DocumentsList} />
+				<Route path="/create-bid" component={CreateBid} />
+				<Route path="/update-bid" component={UpdateBid} />
+				<Route path="/create-proposal" component={CreateProposal} />
+				<Route path="/update-proposal" component={UpdateProposal} />
+				<Route path="/past-projects" component={PastProjectsList} />
+				<Route path="/show-proposals" component={ShowProposals} />
 			</Route> {/* End NavAndHeader */}
 		</Route> {/* End EnsureAuthenticated */}
 	</Route>
