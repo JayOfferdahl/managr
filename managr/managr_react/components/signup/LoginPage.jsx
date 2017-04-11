@@ -3,8 +3,6 @@ import { connect } from 'react-redux';
 
 import LoginForm from './LoginForm'
 import Overview from '../project/Overview'
-import { Link } from 'react-router';
-import { LinkContainer } from 'react-router-bootstrap';
 
 import { authenticateWithManagrServer, setAuthenticatedState } from '../../actions/AuthenticationActions';
 
@@ -40,10 +38,6 @@ class LoginPage extends React.Component {
                         </div>
 
                         <LoginForm />
-
-                        <LinkContainer to="/signup" className="registration-form-no-account">
-                            <p>Don't have an account? <Link className="link-normal">Sign up here.</Link></p>
-                        </LinkContainer>
                     </div>
 				</div>
 			);

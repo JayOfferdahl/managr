@@ -1,5 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router';
+import { LinkContainer } from 'react-router-bootstrap';
 
 import ErrorsList from '../app_components/ErrorsList'
 import Textfield from '../app_components/Textfield';
@@ -36,6 +38,9 @@ class LoginForm extends React.Component {
 						Login
 					</button>
 				</div>
+				<LinkContainer to="/signup" className="registration-form-no-account" onClick={this.props.handleReset.bind(this)}>
+	                <p>Don't have an account? <Link className="link-normal">Sign up here.</Link></p>
+	            </LinkContainer>
 			</form>
 		);
 	}

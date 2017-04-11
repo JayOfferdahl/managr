@@ -20,9 +20,21 @@ export function managrRegistrationFailure(errors_data) {
 	}
 }
 
+export function cleanRegistrationForm() {
+	return {
+		type: 'CLEAN_REGISTRATION_FORM'
+	}
+}
+
 export function updateRegistrationForm(field_name, field_value) {
 	return (dispatch) => {
 		dispatch(updateRegistrationFormField(field_name, field_value));
+	};
+}
+
+export function resetRegistrationForm() {
+	return (dispatch) => {
+		dispatch(cleanRegistrationForm());
 	};
 }
 
