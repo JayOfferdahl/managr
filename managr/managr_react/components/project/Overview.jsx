@@ -9,7 +9,7 @@ class Overview extends React.Component {
     componentWillMount() {
         if (this.props.location == null) {
             // Component rendered as redirect
-            this.context.router.push('/overview');
+            this.context.router.push('/summary');
         }
     }
 
