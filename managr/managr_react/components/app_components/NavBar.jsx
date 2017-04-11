@@ -1,5 +1,5 @@
 import React from 'react';
-import { Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
+import { Nav, NavItem } from 'react-bootstrap';
 import { Link } from 'react-router';
 import { LinkContainer } from 'react-router-bootstrap';
 
@@ -9,48 +9,83 @@ class NavBar extends React.Component {
     render() {
         return (
             <Nav className="nav-links-container">
-                <LinkContainer to="/overview">
-                    <NavItem className="nav-text" eventKey={1}>
-                        <span className="glyphicon glyphicon-home"></span>
-                        Project Overview
-                    </NavItem>
-                </LinkContainer>
-                <LinkContainer to="/milestones">
-                    <NavItem className="nav-text" eventKey={2}>
-                        <span className="glyphicon glyphicon-tasks"></span>
-                        Milestones
-                    </NavItem>
-                </LinkContainer>
-                <LinkContainer to="/finance">
-                    <NavItem className="nav-text" eventKey={3}>
-                        <span className="glyphicon glyphicon-usd"></span>
-                        Finance
-                    </NavItem>
-                </LinkContainer>
-                <LinkContainer to="/documents">
-                    <NavItem className="nav-text" eventKey={4}>
-                        <span className="glyphicon glyphicon-file"></span>
-                        Documents
-                    </NavItem>
-                </LinkContainer>
-                <LinkContainer to="/create-bid">
-                    <NavItem className="nav-text" eventKey={5}>
-                        <span className="glyphicon glyphicon-edit"></span>
-                        Create New Bid
-                    </NavItem>
-                </LinkContainer>
-                <LinkContainer to="/past-projects">
-                    <NavItem className="nav-text" eventKey={6}>
-                        <span className="glyphicon glyphicon-folder-close"></span>
-                        Past Projects
-                    </NavItem>
-                </LinkContainer>
-                <LinkContainer to="/create-proposal">
-                    <NavItem className="nav-text bottom" eventKey={7}>
-                        <span className="glyphicon glyphicon-plus"></span>
-                        New Proposal
-                    </NavItem>
-                </LinkContainer>
+                {/* Projects section */}
+                <div className="nav-main-category" data-toggle="collapse" data-target="#projects">
+                    <p>Projects</p><span className="glyphicon glyphicon-chevron-down"></span>
+                </div>
+                <div id="projects" className="nav-secondary-category collapse in">
+                    <LinkContainer className="nav-secondary-link" to="/summary">
+                        <a className="nav-secondary-link">
+                            <span className="glyphicon glyphicon-home"></span>
+                            Project Overview
+                        </a>
+                    </LinkContainer>
+                    <LinkContainer className="nav-secondary-link" to="/milestones">
+                        <a className="nav-secondary-link">
+                            <span className="glyphicon glyphicon-tasks"></span>
+                            Milestones
+                        </a>
+                    </LinkContainer>
+                    <LinkContainer to="/finance">
+                        <a className="nav-secondary-link">
+                            <span className="glyphicon glyphicon-usd"></span>
+                            Finance
+                        </a>
+                    </LinkContainer>
+                    <LinkContainer className="nav-secondary-link" to="/documents">
+                        <a className="nav-secondary-link">
+                            <span className="glyphicon glyphicon-file"></span>
+                            Documents
+                        </a>
+                    </LinkContainer>
+                    <LinkContainer className="nav-secondary-link" to="/project-settings">
+                        <a className="nav-secondary-link">
+                            <span className="glyphicon glyphicon-cog"></span>
+                            Settings
+                        </a>
+                    </LinkContainer>
+                </div>
+
+                {/* Proposals section */}
+                <div className="nav-main-category" data-toggle="collapse" data-target="#proposals">
+                    <p>Proposals</p><span className="glyphicon glyphicon-chevron-down"></span>
+                </div>
+                <div id="proposals" className="collapse nav-secondary-category">
+                    <LinkContainer className="nav-secondary-link" to="/create-proposal">
+                        <a className="nav-secondary-link">
+                            <span className="glyphicon glyphicon-plus"></span>
+                            New Proposal
+                        </a>
+                    </LinkContainer>
+                </div>
+
+                {/* Bids section */}
+                <div className="nav-main-category" data-toggle="collapse" data-target="#bids">
+                    <p>Bids</p><span className="glyphicon glyphicon-chevron-down"></span>
+                </div>
+                <div id="bids" className="collapse nav-secondary-category">
+                    <LinkContainer className="nav-secondary-link" to="/create-bid">
+                        <a className="nav-secondary-link">
+                            <span className="glyphicon glyphicon-plus"></span>
+                            Create New Bid
+                        </a>
+                    </LinkContainer>
+                </div>
+
+                {/* Past projects section */}
+                <div className="nav-main-category" data-toggle="collapse" data-target="#past-projects">
+                    <p>Past Projects</p><span className="glyphicon glyphicon-chevron-down"></span>
+                </div>
+                <div id="past-projects" className="collapse nav-secondary-category">
+                    <LinkContainer className="nav-secondary-link" to="/past-projects">
+                        <a className="nav-secondary-link">
+                            <span className="glyphicon glyphicon-folder-close"></span>
+                            Past Projects
+                        </a>
+                    </LinkContainer>
+                </div>
+                <br/>
+                <p>Note: Projects/past projects need to have a list of projects associated with the user, and they should link to that project page which shows relevant information about the project.</p>
             </Nav>
         );
     }
