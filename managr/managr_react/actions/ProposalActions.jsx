@@ -63,3 +63,38 @@ export function submitProposal(proposal_data, session_token) {
             });
     };
 }
+
+export function proposalLoadSuccess(data) {
+    return {
+        type: 'PROPOSAL_LOAD_SUCCESS',
+        data
+    }
+}
+
+export function proposalLoadFailure(error) {
+    return {
+        type: 'PROPOSAL_LOAD_FAILURE',
+        error
+    }
+}
+
+export function loadProposalFromServer(proposalID) {
+  const request_params = { method: 'POST', body: proposalID };
+    return (dispatch) => {
+        fetch('http://managr.dev.biz:8000/bids/proposal', request_params)
+            .then((response) => {
+                if(!response.ok) {
+                    console.log("Server response error: " + response.ok);
+                }
+                return response;
+            })
+            .then((response) => response.json())
+            .then((data) => {
+                if(data) {
+                    dispatch(proposalsLoadSuccess(data));
+                } else {
+                    dispatch(proposalsLoadFailure("There was an error loading data from the server."));
+                }
+            });
+    };
+}

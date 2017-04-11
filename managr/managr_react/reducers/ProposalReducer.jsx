@@ -96,3 +96,14 @@ export function proposal_success(state = false, action) {
             return state;
     }
 }
+
+export function proposal(state = {}, action) {
+    switch(action.type) {
+        case 'PROPOSAL_LOAD_SUCCESS':
+            return action.data;
+        case 'PROPOSAL_LOAD_FAILURE':
+            return action.error;
+        default:
+            return state;
+    }
+}

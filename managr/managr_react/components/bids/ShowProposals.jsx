@@ -8,8 +8,7 @@ import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 const options = {
   onRowClick: function(row) {
     //alert(`You click row id: ${row.name}`);
-    var getURL = window.location;
-    window.location.href = getURL.protocol + "//" + getURL.host + "/proposal/" + row.name;
+    console.log(row.uuid);
   }
 };
 

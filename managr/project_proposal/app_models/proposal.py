@@ -5,7 +5,7 @@ from django.db import models
 from helpers.hstore_helper import *
 from managr_entities.app_models.managr_user import ManagrUser
 from project_proposal.app_managers.proposal import ProposalManager
-
+import uuid
 class Proposal(models.Model):
 	owner = models.ForeignKey(ManagrUser, on_delete = models.CASCADE)
 
@@ -13,10 +13,12 @@ class Proposal(models.Model):
 	address = models.CharField(max_length = 255)
 	contact_number = models.CharField(max_length = 14)
 	budget = models.DecimalField(max_digits = 10, decimal_places = 0)
-	
+
 	start_date = models.DateField()
 	end_date = models.DateField()
-	
+
+	proposal_uuid = models.UUIDField(default = uuid.uuid4, editable = False)
+
 	DETAILS_FIELDS = [ # List of keys accepted in 'details' hstore
 		'description',
 	]

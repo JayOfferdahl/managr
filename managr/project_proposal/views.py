@@ -39,7 +39,8 @@ def buildProposalsList():
             "location": proposal.address,
             "budget":   proposal.budget,
             "start":    proposal.start_date,
-            "end":      proposal.end_date
+            "end":      proposal.end_date,
+            "uuid":     proposal.proposal_uuid
             })
     print(proposalList)
     return proposalList
@@ -47,3 +48,6 @@ def buildProposalsList():
 def showProposals(request):
     return JsonResponse(buildProposalsList(), safe = False)
     #return JsonResponse(serializers.serialize('json', Proposal.objects.all(), fields = 'title, address, budget, start_date, end_date'), safe = False)
+
+def showProposal(request):
+    return JsonResponse(Proposal.objects.get(proposal_uuid=request.body))
