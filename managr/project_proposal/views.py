@@ -9,8 +9,6 @@ from project_proposal.app_forms.proposal_form import ProposalForm
 
 from rest_framework.parsers import JSONParser
 from django.utils.six import BytesIO
-from django.forms.models import model_to_dict
-#from django.core import serializers
 
 from collections import OrderedDict
 
@@ -80,9 +78,19 @@ def showProposals(request):
 
 @csrf_exempt
 def getProposal(request):
-    my_proposal = Proposal.objects.get(proposal_uuid = request.body.decode("utf-8"))
-    if my_proposal:
-        print(model_to_dict(my_proposal))
-        return JsonResponse([model_to_dict(my_proposal)], safe = False)
+    proposal = Proposal.objects.get(proposal_uuid = request.body.decode("utf-8"))
+    if proposal:
+        # Generate an object and return it
+        proposalResponse = {
+            "title": proposal.title,
+            "address": proposal.address,
+            "contact_number": proposal.contact_number,
+            "budget": proposal.budget,
+            "start_date": proposal.start_date,
+            "end_date": proposal.end_date,
+            "description": proposal.details['description'],
+        }
+
+        return JsonResponse({'success': True, 'proposal': proposalResponse})
     else:
-        return JsonResponse('error, proposal not found')
+        return JsonResponse({'error': 'Invalid proposal identifier.'})

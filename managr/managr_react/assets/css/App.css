@@ -179,3 +179,11 @@ html, body, #app, .App {
     margin: 0px 0px 10px 0px;
     padding: 10px;
 }
+
+.default-content {
+    padding: 30px;
+}
+
+.default-content h2 {
+    margin-top: 0px;
+}

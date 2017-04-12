@@ -1,26 +1,36 @@
 import React from 'react';
 
-import '../../assets/css/App.css';
 import { connect } from 'react-redux';
 import { loadProposalFromServer } from '../../actions/ProposalActions';
 
-class Proposal extends React.Component {
-  componentWillMount() {
-    this.props.loadProposalFromServer(this.props.uuid);
-  };
-  handleSubmit(event) {
-    alert('A name was submitted: ' + this.state.value);
-    event.preventDefault();
-  };
-  constructor(props) {
-    super(props);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  };
+import '../../assets/css/App.css';
 
-  render () {
-      return (
-        <h1>proposal placeholder</h1>
-      );
+class Proposal extends React.Component {
+    componentWillMount() {
+        this.props.loadProposalFromServer(this.props.params.proposal_uuid);
+    };
+
+    componentWillReceiveProps(next_props) {
+        if(next_props.params.proposal_uuid != this.props.params.proposal_uuid) {
+            this.props.loadProposalFromServer(next_props.params.proposal_uuid);
+        }
+    }
+
+    render () {
+        return (
+            <div className="default-content">
+                <h2>Project Proposal: <b>{this.props.proposal.title}</b></h2>
+                <br/>
+                <p><b>Contact Number:</b> {this.props.proposal.contact_number}</p>
+                <p><b>Location/Address:</b> {this.props.proposal.address}</p>
+                <p><b>Budget:</b> ${this.props.proposal.budget}.00</p>
+                <p><b>Desired Start Date:</b> {this.props.proposal.start_date}</p>
+                <p><b>Desired End Date:</b> {this.props.proposal.end_date}</p>
+
+                <br/>
+                <p><b>Description:</b> {this.props.proposal.description}</p>
+            </div>
+        );
     }
 };
 
@@ -33,7 +43,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        loadProposalFromServer: (proposalID) => dispatch(loadProposalFromServer(proposalID))
+        loadProposalFromServer: (proposal_uuid) => dispatch(loadProposalFromServer(proposal_uuid))
     };
 };
 

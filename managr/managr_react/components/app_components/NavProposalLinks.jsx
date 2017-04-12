@@ -22,7 +22,6 @@ class NavProposalLinks extends React.Component {
             tuples.push(proposal);
         })
 
-        console.log(tuples);
         return tuples;
     }
 
@@ -36,7 +35,6 @@ class NavProposalLinks extends React.Component {
                 {
                     _.map(this.generateProposalTuples(this.props.proposal_metadata),
                         (proposal) => {
-                        console.log(proposal);
                         return (
                             <LinkContainer className="nav-secondary-link" to={"/proposal/" + proposal.link}>
                                 <a className="nav-secondary-link">

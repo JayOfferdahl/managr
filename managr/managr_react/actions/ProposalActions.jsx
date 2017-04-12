@@ -7,14 +7,14 @@ export function updateProposalFormField(field_name, field_value) {
     }
 }
 
-export function proposalSuccess(success = true) {
+export function createProposalSuccess(success = true) {
     return {
         type: 'NEW_PROPOSAL_SUCCESS',
         success
     }
 }
 
-export function proposalFailure(failure) {
+export function createProposalFailure(failure) {
     return {
         type: 'NEW_PROPOSAL_FAILURE',
         failure
@@ -57,13 +57,13 @@ export function submitProposal(proposal_data, session_token) {
             .then((data) => {
                 if (data['success']) {
                     console.log("Proposal successfully submitted. (Debug statement - ProposalActions.jsx)");
-                    dispatch(proposalSuccess());
+                    dispatch(createProposalSuccess());
 
                     // Refresh the proposal list in the navigation bar
                     dispatch(loadUserProposalMetadata(session_token));
                 } else {
                     console.log("Error: %o (Debug statement - ProposalActions.jsx)", data);
-                    dispatch(proposalFailure(data));
+                    dispatch(createProposalFailure(data));
                 }
             });
     };
@@ -86,7 +86,7 @@ export function proposalLoadFailure(error) {
 export function loadProposalFromServer(proposalID) {
   const request_params = { method: 'POST', body: proposalID };
     return (dispatch) => {
-        fetch('http://managr.dev.biz:8000/bids/proposal', request_params)
+        fetch('http://managr.dev.biz:8000/proposals/proposal', request_params)
             .then((response) => {
                 if(!response.ok) {
                     console.log("Server response error: " + response.ok);
@@ -95,10 +95,10 @@ export function loadProposalFromServer(proposalID) {
             })
             .then((response) => response.json())
             .then((data) => {
-                if(data) {
-                    dispatch(proposalsLoadSuccess(data));
+                if(data['success']) {
+                    dispatch(proposalLoadSuccess(data['proposal']));
                 } else {
-                    dispatch(proposalsLoadFailure("There was an error loading data from the server."));
+                    dispatch(proposalLoadFailure("There was an error loading data from the server."));
                 }
             });
     };
