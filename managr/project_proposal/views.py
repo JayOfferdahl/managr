@@ -11,6 +11,8 @@ from rest_framework.parsers import JSONParser
 from django.utils.six import BytesIO
 from django.core import serializers
 
+from collections import OrderedDict
+
 @csrf_exempt
 def newProposal(request):
     proposal_data = JSONParser().parse(BytesIO(request.body))
@@ -40,9 +42,9 @@ def getUserProposalMetadata(request):
         user = ManagrUser.objects.get(session_token=session_token)
         if user:
             # Generate a list of project proposals and their ids
-            proposals = Proposal.objects.filter(owner=user)
+            proposals = Proposal.objects.filter(owner=user).order_by('title')
 
-            proposal_metadata = dict()
+            proposal_metadata = OrderedDict()
 
             for proposal in proposals:
                 proposal_metadata[proposal.title] = proposal.start_date
