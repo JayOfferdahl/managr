@@ -34,6 +34,7 @@ urlpatterns = [
 
     url(r'^proposals/new', project_proposal_views.newProposal, name='new_proposal'),
     url(r'^proposals/update', project_proposal_views.updateProposal, name='update_proposal'),
+    url(r'^proposals/get-user-proposal-metadata', project_proposal_views.getUserProposalMetadata, name="get_user_proposal_metadata"),
 
     url(r'^bids/showproposals', project_proposal_views.showProposals, name='show_proposals'),
     url(r'^proposals/proposal', project_proposal_views.getProposal, name='proposal'),

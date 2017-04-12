@@ -1,9 +1,10 @@
 import React from 'react';
 import { Nav, NavItem } from 'react-bootstrap';
-import { Link } from 'react-router';
 import { LinkContainer } from 'react-router-bootstrap';
+import { connect } from 'react-redux';
 
 import '../../assets/css/App.css';
+import NavProposalLinks from './NavProposalLinks';
 
 class NavBar extends React.Component {
     render() {
@@ -47,17 +48,7 @@ class NavBar extends React.Component {
                 </div>
 
                 {/* Proposals section */}
-                <div className="nav-main-category" data-toggle="collapse" data-target="#proposals">
-                    <p>Proposals</p><span className="glyphicon glyphicon-chevron-down"></span>
-                </div>
-                <div id="proposals" className="collapse nav-secondary-category">
-                    <LinkContainer className="nav-secondary-link" to="/create-proposal">
-                        <a className="nav-secondary-link">
-                            <span className="glyphicon glyphicon-plus"></span>
-                            New Proposal
-                        </a>
-                    </LinkContainer>
-                </div>
+                <NavProposalLinks />
 
                 {/* Bids section */}
                 <div className="nav-main-category" data-toggle="collapse" data-target="#bids">
