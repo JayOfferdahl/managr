@@ -30,6 +30,32 @@ def newProposal(request):
 def updateProposal(request):
     pass
 
+@csrf_exempt
+def getUserProposalMetadata(request):
+    session_token = JSONParser().parse(BytesIO(request.body))
+
+    print(session_token)
+
+    if session_token:
+        user = ManagrUser.objects.get(session_token=session_token)
+        if user:
+            # Generate a list of project proposals and their ids
+            proposals = Proposal.objects.filter(owner=user)
+
+            proposal_metadata = dict()
+
+            for proposal in proposals:
+                proposal_metadata[proposal.title] = proposal.start_date
+
+            return JsonResponse({
+                'success': 'Proposals returned for user.',
+                'data': proposal_metadata
+            })
+        else:
+            return JsonResponse({'error': 'Invalid session token.'})
+    else:
+        return JsonResponse({'error': 'No session token provided.'})
+
 def buildProposalsList():
     proposals = Proposal.objects.all()
     proposalList = list()
