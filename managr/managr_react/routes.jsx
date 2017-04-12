@@ -11,6 +11,8 @@ import UpdateBid from './components/bids/UpdateBid'
 import CreateProposal from './components/proposals/CreateProposal'
 import UpdateProposal from './components/proposals/UpdateProposal'
 
+import CreateCompanyPage from './components/companies/CreateCompanyPage'
+
 import DocumentsList from './components/documents/DocumentsList'
 
 import Activity from './components/project/Activity'
@@ -28,6 +30,7 @@ import Finance from './components/reports/Finance'
 import LoginPage from './components/signup/LoginPage'
 import SignupPage from './components/signup/SignupPage'
 import ShowProposals from './components/bids/ShowProposals'
+
 export default (
 	<Route path="/" component={App}>
 		<Route path="/signup" component={SignupPage}></Route>
@@ -51,6 +54,7 @@ export default (
 				<Route path="/past-projects" component={PastProjectsList} />
 				<Route path="/show-proposals" component={ShowProposals} />
 			</Route> {/* End NavAndHeader */}
+			<Route path="create-company-:company_type" component={CreateCompanyPage} />
 		</Route> {/* End EnsureAuthenticated */}
 	</Route>
 )

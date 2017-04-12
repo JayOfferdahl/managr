@@ -89,6 +89,7 @@ export function loginWithServer(form_fields_info) {
 				if (data['success']) {
 					localStorage.setItem('managr_session_token', data['success']);
 					dispatch(managrLoginSuccess());
+					dispatch(resetLoginForm());
 				} else {
 					dispatch(managrLoginFailure(data));
 				}

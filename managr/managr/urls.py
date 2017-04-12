@@ -32,6 +32,8 @@ urlpatterns = [
     url(r'^accounts/signup', managr_entities_views.register, name='register'),
     url(r'^accounts/ensure-auth', managr_entities_views.ensureAuth, name='ensure_auth'),
 
+    url(r'^companies/create-contractor-company', managr_entities_views.createContractorCompany, name='create_contractor_company'),
+
     url(r'^proposals/new', project_proposal_views.newProposal, name='new_proposal'),
     url(r'^proposals/update', project_proposal_views.updateProposal, name='update_proposal'),
 

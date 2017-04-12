@@ -90,3 +90,14 @@ export function registration_success(state = false, action) {
 			return state;
 	}
 }
+
+export function user_type(state = null, action) {
+	switch(action.type) {
+		case 'UPDATE_REGISTRATION_USER_TYPE_FIELD':
+			return action.field_value;
+		case 'CLEAN_REGISTRATION_FORM':
+			return null;
+		default:
+			return state;
+	}
+}

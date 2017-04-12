@@ -53,6 +53,7 @@ export function registerWithServer(form_fields_info) {
 				if (data['success']) {
 					localStorage.setItem('managr_session_token', data['success']);
 					dispatch(managrRegistrationSuccess());
+					dispatch(resetRegistrationForm());
 				} else {
 					dispatch(managrRegistrationFailure(data));
 				}
