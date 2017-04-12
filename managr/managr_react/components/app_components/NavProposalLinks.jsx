@@ -38,7 +38,7 @@ class NavProposalLinks extends React.Component {
                         (proposal) => {
                         console.log(proposal);
                         return (
-                            <LinkContainer className="nav-secondary-link" to="proposal/:{proposal.link}">
+                            <LinkContainer className="nav-secondary-link" to={"/proposal/" + proposal.link}>
                                 <a className="nav-secondary-link">
                                     {proposal.title}
                                 </a>

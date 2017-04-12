@@ -48,7 +48,7 @@ def getUserProposalMetadata(request):
             proposal_metadata = OrderedDict()
 
             for proposal in proposals:
-                proposal_metadata[proposal.title] = proposal.start_date
+                proposal_metadata[proposal.title] = proposal.proposal_uuid
 
             return JsonResponse({
                 'success': 'Proposals returned for user.',

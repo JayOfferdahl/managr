@@ -54,7 +54,7 @@ export default (
             <Route path="/update-proposal" component={UpdateProposal}/>
             <Route path="/past-projects" component={PastProjectsList}/>
             <Route path="/show-proposals" component={ShowProposals}/>
-            <Route path="/proposal" component={Proposal}/>
+            <Route path="/proposal/:proposal_uuid" component={Proposal}/>
         </Route> {/* End NavAndHeader */}
     </Route> {/* End EnsureAuthenticated */}
 </Route>
