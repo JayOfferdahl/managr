@@ -1,3 +1,5 @@
+import { loadUserProposalMetadata } from './AppActions';
+
 export function updateProposalFormField(field_name, field_value) {
     return {
         type: 'UPDATE_PROPOSAL_' + field_name.toUpperCase() + '_FIELD',
@@ -56,6 +58,9 @@ export function submitProposal(proposal_data, session_token) {
                 if (data['success']) {
                     console.log("Proposal successfully submitted. (Debug statement - ProposalActions.jsx)");
                     dispatch(proposalSuccess());
+
+                    // Refresh the proposal list in the navigation bar
+                    dispatch(loadUserProposalMetadata(session_token));
                 } else {
                     console.log("Error: %o (Debug statement - ProposalActions.jsx)", data);
                     dispatch(proposalFailure(data));
