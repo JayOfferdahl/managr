@@ -1,3 +1,6 @@
+
+import { LinkContainer } from 'react-router-bootstrap';
+import React from 'react';
 export function proposalsLoadSuccess(data) {
     return {
         type: 'PROPOSALS_LOAD_SUCCESS',
@@ -22,10 +25,16 @@ export function loadProposalsFromServer() {
                 return response;
             })
             .then((response) => response.json())
-            .then((data) => {
+            .then( (data) => {
                 if(data) {
+                  /*  data.forEach( (row) => {
+                      let cur_uuid = row['uuid']
+                      let cur_name = row['name']
+                      row['name'] = <LinkContainer to="/proposal"/>
+                    })*/
                     dispatch(proposalsLoadSuccess(data));
-                } else {
+                  }
+               else {
                     dispatch(proposalsLoadFailure("There was an error loading data from the server."));
                 }
             });

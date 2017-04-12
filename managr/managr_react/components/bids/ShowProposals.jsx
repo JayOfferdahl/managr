@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Router, browserHistory } from 'react-router';
 
 
 import '../../assets/css/App.css';
@@ -33,10 +34,16 @@ class ShowProposals extends React.Component {
     submitEvent.preventDefault();
     this.props.loadProposalFromServer(this.props);
   }
+
+  linkFormatter(cell, row){
+    console.log("Link format: cell: " + cell + " _row: " + row.uuid)
+    return '<LinkContainer to="http://managr.dev.biz:8080/proposal' +  '">' + row.name + "</LinkContainer>"
+  }
+
   render () {
       return (
         <BootstrapTable data = { this.props.proposals } options = { options } striped hover pagination>
-            <TableHeaderColumn isKey = { true } dataSort={ true } filter={ { type: 'TextFilter'} } dataField='name'>Name</TableHeaderColumn>
+            <TableHeaderColumn isKey = { true } dataSort={ true } filter={ { type: 'TextFilter'} } dataField='name' dataFormat={this.linkFormatter}>Name</TableHeaderColumn>
             <TableHeaderColumn dataSort={ true } filter={ { type: 'TextFilter'} } dataField='location'>Location</TableHeaderColumn>
             <TableHeaderColumn dataSort={ true } sortFunc={ numericSortFunc } dataField='budget'>Budget</TableHeaderColumn>
             <TableHeaderColumn dataSort={ true } dataField='start'>Start Date</TableHeaderColumn>
@@ -46,15 +53,16 @@ class ShowProposals extends React.Component {
     }
 };
 
-ShowProposals.contextTypes = {
+/*ShowProposals.contextTypes = {
   	router: React.PropTypes.object.isRequired
 }
-
+*/
 const options = {
   onRowClick: function(row) {
     //this.context.router.push('/proposals/:' + row.uuid);
     //console.log(row.uuid);
-    fetch('http://managr.dev.biz:8000/proposals/proposal', {method : 'post', body : row.uuid});
+    //fetch('http://managr.dev.biz:8000/proposals/proposal', {method : 'post', body : row.uuid});
+    browserHistory.push('/proposal/' + row.uuid);
   }
 };
 

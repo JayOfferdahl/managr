@@ -55,7 +55,7 @@ class NavBar extends React.Component {
                     <p>Bids</p><span className="glyphicon glyphicon-chevron-down"></span>
                 </div>
                 <div id="bids" className="collapse nav-secondary-category">
-                    <LinkContainer className="nav-secondary-link" to="/create-bid">
+                    <LinkContainer className="nav-secondary-link" to="/show-proposals">
                         <a className="nav-secondary-link">
                             <span className="glyphicon glyphicon-plus"></span>
                             Create New Bid
