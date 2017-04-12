@@ -36,5 +36,5 @@ urlpatterns = [
     url(r'^proposals/update', project_proposal_views.updateProposal, name='update_proposal'),
 
     url(r'^bids/showproposals', project_proposal_views.showProposals, name='show_proposals'),
-    url(r'^proposals/proposal', project_proposal_views.Proposal, name='proposal'),
+    url(r'^proposals/proposal', project_proposal_views.getProposal, name='proposal'),
 ]

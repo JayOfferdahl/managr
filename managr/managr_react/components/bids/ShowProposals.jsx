@@ -1,16 +1,14 @@
 import React from 'react';
+import { connect } from 'react-redux';
+
 
 import '../../assets/css/App.css';
-import { connect } from 'react-redux';
+
 import { loadProposalsFromServer } from '../../actions/ShowProposalsActions';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
+//import { loadProposalFromServer } from '../../actions/ProposalActions';
 
-const options = {
-  onRowClick: function(row) {
-    //alert(`You click row id: ${row.name}`);
-    console.log(row.uuid);
-  }
-};
+
 
 function numericSortFunc(a, b, order) {
   if (order === 'desc') {
@@ -31,6 +29,10 @@ class ShowProposals extends React.Component {
       defaultSortOrder: 'desc',  // default sort order
     };
   };*/
+  handleSubmit(submitEvent) {
+    submitEvent.preventDefault();
+    this.props.loadProposalFromServer(this.props);
+  }
   render () {
       return (
         <BootstrapTable data = { this.props.proposals } options = { options } striped hover pagination>
@@ -44,6 +46,18 @@ class ShowProposals extends React.Component {
     }
 };
 
+ShowProposals.contextTypes = {
+  	router: React.PropTypes.object.isRequired
+}
+
+const options = {
+  onRowClick: function(row) {
+    //this.context.router.push('/proposals/:' + row.uuid);
+    //console.log(row.uuid);
+    fetch('http://managr.dev.biz:8000/proposals/proposal', {method : 'post', body : row.uuid});
+  }
+};
+
 const mapStateToProps = (state) => {
     return {
         proposals: state.proposals,
@@ -52,7 +66,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        loadProposalsFromServer: () => dispatch(loadProposalsFromServer())
+        loadProposalsFromServer: () => dispatch(loadProposalsFromServer()),
+      //  loadProposalFromServer: (proposalID) => dispatch(loadProposalFromServer(proposalID))
     };
 };
 

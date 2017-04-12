@@ -6,21 +6,24 @@ import { loadProposalFromServer } from '../../actions/ProposalActions';
 
 class Proposal extends React.Component {
   componentWillMount() {
-    this.props.loadProposalFromServer();
+    this.props.loadProposalFromServer(this.props.uuid);
   };
-  /*constructor(props) {
+  handleSubmit(event) {
+    alert('A name was submitted: ' + this.state.value);
+    event.preventDefault();
+  };
+  constructor(props) {
     super(props);
-    this.options = {
-      defaultSortName: 'name',  // default sort column name
-      defaultSortOrder: 'desc',  // default sort order
-    };
-  };*/
+    this.handleSubmit = this.handleSubmit.bind(this);
+  };
+
   render () {
       return (
         <h1>proposal placeholder</h1>
       );
     }
 };
+
 
 const mapStateToProps = (state) => {
     return {
@@ -30,7 +33,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        loadProposalFromServer: () => dispatch(loadProposalFromServer())
+        loadProposalFromServer: (proposalID) => dispatch(loadProposalFromServer(proposalID))
     };
 };
 

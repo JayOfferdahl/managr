@@ -9,7 +9,8 @@ from project_proposal.app_forms.proposal_form import ProposalForm
 
 from rest_framework.parsers import JSONParser
 from django.utils.six import BytesIO
-from django.core import serializers
+from django.forms.models import model_to_dict
+#from django.core import serializers
 
 @csrf_exempt
 def newProposal(request):
@@ -42,12 +43,18 @@ def buildProposalsList():
             "end":      proposal.end_date,
             "uuid":     proposal.proposal_uuid
             })
-    print(proposalList)
     return proposalList
+
 @csrf_exempt
 def showProposals(request):
     return JsonResponse(buildProposalsList(), safe = False)
     #return JsonResponse(serializers.serialize('json', Proposal.objects.all(), fields = 'title, address, budget, start_date, end_date'), safe = False)
 
-def showProposal(request):
-    return JsonResponse(Proposal.objects.get(proposal_uuid=request.body))
+@csrf_exempt
+def getProposal(request):
+    my_proposal = Proposal.objects.get(proposal_uuid = request.body.decode("utf-8"))
+    if my_proposal:
+        print(model_to_dict(my_proposal))
+        return JsonResponse([model_to_dict(my_proposal)], safe = False)
+    else:
+        return JsonResponse('error, proposal not found')
