@@ -4,6 +4,8 @@ from django.contrib.postgres.fields import HStoreField
 from django.core.exceptions import ValidationError
 from django.db import models
 
+from managr_entities.app_managers.company import CompanyManager
+
 from helpers.hstore_helper import *
 
 class Company(models.Model):
@@ -17,11 +19,16 @@ class Company(models.Model):
 	company_type = models.IntegerField(choices = COMPANY_TYPE_CHOICES, default = 0)
 
 	COMPANY_ATTRIBUTE_FIELDS = [ # List of keys accepted in 'attributes' hstore
-		'location',
-		'description',
+		'address',
+		'city',
+		'state',
+		'postal_code',
 		'email_address',
+		'description',
 	]
 	attributes = HStoreField()
+
+	objects = CompanyManager()
 
 	def clean(self, *args, **kwargs):
 		has_valid_company_attributes = verify_keys_before_save(self.attributes, self.COMPANY_ATTRIBUTE_FIELDS)

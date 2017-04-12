@@ -10,7 +10,11 @@ from rest_framework.parsers import JSONParser
 
 from managr_entities.app_forms.registration_form import RegistrationForm
 from managr_entities.app_forms.login_form import LoginForm
+from managr_entities.app_forms.create_contractor_company_form import CreateContractorCompanyForm
 from managr_entities.app_models.managr_user import ManagrUser
+from managr_entities.app_models.company import Company
+
+from helpers.states_array import states_array
 
 @csrf_exempt
 def register(request):
@@ -46,8 +50,6 @@ def login(request):
 		return JsonResponse({'success': str(managr_user.session_token)})
 	else:
 		errors = dict([(key, [str(error) for error in value]) for key, value in login_form.errors.items()])
-		# TODO: Necessary print statement here or debug?
-		print(errors)
 		return JsonResponse(errors)
 
 @csrf_exempt
@@ -79,3 +81,17 @@ def ensureAuth(request):
 		return JsonResponse({'failure': 'Unable to authenticate'})
 	else:
 		return JsonResponse({'success': 'Successful authentication'})
+
+@csrf_exempt
+def createContractorCompany(request):
+	company_data = JSONParser().parse(BytesIO(request.body))
+	contractor_company_creation_form = CreateContractorCompanyForm(company_data)
+
+	if contractor_company_creation_form.is_valid():
+		print(company_data)
+		new_company = Company.objects.create_contractor_company(company_data['company_name'], company_data['company_email'], company_data['address'], company_data['city'], states_array[int(company_data['state'])], company_data['postal_code'], company_data['description'])
+		return JsonResponse({'success': 'Successful company creation'})
+	else:
+		errors = dict([(key, [str(error) for error in value]) for key, value in contractor_company_creation_form.errors.items()])
+		return JsonResponse(errors)
+

@@ -33,6 +33,8 @@ urlpatterns = [
     url(r'^accounts/ensure-auth', managr_entities_views.ensureAuth, name='ensure_auth'),
 
     url(r'^proposals/get-user-proposal-metadata', project_proposal_views.getUserProposalMetadata, name="get_user_proposal_metadata"),
+    url(r'^companies/create-contractor-company', managr_entities_views.createContractorCompany, name='create_contractor_company'),
+
     url(r'^proposals/new', project_proposal_views.newProposal, name='new_proposal'),
     url(r'^proposals/proposal', project_proposal_views.getProposal, name='proposal'),
     url(r'^proposals/update', project_proposal_views.updateProposal, name='update_proposal'),
