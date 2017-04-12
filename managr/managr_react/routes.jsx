@@ -58,7 +58,7 @@ export default (
             <Route path="/show-proposals" component={ShowProposals}/>
             <Route path="/proposal/:proposal_uuid" component={Proposal}/>
         </Route> {/* End NavAndHeader */}
-        <Route path="create-company-:company_type" component={CreateCompanyPage} />
+        <Route path="/create-company-:company_type" component={CreateCompanyPage} />
     </Route> {/* End EnsureAuthenticated */}
 </Route>
 )

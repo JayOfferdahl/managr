@@ -35,4 +35,13 @@ export default combineReducers ({
 	proposal,
 
 	proposals,
+
+	company_name,
+	company_email,
+	city,
+	state,
+	postal_code,
+	creation_success,
+	creation_errors
+
 });
