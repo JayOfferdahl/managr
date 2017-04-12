@@ -20,6 +20,7 @@ import Materials from './components/project/Materials'
 import Milestones from './components/project/Milestones'
 import Overview from './components/project/Overview'
 import Summary from './components/project/Summary'
+import ProjectSettings from './components/project/ProjectSettings'
 
 import PastProjectsList from './components/project_history/PastProjectsList'
 
@@ -28,29 +29,33 @@ import Finance from './components/reports/Finance'
 import LoginPage from './components/signup/LoginPage'
 import SignupPage from './components/signup/SignupPage'
 import ShowProposals from './components/bids/ShowProposals'
+import Proposal from './components/proposals/Proposal'
+
 export default (
-	<Route path="/" component={App}>
-		<Route path="/signup" component={SignupPage}></Route>
-		<Route path="/login" component={LoginPage}></Route>
-		<Route component={EnsureAuthenticated}>
-			<Route component={NavAndHeader}>
-				<Route path="/overview" component={Overview}>
-					<Route path="/summary" component={Summary} />
-			        <Route path="/equipment" component={Equipment} />
-			        <Route path="/labor" component={Labor} />
-			        <Route path="/materials" component={Materials} />
-			        <Route path="/activity" component={Activity} />
-				</Route> {/* End Overview */}
-				<Route path="/milestones" component={Milestones} />
-				<Route path="/finance" component={Finance} />
-				<Route path="/documents" component={DocumentsList} />
-				<Route path="/create-bid" component={CreateBid} />
-				<Route path="/update-bid" component={UpdateBid} />
-				<Route path="/create-proposal" component={CreateProposal} />
-				<Route path="/update-proposal" component={UpdateProposal} />
-				<Route path="/past-projects" component={PastProjectsList} />
-				<Route path="/show-proposals" component={ShowProposals} />
-			</Route> {/* End NavAndHeader */}
-		</Route> {/* End EnsureAuthenticated */}
-	</Route>
+<Route path="/" component={App}>
+    <Route path="/signup" component={SignupPage}></Route>
+    <Route path="/login" component={LoginPage}></Route>
+    <Route component={EnsureAuthenticated}>
+        <Route component={NavAndHeader}>
+            <Route component={Overview}>
+                <Route path="/summary" component={Summary}/>
+                <Route path="/equipment" component={Equipment}/>
+                <Route path="/labor" component={Labor}/>
+                <Route path="/materials" component={Materials}/>
+                <Route path="/activity" component={Activity}/>
+            </Route> {/* End Overview */}
+            <Route path="/project-settings" component={ProjectSettings}/>
+            <Route path="/milestones" component={Milestones}/>
+            <Route path="/finance" component={Finance}/>
+            <Route path="/documents" component={DocumentsList}/>
+            <Route path="/create-bid" component={CreateBid}/>
+            <Route path="/update-bid" component={UpdateBid}/>
+            <Route path="/create-proposal" component={CreateProposal}/>
+            <Route path="/update-proposal" component={UpdateProposal}/>
+            <Route path="/past-projects" component={PastProjectsList}/>
+            <Route path="/show-proposals" component={ShowProposals}/>
+            <Route path="/proposal/:proposal_uuid" component={Proposal}/>
+        </Route> {/* End NavAndHeader */}
+    </Route> {/* End EnsureAuthenticated */}
+</Route>
 )
