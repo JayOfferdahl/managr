@@ -1,9 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
+import { Router, browserHistory } from 'react-router';
 
+import '../../assets/css/App.css';
 import { loadProposalsFromServer } from '../../actions/ShowProposalsActions';
-
 import '../../assets/css/App.css';
 
 function numericSortFunc(a, b, order) {
@@ -18,14 +19,6 @@ class ShowProposals extends React.Component {
     componentWillMount() {
         this.props.loadProposalsFromServer();
     };
-
-    /*constructor(props) {
-        super(props);
-        this.options = {
-            defaultSortName: 'name',  // default sort column name
-            defaultSortOrder: 'desc',  // default sort order
-        };
-    };*/
 
     handleSubmit(submitEvent) {
         submitEvent.preventDefault();
@@ -45,16 +38,13 @@ class ShowProposals extends React.Component {
     }
 };
 
-ShowProposals.contextTypes = {
-    router: React.PropTypes.object.isRequired
-}
-
 const options = {
-    onRowClick: function(row) {
-        //this.context.router.push('/proposals/:' + row.uuid);
-        //console.log(row.uuid);
-        fetch('http://managr.dev.biz:8000/proposals/proposal', {method : 'post', body : row.uuid});
-    }
+  onRowClick: function(row) {
+    //this.context.router.push('/proposals/:' + row.uuid);
+    //console.log(row.uuid);
+    //fetch('http://managr.dev.biz:8000/proposals/proposal', {method : 'post', body : row.uuid});
+    browserHistory.push('/proposal/' + row.uuid);
+  }
 };
 
 const mapStateToProps = (state) => {
