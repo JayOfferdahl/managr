@@ -10,16 +10,16 @@ import favicon from '../assets/img/favicon/favicon.ico';
 
 
 class App extends React.Component {
-	render() {
-		return (
-			<div className="App">
+    render() {
+        return (
+            <div className="App">
                 <Helmet>
                     <link rel="shortcut icon" type="image/icon" href={favicon} />
                 </Helmet>
-				{this.props.children}
-			</div>
-		);
-	}
+                {this.props.children}
+            </div>
+        );
+    }
 }
 
 const mapStateToProps = (state) => {
