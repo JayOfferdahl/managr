@@ -12,7 +12,7 @@ class LoginForm extends React.Component {
 	componentDidUpdate(prevProps, prevState) {
 		if (this.props.login_success == true && prevProps.login_success == false) {
 			this.props.handleReset();
-			this.context.router.push('/overview');
+			this.context.router.push('/summary');
 		}
 	}
 

@@ -1,5 +1,7 @@
-from django.db import models
+import uuid
 
+from Crypto import Random
+from django.db import models
 from managr_entities.app_models.managr_user import ManagrUser
 
 class ProposalManager(models.Manager):
@@ -14,8 +16,12 @@ class ProposalManager(models.Manager):
             start_date = proposal_data['start_date'],
             end_date = proposal_data['end_date'],
             budget = proposal_data['budget'],
-            details = {'description': proposal_data['description']}
+            details = {'description': proposal_data['description']},
+            proposal_uuid = self.generate_project_uuid(),
         )
 
         proposal.save()
         return proposal
+
+    def generate_project_uuid(self):
+        return uuid.UUID(bytes = Random.get_random_bytes(16))

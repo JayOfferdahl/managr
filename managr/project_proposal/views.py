@@ -9,7 +9,8 @@ from project_proposal.app_forms.proposal_form import ProposalForm
 
 from rest_framework.parsers import JSONParser
 from django.utils.six import BytesIO
-from django.core import serializers
+
+from collections import OrderedDict
 
 @csrf_exempt
 def newProposal(request):
@@ -30,6 +31,32 @@ def newProposal(request):
 def updateProposal(request):
     pass
 
+@csrf_exempt
+def getUserProposalMetadata(request):
+    session_token = JSONParser().parse(BytesIO(request.body))
+
+    print(session_token)
+
+    if session_token:
+        user = ManagrUser.objects.get(session_token=session_token)
+        if user:
+            # Generate a list of project proposals and their ids
+            proposals = Proposal.objects.filter(owner=user).order_by('title')
+
+            proposal_metadata = OrderedDict()
+
+            for proposal in proposals:
+                proposal_metadata[proposal.title] = proposal.proposal_uuid
+
+            return JsonResponse({
+                'success': 'Proposals returned for user.',
+                'data': proposal_metadata
+            })
+        else:
+            return JsonResponse({'error': 'Invalid session token.'})
+    else:
+        return JsonResponse({'error': 'No session token provided.'})
+
 def buildProposalsList():
     proposals = Proposal.objects.all()
     proposalList = list()
@@ -39,11 +66,31 @@ def buildProposalsList():
             "location": proposal.address,
             "budget":   proposal.budget,
             "start":    proposal.start_date,
-            "end":      proposal.end_date
+            "end":      proposal.end_date,
+            "uuid":     proposal.proposal_uuid
             })
-    print(proposalList)
     return proposalList
+
 @csrf_exempt
 def showProposals(request):
     return JsonResponse(buildProposalsList(), safe = False)
     #return JsonResponse(serializers.serialize('json', Proposal.objects.all(), fields = 'title, address, budget, start_date, end_date'), safe = False)
+
+@csrf_exempt
+def getProposal(request):
+    proposal = Proposal.objects.get(proposal_uuid = request.body.decode("utf-8"))
+    if proposal:
+        # Generate an object and return it
+        proposalResponse = {
+            "title": proposal.title,
+            "address": proposal.address,
+            "contact_number": proposal.contact_number,
+            "budget": proposal.budget,
+            "start_date": proposal.start_date,
+            "end_date": proposal.end_date,
+            "description": proposal.details['description'],
+        }
+
+        return JsonResponse({'success': True, 'proposal': proposalResponse})
+    else:
+        return JsonResponse({'error': 'Invalid proposal identifier.'})
