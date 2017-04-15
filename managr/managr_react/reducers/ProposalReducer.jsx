@@ -119,3 +119,14 @@ export function proposal_owner(state = '', action) {
             return state;
     }
 }
+
+export function proposal_deleted(state = '', action) {
+    switch(action.type) {
+        case 'PROPOSAL_DELETE_SUCCESS':
+            return action.success;
+        case 'PROPOSAL_DELETE_FAILURE':
+            return action.failure;
+        default:
+            return state;
+    }
+}

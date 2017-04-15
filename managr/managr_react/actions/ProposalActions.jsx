@@ -115,3 +115,42 @@ export function loadProposalFromServer(proposalUUID, sessionToken) {
         });
     };
 }
+
+export function proposalDeleteSuccess(success = true) {
+    return {
+        type: 'PROPOSAL_DELETE_SUCCESS',
+        success
+    }
+}
+
+export function proposalDeleteFailure(failure) {
+    return {
+        type: 'PROPOSAL_DELETE_FAILURE',
+        failure
+    }
+}
+
+export function deleteProposal(proposalUUID, sessionToken) {
+    let data = {};
+    data.proposal_uuid = proposalUUID;
+    data.session_token = sessionToken;
+    
+    const request_params = { method: 'POST', body: JSON.stringify(data) };
+    return (dispatch) => {
+        fetch('http://managr.dev.biz:8000/proposals/delete-proposal', request_params)
+        .then((response) => {
+            if(!response.ok) {
+                console.log("Server response error: " + response.ok);
+            }
+            return response;
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            if(data['success']) {
+                dispatch(proposalDeleteSuccess());
+            } else {
+                dispatch(proposalDeleteFailure(data['error']));
+            }
+        });
+    };
+}

@@ -18,10 +18,22 @@ class Proposal extends React.Component {
         }
     }
 
+    handleUpdateProposal() {
+        console.log("Update proposal");
+    }
+
+    handleCreateBid() {
+        console.log("Create bid");
+    }
+
     render () {
         return (
             <div className="default-content">
-                <ProposalTools owner={this.props.proposal_owner} />
+                <ProposalTools
+                    owner={this.props.proposal_owner}
+                    handleClick={this.props.proposal_owner == "true" ? this.handleUpdateProposal : this.handleCreateBid}
+                    proposal_uuid={this.props.params.proposal_uuid}
+                />
                 <h2>Project Proposal: <b>{this.props.proposal.title}</b></h2>
                 <br/>
                 <p><b>Contact Number:</b> {this.props.proposal.contact_number}</p>
@@ -35,7 +47,6 @@ class Proposal extends React.Component {
         );
     }
 };
-
 
 const mapStateToProps = (state) => {
     return {

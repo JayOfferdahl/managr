@@ -115,3 +115,7 @@ def getProposal(request):
         else:
             return JsonResponse({'error': 'Invalid proposal identifier.'})
     return JsonResponse({'error': 'Invalid session token.'})
+
+@csrf_exempt
+def deleteProposal(request):
+    print("They want to delete a proposal.")
