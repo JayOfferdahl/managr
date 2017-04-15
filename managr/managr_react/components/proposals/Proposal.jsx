@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { loadProposalFromServer } from '../../actions/ProposalActions';
 
-import '../../assets/css/App.css';
+import ProposalTools from './ProposalTools'
 
 class Proposal extends React.Component {
     componentWillMount() {
@@ -19,26 +19,9 @@ class Proposal extends React.Component {
     }
 
     render () {
-        let activeProposal;
-        if(this.props.proposal_owner == "true") {
-            activeProposal = (
-                <div className="alert alert-success proposal-success">
-                    <div className="proposal-tool-buttons">
-                        <button className="btn btn-sm btn-default">
-                            Edit
-                        </button>
-                        <button className="btn btn-sm btn-danger">
-                            Delete
-                        </button>
-                    </div>
-                    <p>This proposal is live on the Managr contractor network.</p>
-                </div>
-            );
-        }
-
         return (
             <div className="default-content">
-                {activeProposal}
+                <ProposalTools owner={this.props.proposal_owner} />
                 <h2>Project Proposal: <b>{this.props.proposal.title}</b></h2>
                 <br/>
                 <p><b>Contact Number:</b> {this.props.proposal.contact_number}</p>

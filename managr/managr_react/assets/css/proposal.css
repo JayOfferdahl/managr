@@ -84,6 +84,10 @@
     margin-right: 10px;
 }
 
+.proposal-tool-buttons button:only-child {
+    margin-right: 0px;
+}
+
 .proposal-success button {
     width: 75px;
 }
