@@ -101,10 +101,19 @@ export function proposal(state = {}, action) {
     switch(action.type) {
         case 'PROPOSAL_LOAD_SUCCESS':
             return action.data;
-        case 'PROPOSAL_LOAD_FAILURE':
-            return action.error;
         default:
             return state;
+    }
+}
+
+export function proposal_load_failure(state = '', action) {
+    switch(action.type) {
+        case 'PROPOSAL_LOAD_FAILURE':
+            return true;
+        case 'PROPOSAL_LOAD_SUCCESS':
+            return false;
+        default:
+            return false;
     }
 }
 
@@ -126,6 +135,8 @@ export function proposal_deleted(state = '', action) {
             return action.success;
         case 'PROPOSAL_DELETE_FAILURE':
             return action.failure;
+        case 'RESET_PROPOSAL_VIEW':
+            return false;
         default:
             return state;
     }

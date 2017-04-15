@@ -11,6 +11,14 @@ class NavProposalLinks extends React.Component {
         this.props.loadUserProposalMetadata(token);
     }
 
+    componentWillReceiveProps(next_props) {
+        // If we detect a proposal deletion, update the navbar.
+        if(next_props.proposal_deleted != this.props.proposal_deleted && next_props.proposal_deleted == true) {
+            let session_token = localStorage.getItem("managr_session_token");
+            this.props.loadUserProposalMetadata(session_token);
+        }
+    }
+
     generateProposalTuples(proposal_metadata) {
         let tuples = [];
 
@@ -58,6 +66,7 @@ class NavProposalLinks extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
+        proposal_deleted: state.proposal_deleted,
         proposal_metadata: state.proposal_metadata,
         proposal_metadata_load_errors: state.proposal_metadata_load_errors,
     };

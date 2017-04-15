@@ -76,10 +76,9 @@ export function proposalLoadSuccess(data) {
     }
 }
 
-export function proposalLoadFailure(error) {
+export function proposalLoadFailure() {
     return {
-        type: 'PROPOSAL_LOAD_FAILURE',
-        error
+        type: 'PROPOSAL_LOAD_FAILURE'
     }
 }
 
@@ -101,6 +100,7 @@ export function loadProposalFromServer(proposalUUID, sessionToken) {
         .then((response) => {
             if(!response.ok) {
                 console.log("Server response error: " + response.ok);
+                dispatch(proposalLoadFailure());
             }
             return response;
         })
@@ -110,7 +110,7 @@ export function loadProposalFromServer(proposalUUID, sessionToken) {
                 dispatch(proposalLoadSuccess(data['proposal']));
                 dispatch(proposalLoadOwner(data['owner']));
             } else {
-                dispatch(proposalLoadFailure("There was an error loading data from the server."));
+                dispatch(proposalLoadFailure());
             }
         });
     };
@@ -152,5 +152,17 @@ export function deleteProposal(proposalUUID, sessionToken) {
                 dispatch(proposalDeleteFailure(data['error']));
             }
         });
+    };
+}
+
+export function cleanProposalView() {
+    return {
+        type: 'RESET_PROPOSAL_VIEW'
+    }
+}
+
+export function resetProposalView() {
+    return (dispatch) => {
+        dispatch(cleanProposalView());
     };
 }

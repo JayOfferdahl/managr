@@ -35,8 +35,6 @@ def updateProposal(request):
 def getUserProposalMetadata(request):
     session_token = JSONParser().parse(BytesIO(request.body))
 
-    print(session_token)
-
     if session_token:
         user = ManagrUser.objects.get(session_token = session_token)
         if user:
@@ -84,8 +82,15 @@ def getProposal(request):
     session_token = request_data['session_token']
 
     if session_token and proposal_uuid:
-        proposal = Proposal.objects.get(proposal_uuid = proposal_uuid)
-        user = ManagrUser.objects.get(session_token = session_token)
+        try:
+            user = ManagrUser.objects.get(session_token = session_token)
+        except ManagrUser.DoesNotExist:
+            return JsonResponse({'error': 'Invalid session token.'})
+
+        try:
+            proposal = Proposal.objects.get(proposal_uuid = proposal_uuid)
+        except Proposal.DoesNotExist:
+            return JsonResponse({'error': 'Invalid proposal identifier.'})
         
         # Check owner
         if proposal.owner == user:
@@ -96,26 +101,41 @@ def getProposal(request):
             requestOwnsProposal = False
 
         # Create proposal response
-        if proposal:
-            proposalResponse = {
-                "title": proposal.title,
-                "address": proposal.address,
-                "contact_number": proposal.contact_number,
-                "budget": proposal.budget,
-                "start_date": proposal.start_date,
-                "end_date": proposal.end_date,
-                "description": proposal.details['description'],
-            }
+        proposalResponse = {
+            "title": proposal.title,
+            "address": proposal.address,
+            "contact_number": proposal.contact_number,
+            "budget": proposal.budget,
+            "start_date": proposal.start_date,
+            "end_date": proposal.end_date,
+            "description": proposal.details['description'],
+        }
 
-            return JsonResponse({
-                'success': True,
-                'owner': requestOwnsProposal,
-                'proposal': proposalResponse
-            })
-        else:
-            return JsonResponse({'error': 'Invalid proposal identifier.'})
-    return JsonResponse({'error': 'Invalid session token.'})
+        return JsonResponse({
+            'success': True,
+            'owner': requestOwnsProposal,
+            'proposal': proposalResponse
+        })
 
 @csrf_exempt
 def deleteProposal(request):
-    print("They want to delete a proposal.")
+    request_data = JSONParser().parse(BytesIO(request.body))
+
+    proposal_uuid = request_data['proposal_uuid']
+    session_token = request_data['session_token']
+
+    if session_token and proposal_uuid:
+        proposal = Proposal.objects.get(proposal_uuid = proposal_uuid)
+        user = ManagrUser.objects.get(session_token = session_token)
+        
+        # Check owner
+        if proposal.owner == user:
+            print("Request for proposal delete by owner. (Debug statement - project_proposal/views.py)")
+            proposal.delete()
+            print("Proposal deleted by owner. (Debug statement - project_proposal/views.py)")
+            return JsonResponse({'success': True })
+        else:
+            print("Request for proposal delete by viewer. (Debug statement - project_proposal/views.py)")
+            return JsonResponse({'error': 'Invalid session token.'})
+    else:
+        return JsonResponse({'error': 'Invalid session token.'})

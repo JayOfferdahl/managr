@@ -27,7 +27,8 @@ import { title,
 		 proposal_errors,
 		 proposal,
 		 proposal_owner,
-		 proposal_deleted } from './ProposalReducer';
+		 proposal_deleted,
+		 proposal_load_failure } from './ProposalReducer';
 
 import { proposals } from './ShowProposalsReducer';
 
@@ -67,6 +68,7 @@ export default combineReducers ({
 	proposal,
 	proposal_owner,
 	proposal_deleted,
+	proposal_load_failure,
 
 	// View proposal reducers
 	proposals,
