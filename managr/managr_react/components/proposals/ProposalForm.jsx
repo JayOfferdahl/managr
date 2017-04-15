@@ -12,6 +12,7 @@ class ProposalForm extends React.Component {
             proposal_form_success: false,
         }
     }
+
     componentDidUpdate(previous_props, previous_state) {
         if(this.props.proposal_success && !previous_props.proposal_success) {
             this.props.handleReset();
@@ -26,12 +27,12 @@ class ProposalForm extends React.Component {
     handleSubmit(submitEvent) {
         submitEvent.preventDefault();
         this.setState({ proposal_form_success: false });
-        var sessionCookie = localStorage.getItem("managr_session_token");
+        let sessionCookie = localStorage.getItem("managr_session_token");
         this.props.submitNewProposal(this.props, sessionCookie);
     }
 
     render() {
-        var successMessage;
+        let successMessage;
         if(this.state.proposal_form_success) {
             successMessage = <div className="alert alert-success proposal-success">Your proposal has been successfully created!</div>;
         }

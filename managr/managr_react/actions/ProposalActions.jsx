@@ -47,25 +47,25 @@ export function submitProposal(proposal_data, session_token) {
     const request_params = { method: 'POST', body: JSON.stringify(data)};
     return (dispatch) => {
         fetch('http://managr.dev.biz:8000/proposals/new', request_params)
-            .then((response) => {
-                if (!response.ok) {
-                    // Server response was not okay
-                }
-                return response;
-            })
-            .then((response) => response.json())
-            .then((data) => {
-                if (data['success']) {
-                    console.log("Proposal successfully submitted. (Debug statement - ProposalActions.jsx)");
-                    dispatch(createProposalSuccess());
+        .then((response) => {
+            if (!response.ok) {
+                // Server response was not okay
+            }
+            return response;
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            if (data['success']) {
+                console.log("Proposal successfully submitted. (Debug statement - ProposalActions.jsx)");
+                dispatch(createProposalSuccess());
 
-                    // Refresh the proposal list in the navigation bar
-                    dispatch(loadUserProposalMetadata(session_token));
-                } else {
-                    console.log("Error: %o (Debug statement - ProposalActions.jsx)", data);
-                    dispatch(createProposalFailure(data));
-                }
-            });
+                // Refresh the proposal list in the navigation bar
+                dispatch(loadUserProposalMetadata(session_token));
+            } else {
+                console.log("Error: %o (Debug statement - ProposalActions.jsx)", data);
+                dispatch(createProposalFailure(data));
+            }
+        });
     };
 }
 
@@ -83,23 +83,35 @@ export function proposalLoadFailure(error) {
     }
 }
 
-export function loadProposalFromServer(proposalID) {
-  const request_params = { method: 'POST', body: proposalID };
+export function proposalLoadOwner(owner) {
+    return {
+        type: 'PROPOSAL_LOADED_BY_OWNER',
+        owner
+    }
+}
+
+export function loadProposalFromServer(proposalUUID, sessionToken) {
+    let data = {};
+    data.proposal_uuid = proposalUUID;
+    data.session_token = sessionToken;
+    
+    const request_params = { method: 'POST', body: JSON.stringify(data) };
     return (dispatch) => {
         fetch('http://managr.dev.biz:8000/proposals/proposal', request_params)
-            .then((response) => {
-                if(!response.ok) {
-                    console.log("Server response error: " + response.ok);
-                }
-                return response;
-            })
-            .then((response) => response.json())
-            .then((data) => {
-                if(data['success']) {
-                    dispatch(proposalLoadSuccess(data['proposal']));
-                } else {
-                    dispatch(proposalLoadFailure("There was an error loading data from the server."));
-                }
-            });
+        .then((response) => {
+            if(!response.ok) {
+                console.log("Server response error: " + response.ok);
+            }
+            return response;
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            if(data['success']) {
+                dispatch(proposalLoadSuccess(data['proposal']));
+                dispatch(proposalLoadOwner(data['owner']));
+            } else {
+                dispatch(proposalLoadFailure("There was an error loading data from the server."));
+            }
+        });
     };
 }

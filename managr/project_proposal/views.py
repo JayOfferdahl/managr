@@ -19,7 +19,7 @@ def newProposal(request):
 
     if proposal_form.is_valid():
         print("Proposal request - valid (Debug statement - project_proposal/views.py)")
-        user = ManagrUser.objects.get(session_token=proposal_data['token'])
+        user = ManagrUser.objects.get(session_token = proposal_data['token'])
         proposal = Proposal.objects.create_proposal(user, proposal_data)
         return JsonResponse({'success': 'Your project proposal was successfully created!'})
     else:
@@ -38,10 +38,10 @@ def getUserProposalMetadata(request):
     print(session_token)
 
     if session_token:
-        user = ManagrUser.objects.get(session_token=session_token)
+        user = ManagrUser.objects.get(session_token = session_token)
         if user:
             # Generate a list of project proposals and their ids
-            proposals = Proposal.objects.filter(owner=user).order_by('title')
+            proposals = Proposal.objects.filter(owner = user).order_by('title')
 
             proposal_metadata = OrderedDict()
 
@@ -55,7 +55,7 @@ def getUserProposalMetadata(request):
         else:
             return JsonResponse({'error': 'Invalid session token.'})
     else:
-        return JsonResponse({'error': 'No session token provided.'})
+        return JsonResponse({'error': 'Invalid session token.'})
 
 def buildProposalsList():
     proposals = Proposal.objects.all()
@@ -78,19 +78,40 @@ def showProposals(request):
 
 @csrf_exempt
 def getProposal(request):
-    proposal = Proposal.objects.get(proposal_uuid = request.body.decode("utf-8"))
-    if proposal:
-        # Generate an object and return it
-        proposalResponse = {
-            "title": proposal.title,
-            "address": proposal.address,
-            "contact_number": proposal.contact_number,
-            "budget": proposal.budget,
-            "start_date": proposal.start_date,
-            "end_date": proposal.end_date,
-            "description": proposal.details['description'],
-        }
+    request_data = JSONParser().parse(BytesIO(request.body))
 
-        return JsonResponse({'success': True, 'proposal': proposalResponse})
-    else:
-        return JsonResponse({'error': 'Invalid proposal identifier.'})
+    proposal_uuid = request_data['proposal_uuid']
+    session_token = request_data['session_token']
+
+    if session_token and proposal_uuid:
+        proposal = Proposal.objects.get(proposal_uuid = proposal_uuid)
+        user = ManagrUser.objects.get(session_token = session_token)
+        
+        # Check owner
+        if proposal.owner == user:
+            print("Request for proposal by owner. (Debug statement - project_proposal/views.py)")
+            requestOwnsProposal = True
+        else:
+            print("Request for proposal by viewer. (Debug statement - project_proposal/views.py)")
+            requestOwnsProposal = False
+
+        # Create proposal response
+        if proposal:
+            proposalResponse = {
+                "title": proposal.title,
+                "address": proposal.address,
+                "contact_number": proposal.contact_number,
+                "budget": proposal.budget,
+                "start_date": proposal.start_date,
+                "end_date": proposal.end_date,
+                "description": proposal.details['description'],
+            }
+
+            return JsonResponse({
+                'success': True,
+                'owner': requestOwnsProposal,
+                'proposal': proposalResponse
+            })
+        else:
+            return JsonResponse({'error': 'Invalid proposal identifier.'})
+    return JsonResponse({'error': 'Invalid session token.'})

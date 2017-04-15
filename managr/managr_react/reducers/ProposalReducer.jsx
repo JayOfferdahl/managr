@@ -107,3 +107,15 @@ export function proposal(state = {}, action) {
             return state;
     }
 }
+
+export function proposal_owner(state = '', action) {
+    switch(action.type) {
+        case 'PROPOSAL_LOADED_BY_OWNER':
+            if(action.owner == false)
+                return "false";
+            else
+                return "true";
+        default:
+            return state;
+    }
+}

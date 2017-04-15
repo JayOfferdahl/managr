@@ -74,3 +74,16 @@
     padding: 10px;
     margin: 0px 0px 10px 0px;
 }
+
+.proposal-tool-buttons {
+    float: right;
+    margin: -4px -4px 5px 5px;
+}
+
+.proposal-tool-buttons button:first-child {
+    margin-right: 10px;
+}
+
+.proposal-success button {
+    width: 75px;
+}
