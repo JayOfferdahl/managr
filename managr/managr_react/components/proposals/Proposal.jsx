@@ -66,7 +66,7 @@ class Proposal extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        proposal: state.proposal,
+        proposal: state.proposal_load_success,
         proposal_load_failure: state.proposal_load_failure,
         proposal_owner: state.proposal_owner,
     };

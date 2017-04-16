@@ -9,14 +9,14 @@ class ProposalForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            proposal_form_success: false,
+            proposal_form_success_message: false,
         }
     }
 
     componentDidUpdate(previous_props, previous_state) {
-        if(this.props.proposal_success && !previous_props.proposal_success) {
+        if(this.props.proposal_form_success && !previous_props.proposal_form_success) {
             this.props.handleReset();
-            this.setState({ proposal_form_success: true });
+            this.setState({ proposal_form_success_message: true });
         }
     }
 
@@ -26,20 +26,20 @@ class ProposalForm extends React.Component {
 
     handleSubmit(submitEvent) {
         submitEvent.preventDefault();
-        this.setState({ proposal_form_success: false });
+        this.setState({ proposal_form_success_message: false });
         let sessionCookie = localStorage.getItem("managr_session_token");
         this.props.submitNewProposal(this.props, sessionCookie);
     }
 
     render() {
         let successMessage;
-        if(this.state.proposal_form_success) {
+        if(this.state.proposal_form_success_message) {
             successMessage = <div className="alert alert-success proposal-success">Your proposal has been successfully created!</div>;
         }
 
         return (
             <form onSubmit={this.handleSubmit.bind(this)} className="proposal-form">
-                <ErrorsList errors={this.props.proposal_errors} />
+                <ErrorsList errors={this.props.proposal_form_errors} />
                 {successMessage}
                 <div className="proposal-form-section proposal-form-section-left">
                     <div className="form-group">   
@@ -102,15 +102,15 @@ ProposalForm.contextTypes = {
 
 const mapStateToProps = (state) => {
     return {
-        title: state.title,
-        address: state.address,
-        contact_number: state.contact_number,
-        budget: state.budget,
-        start_date: state.start_date,
-        end_date: state.end_date,
-        description: state.description,
-        proposal_errors: state.proposal_errors,
-        proposal_success: state.proposal_success,
+        title: state.proposal_form_title,
+        address: state.proposal_form_address,
+        contact_number: state.proposal_form_contact_number,
+        budget: state.proposal_form_budget,
+        start_date: state.proposal_form_start_date,
+        end_date: state.proposal_form_end_date,
+        description: state.proposal_form_description,
+        proposal_form_errors: state.proposal_form_errors,
+        proposal_form_success: state.proposal_form_success,
     };
 };
 

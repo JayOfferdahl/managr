@@ -16,19 +16,19 @@ import { username_or_email,
 
 import { is_authenticated } from './AuthenticationReducer';
 
-import { title,
-		 address,
-		 contact_number,
-		 budget,
-		 start_date,
-		 end_date,
-		 description,
-		 proposal_success,
-		 proposal_errors,
-		 proposal,
+import { proposal_form_title,
+		 proposal_form_address,
+		 proposal_form_contact_number,
+		 proposal_form_budget,
+		 proposal_form_start_date,
+		 proposal_form_end_date,
+		 proposal_form_description,
+		 proposal_form_success,
+		 proposal_form_errors,
+		 proposal_load_success,
+		 proposal_load_failure,
 		 proposal_owner,
-		 proposal_deleted,
-		 proposal_load_failure } from './ProposalReducer';
+		 proposal_deleted } from './ProposalReducer';
 
 import { proposals } from './ShowProposalsReducer';
 
@@ -37,6 +37,7 @@ import { proposal_metadata_load_errors,
 
 export default combineReducers ({
 	// Registration reducers
+	// TODO: Rename these to reflect purpose (registration_form_...)
 	first_name,
 	last_name,
 	username,
@@ -56,21 +57,22 @@ export default combineReducers ({
 	is_authenticated,
 
 	// Proposal reducers
-	title,
-	address,
-	contact_number,
-	budget,
-	start_date,
-	end_date,
-	description,
-	proposal_success,
-	proposal_errors,
-	proposal,
+	proposal_form_title,
+	proposal_form_address,
+	proposal_form_contact_number,
+	proposal_form_budget,
+	proposal_form_start_date,
+	proposal_form_end_date,
+	proposal_form_description,
+	proposal_form_success,
+	proposal_form_errors,
+	proposal_load_success,
+	proposal_load_failure,
 	proposal_owner,
 	proposal_deleted,
-	proposal_load_failure,
 
 	// View proposal reducers
+	// TODO: Rename this to reflect purpose
 	proposals,
 
 	// Navigation proposal reducers

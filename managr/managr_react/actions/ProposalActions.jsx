@@ -2,21 +2,21 @@ import { loadUserProposalMetadata } from './AppActions';
 
 export function updateProposalFormField(field_name, field_value) {
     return {
-        type: 'UPDATE_PROPOSAL_' + field_name.toUpperCase() + '_FIELD',
+        type: 'PROPOSAL_FORM_UPDATE_' + field_name.toUpperCase() + '_FIELD',
         field_value
     }
 }
 
 export function createProposalSuccess(success = true) {
     return {
-        type: 'NEW_PROPOSAL_SUCCESS',
+        type: 'PROPOSAL_FORM_CREATION_SUCCESS',
         success
     }
 }
 
 export function createProposalFailure(failure) {
     return {
-        type: 'NEW_PROPOSAL_FAILURE',
+        type: 'PROPOSAL_FORM_CREATION_FAILURE',
         failure
     }
 }
@@ -29,7 +29,7 @@ export function updateProposalForm(field_name, field_value) {
 
 export function cleanProposalForm() {
     return {
-        type: 'CLEAN_PROPOSAL_FORM'
+        type: 'PROPOSAL_FORM_CLEAN_FORM'
     }
 }
 
@@ -56,13 +56,11 @@ export function submitProposal(proposal_data, session_token) {
         .then((response) => response.json())
         .then((data) => {
             if (data['success']) {
-                console.log("Proposal successfully submitted. (Debug statement - ProposalActions.jsx)");
                 dispatch(createProposalSuccess());
 
                 // Refresh the proposal list in the navigation bar
                 dispatch(loadUserProposalMetadata(session_token));
             } else {
-                console.log("Error: %o (Debug statement - ProposalActions.jsx)", data);
                 dispatch(createProposalFailure(data));
             }
         });
@@ -99,7 +97,6 @@ export function loadProposalFromServer(proposalUUID, sessionToken) {
         fetch('http://managr.dev.biz:8000/proposals/proposal', request_params)
         .then((response) => {
             if(!response.ok) {
-                console.log("Server response error: " + response.ok);
                 dispatch(proposalLoadFailure());
             }
             return response;
@@ -157,7 +154,7 @@ export function deleteProposal(proposalUUID, sessionToken) {
 
 export function cleanProposalView() {
     return {
-        type: 'RESET_PROPOSAL_VIEW'
+        type: 'PROPOSAL_RESET_VIEW'
     }
 }
 
