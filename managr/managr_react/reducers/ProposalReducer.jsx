@@ -75,12 +75,15 @@ export function proposal_form_description(state = '', action) {
     }
 }
 
-export function proposal_form_success(state = false, action) {
+export function proposal_form_success(state = {}, action) {
     switch(action.type) {
         case 'PROPOSAL_FORM_CREATION_SUCCESS':
-            return action.success;
+            return {
+                success: true,
+                proposal_uuid: action.proposal_uuid,
+            };
         case 'PROPOSAL_FORM_CLEAN_FORM':
-            return false;
+            return {};
         default:
             return state;
     }

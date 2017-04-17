@@ -48,13 +48,16 @@ export default (
             <Route path="/milestones" component={Milestones}/>
             <Route path="/finance" component={Finance}/>
             <Route path="/documents" component={DocumentsList}/>
-            <Route path="/create-bid" component={CreateBid}/>
-            <Route path="/update-bid" component={UpdateBid}/>
-            <Route path="/create-proposal" component={CreateProposal}/>
-            <Route path="/update-proposal" component={UpdateProposal}/>
-            <Route path="/past-projects" component={PastProjectsList}/>
+
+            <Route path="/create-bid/:proposal_uuid" component={CreateBid}/>
+            <Route path="/update-bid/:bid_uuid" component={UpdateBid}/>
             <Route path="/show-proposals" component={ShowProposals}/>
+            
+            <Route path="/create-proposal" component={CreateProposal}/>
             <Route path="/proposal/:proposal_uuid" component={Proposal}/>
+            <Route path="/update-proposal/:proposal_uuid" component={UpdateProposal}/>
+            
+            <Route path="/past-projects" component={PastProjectsList}/>
         </Route> {/* End NavAndHeader */}
     </Route> {/* End EnsureAuthenticated */}
 </Route>

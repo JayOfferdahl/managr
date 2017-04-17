@@ -3,44 +3,74 @@ import { connect } from 'react-redux';
 
 import ErrorsList from '../app_components/ErrorsList'
 
-import { submitProposal, updateProposalForm, resetProposalForm } from '../../actions/ProposalActions'
+import { submitProposal,
+         updateProposal,
+         updateProposalForm,
+         resetProposalForm } from '../../actions/ProposalActions'
 
 class ProposalForm extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            proposal_form_success_message: false,
+    // Pushes the router to the proposal page of the newly created/updated proposal.
+    componentDidUpdate(previous_props, previous_state) {
+        if(this.props.proposal_form_success.success && !previous_props.proposal_form_success.success) {
+            console.log("wat");
+            this.context.router.push("/proposal/" + this.props.proposal_form_success.proposal_uuid);
         }
     }
 
-    componentDidUpdate(previous_props, previous_state) {
-        if(this.props.proposal_form_success && !previous_props.proposal_form_success) {
-            this.props.handleReset();
-            this.setState({ proposal_form_success_message: true });
+    // When remounting the form, populate data if it's of type update. If not, clean it.
+    // TODO: If you're trying to fix the "wrong data after hitting the back/foward button" problem
+    // here by using componentWillRecieveProps or whatever, good luck. I could not get it fixed.
+    componentWillMount() {
+        if(this.props.update) {
+            this.populateProposalData.bind(this);
+            this.populateProposalData(this.props.proposal_data);
         }
+    }
+
+    componentWillUnmount() {
+        this.props.handleReset();
+    }
+
+    // Populates initial proposal form data. This method assumes the form supports an update function.
+    populateProposalData(proposal_data) {
+        // Setup dummy onChange event
+        let fieldUpdate = {};
+        fieldUpdate.target = {};
+        
+        _.forEach(proposal_data, (value, key) => {
+            fieldUpdate.target.name = key;
+            fieldUpdate.target.value = value;
+
+            this.handleChange(fieldUpdate);
+        })
     }
 
     handleChange(fieldUpdate) {
         this.props.updateField(fieldUpdate.target.name, fieldUpdate.target.value);
     }
 
+    // Submits the form for new proposal creation
     handleSubmit(submitEvent) {
         submitEvent.preventDefault();
-        this.setState({ proposal_form_success_message: false });
-        let sessionCookie = localStorage.getItem("managr_session_token");
-        this.props.submitNewProposal(this.props, sessionCookie);
+        this.props.submitNewProposal(this.props, this.getSessionToken());
+    }
+
+    // Submits the form for existing proposal update.
+    handleUpdate(submitEvent) {
+        submitEvent.preventDefault();
+        this.props.updateProposal(this.props, this.getSessionToken());
+    }
+
+    getSessionToken() {
+        return localStorage.getItem("managr_session_token");
     }
 
     render() {
-        let successMessage;
-        if(this.state.proposal_form_success_message) {
-            successMessage = <div className="alert alert-success proposal-success">Your proposal has been successfully created!</div>;
-        }
+        let submitMethod = this.props.update ? this.handleUpdate.bind(this) : this.handleSubmit.bind(this);
 
         return (
-            <form onSubmit={this.handleSubmit.bind(this)} className="proposal-form">
+            <form onSubmit={submitMethod} className="proposal-form">
                 <ErrorsList errors={this.props.proposal_form_errors} />
-                {successMessage}
                 <div className="proposal-form-section proposal-form-section-left">
                     <div className="form-group">   
                         <label htmlFor="title">Title</label>
@@ -89,7 +119,7 @@ class ProposalForm extends React.Component {
                 </div>
 
                 <button className="btn btn-warning proposal-form-submit">
-                    Create Project Proposal
+                    {this.props.submitMessage}
                 </button>
             </form>
         );
@@ -117,8 +147,9 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         updateField: (field_name, field_value) => dispatch(updateProposalForm(field_name, field_value)),
+        updateProposal: (form_fields_info, session_cookie) => dispatch(updateProposal(form_fields_info, session_cookie)),
         submitNewProposal: (form_fields_info, session_cookie) => dispatch(submitProposal(form_fields_info, session_cookie)),
-        handleReset: () => dispatch(resetProposalForm())
+        handleReset: () => dispatch(resetProposalForm()),
     };
 };
 

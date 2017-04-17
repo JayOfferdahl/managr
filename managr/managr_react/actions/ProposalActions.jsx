@@ -7,10 +7,11 @@ export function updateProposalFormField(field_name, field_value) {
     }
 }
 
-export function createProposalSuccess(success = true) {
+export function createProposalSuccess(proposal_uuid) {
     return {
         type: 'PROPOSAL_FORM_CREATION_SUCCESS',
-        success
+        success: true,
+        proposal_uuid: proposal_uuid,
     }
 }
 
@@ -56,7 +57,36 @@ export function submitProposal(proposal_data, session_token) {
         .then((response) => response.json())
         .then((data) => {
             if (data['success']) {
-                dispatch(createProposalSuccess());
+                dispatch(createProposalSuccess(data['success']));
+
+                // Refresh the proposal list in the navigation bar
+                dispatch(loadUserProposalMetadata(session_token));
+            } else {
+                dispatch(createProposalFailure(data));
+            }
+        });
+    };
+}
+
+export function updateProposal(proposal_data, session_token) {
+    // Add the session token to the request body
+    var data = JSON.parse(JSON.stringify(proposal_data))
+    data.token = session_token;
+
+    const request_params = { method: 'POST', body: JSON.stringify(data)};
+    return (dispatch) => {
+        fetch('http://managr.dev.biz:8000/proposals/update', request_params)
+        .then((response) => {
+            if (!response.ok) {
+                // Server response was not okay
+            }
+            return response;
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            // We can piggyback on createproposal actions since we forward to the same page.
+            if (data['success']) {
+                dispatch(createProposalSuccess(data['success']));
 
                 // Refresh the proposal list in the navigation bar
                 dispatch(loadUserProposalMetadata(session_token));

@@ -26,6 +26,10 @@ class ProposalTools extends React.Component {
         }
     }
 
+    handleBid() {
+        this.context.router.push("/create-bid/" + this.props.proposal_uuid);
+    }
+
     render () {
         if(this.props.owner == "true") {
             let deleteSuccess, toolBarClass;
@@ -33,8 +37,8 @@ class ProposalTools extends React.Component {
                 deleteSuccess = <p>This proposal has been deleted.</p>;
                 toolBarClass = "alert alert-warning proposal-success";
             } else {
-                deleteSuccess = <p>This proposal is live on the Managr contractor network.</p>;
-                toolBarClass = "alert alert-success proposal-success";
+                deleteSuccess = <p>{this.props.text}</p>;
+                toolBarClass = "alert alert-" + this.props.status + " proposal-success";
             }
 
             return (
@@ -45,7 +49,7 @@ class ProposalTools extends React.Component {
                             onClick={this.props.handleClick}
                             disabled={this.props.proposal_deleted}
                         >
-                            Edit
+                            {this.props.handleClickName}
                         </button>
                         <button
                             className="btn btn-sm btn-danger"
@@ -62,7 +66,7 @@ class ProposalTools extends React.Component {
             return (
                 <div className="alert alert-info proposal-success">
                     <div className="proposal-tool-buttons">
-                        <button className="btn btn-sm btn-primary" onClick={this.props.handleClick}>
+                        <button className="btn btn-sm btn-primary" onClick={this.handleBid.bind(this)}>
                             Bid
                         </button>
                     </div>

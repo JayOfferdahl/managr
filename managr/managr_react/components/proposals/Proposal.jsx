@@ -1,10 +1,11 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { LinkContainer } from 'react-router-bootstrap';
 
-import { connect } from 'react-redux';
 import { loadProposalFromServer } from '../../actions/ProposalActions';
 
-import ProposalTools from './ProposalTools'
+import ProposalTools from './ProposalTools';
+import ProposalLoadFailureMessage from './ProposalLoadFailureMessage';
 
 class Proposal extends React.Component {
     componentWillMount() {
@@ -20,34 +21,22 @@ class Proposal extends React.Component {
     }
 
     handleUpdateProposal() {
-        console.log("Update proposal");
-    }
-
-    handleCreateBid() {
-        console.log("Create bid");
+        this.context.router.push('/update-proposal/' + this.props.params.proposal_uuid);
     }
 
     render () {
         if(this.props.proposal_load_failure) {
-            return (
-                <div className="default-content">
-                    <h2>Error 404: <b>Project proposal not found</b></h2>
-                    <br/>
-                    <p>
-                        The proposal you're looking for no longer exists or never existed.&nbsp;
-                        <LinkContainer to="/show-proposals">
-                            <a>Try searching proposals here.</a>
-                        </LinkContainer>
-                    </p>
-                </div>
-            );
+            return <ProposalLoadFailureMessage />;
         } else {
             return (
                 <div className="default-content">
                     <ProposalTools
                         owner={this.props.proposal_owner}
-                        handleClick={this.props.proposal_owner == "true" ? this.handleUpdateProposal : this.handleCreateBid}
+                        handleClick={this.handleUpdateProposal.bind(this)}
+                        handleClickName="Edit"
                         proposal_uuid={this.props.params.proposal_uuid}
+                        text="This proposal is live on the Managr contractor network."
+                        status="success"
                     />
                     <h2>Project Proposal: <b>{this.props.proposal.title}</b></h2>
                     <br/>
@@ -63,6 +52,10 @@ class Proposal extends React.Component {
         }
     }
 };
+
+Proposal.contextTypes = {
+    router: React.PropTypes.object.isRequired
+}
 
 const mapStateToProps = (state) => {
     return {

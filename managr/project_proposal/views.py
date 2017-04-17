@@ -28,7 +28,7 @@ def newProposal(request):
             return JsonResponse({'error': 'Invalid session token.'})
 
         proposal = Proposal.objects.create_proposal(user, proposal_data)
-        return JsonResponse({'success': 'Your project proposal was successfully created!'})
+        return JsonResponse({'success': proposal.proposal_uuid})
     else:
         print("Proposal request - invalid (Debug statement - project_proposal/views.py)")
         errors = dict([(key, [str(error) for error in value]) for key, value in proposal_form.errors.items()])
@@ -47,13 +47,12 @@ def updateProposal(request):
         # Validate proposal object & user object exist
         try:
             user = ManagrUser.objects.get(session_token = proposal_data['token'])
-            proposal = Proposal.objects.get(project_uuid = proposal_data['proposal_uuid'])
+            proposal = Proposal.objects.get(proposal_uuid = proposal_data['proposal_uuid'])
         except ObjectDoesNotExist:
             return JsonResponse({'error': 'Invalid request.'})
 
-        # proposal = Proposal.objects.create_proposal(user, proposal_data)
-        print("Updated proposal (even though not really).")
-        return JsonResponse({'success': 'Your project proposal was successfully created!'})
+        proposal = Proposal.objects.update_proposal(proposal, proposal_data)
+        return JsonResponse({'success': proposal.proposal_uuid})
     else:
         print("Proposal update request - invalid (Debug statement - project_proposal/views.py)")
         errors = dict([(key, [str(error) for error in value]) for key, value in proposal_form.errors.items()])
