@@ -35,8 +35,8 @@ import Proposal from './components/proposals/Proposal'
 
 export default (
 <Route path="/" component={App}>
-    <Route path="/signup" component={SignupPage}></Route>
-    <Route path="/login" component={LoginPage}></Route>
+	<IndexRoute component={LoginPage} />
+    <Route path="/signup" component={SignupPage} />
     <Route component={EnsureAuthenticated}>
         <Route component={NavAndHeader}>
             <Route component={Overview}>

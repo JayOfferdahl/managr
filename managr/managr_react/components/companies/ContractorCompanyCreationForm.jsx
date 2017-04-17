@@ -14,8 +14,10 @@ import { states_array } from '../../assets/js/StatesArray';
 
 class ContractorCompanyCreationForm extends React.Component {
     componentDidUpdate(prevProps, prevState) {
-        ///if (this.props.creation_success == true && prevProps.creation_success == false) {
-        //}
+        if (this.props.creation_success == true && prevProps.creation_success == false) {
+            // Push to summary for now, probably want to redirect to some sort of company view in the future
+            this.context.router.push('/summary');
+        }
     }
 
     handleChange(fieldUpdate) {

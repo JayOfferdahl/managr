@@ -15,7 +15,6 @@ class RegistrationForm extends React.Component {
 			// Depending on how the user signed up, they will be redirected to different views
 			switch(this.props.user_type) {
 				case '0':
-					console.log('create contractor');
 					this.context.router.push('/create-company-0');
 					break;
 				case '1':
@@ -57,7 +56,7 @@ class RegistrationForm extends React.Component {
 						Sign Up
 					</button>
 				</div>
-				<LinkContainer to="/login" className="registration-form-no-account" onClick={this.props.handleReset.bind(this)}>
+				<LinkContainer to="/" className="registration-form-no-account" onClick={this.props.handleReset.bind(this)}>
                     <p>Already have an account? <Link className="link-normal">Login here.</Link></p>
                 </LinkContainer>
 			</form>

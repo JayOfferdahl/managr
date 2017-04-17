@@ -13,7 +13,7 @@ class LoginPage extends React.Component {
 	componentWillMount() {
 		if (this.props.location == null) {
 			// Component rendered as redirect
-			this.context.router.push('/login');
+			this.context.router.push('/');
 		}
 
 		const session_token = localStorage.getItem('managr_session_token');
