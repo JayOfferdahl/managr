@@ -100,7 +100,7 @@ def buildProposalsList():
             "start":    proposal.start_date,
             "end":      proposal.end_date,
             "uuid":     proposal.proposal_uuid
-            })
+        })
     return proposalList
 
 @csrf_exempt
@@ -109,6 +109,7 @@ def showProposals(request):
 
 # Returns a proposal object based on the proposal_uuid. If the requesting user owns the requested
 # proposal, a flag is set to true indicating so. In either case, the entire proposal is returned.
+# If the user does not own the proposal, it checks if they have a bid on the proposal.
 @csrf_exempt
 def getProposal(request):
     request_data = JSONParser().parse(BytesIO(request.body))
@@ -128,9 +129,22 @@ def getProposal(request):
         if proposal.owner == user:
             print("Request for proposal by owner. (Debug statement - project_proposal/views.py)")
             requestOwnsProposal = True
+            bidResponse = {}
         else:
             print("Request for proposal by viewer. (Debug statement - project_proposal/views.py)")
             requestOwnsProposal = False
+            bid = Bid.objects.get(owner = user, corresponding_proposal__proposal_uuid = proposal_uuid)
+            if bid:
+                bidResponse = {
+                    "contact_number": bid.contact_number,
+                    "budget": bid.budget,
+                    "start_date": bid.start_date,
+                    "end_date": bid.end_date,
+                    "description": bid.details['description'],
+                }
+            # If no bid was returned, return an empty bid response
+            else:
+                bidResponse = {}
 
         # Create proposal response
         proposalResponse = {
@@ -146,7 +160,8 @@ def getProposal(request):
         return JsonResponse({
             'success': True,
             'owner': requestOwnsProposal,
-            'proposal': proposalResponse
+            'proposal': proposalResponse,
+            'bid': bidResponse,
         })
 
 # Removes a proposal object from the database. Ensures the requesting using owns the proposal
