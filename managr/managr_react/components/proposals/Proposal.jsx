@@ -32,9 +32,9 @@ class Proposal extends React.Component {
             return <ProposalLoadFailureMessage />;
         } else {
             let bid;
-            if(this.props.proposal_owner == "false" && this.props.bid_in_progress) {
+            if(this.props.proposal_owner == "false")
                 bid = <Bid proposal_uuid={this.props.params.proposal_uuid} />;
-            }
+
             return (
                 <div className="default-content">
                     <ProposalTools
@@ -70,7 +70,6 @@ const mapStateToProps = (state) => {
         proposal: state.proposal_load_success,
         proposal_load_failure: state.proposal_load_failure,
         proposal_owner: state.proposal_owner,
-        bid_in_progress: state.bid_in_progress,
     };
 };
 

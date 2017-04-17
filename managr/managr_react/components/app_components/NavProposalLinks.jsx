@@ -41,9 +41,9 @@ class NavProposalLinks extends React.Component {
                 <div id="proposals" className="nav-secondary-category collapse in">
                 {
                     _.map(this.generateProposalTuples(this.props.proposal_metadata),
-                        (proposal) => {
+                        (proposal, index) => {
                         return (
-                            <LinkContainer className="nav-secondary-link" to={"/proposal/" + proposal.link}>
+                            <LinkContainer key={index} className="nav-secondary-link" to={"/proposal/" + proposal.link}>
                                 <a className="nav-secondary-link">
                                     {proposal.title}
                                 </a>

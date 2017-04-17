@@ -125,26 +125,31 @@ def getProposal(request):
         except ObjectDoesNotExist:
             return JsonResponse({'error': 'Invalid request.'})
         
+        bidResponse = {
+            "exists": False,
+        }
+
         # Check owner
         if proposal.owner == user:
             print("Request for proposal by owner. (Debug statement - project_proposal/views.py)")
             requestOwnsProposal = True
-            bidResponse = {}
         else:
             print("Request for proposal by viewer. (Debug statement - project_proposal/views.py)")
             requestOwnsProposal = False
-            bid = Bid.objects.get(owner = user, corresponding_proposal__proposal_uuid = proposal_uuid)
-            if bid:
+
+            try:
+                bid = Bid.objects.get(owner = user, corresponding_proposal__proposal_uuid = proposal_uuid)
                 bidResponse = {
+                    "exists": True,
                     "contact_number": bid.contact_number,
                     "budget": bid.budget,
                     "start_date": bid.start_date,
                     "end_date": bid.end_date,
                     "description": bid.details['description'],
                 }
-            # If no bid was returned, return an empty bid response
-            else:
-                bidResponse = {}
+            # If the bid doesn't exist, return nothing
+            except Bid.DoesNotExist:
+                pass
 
         # Create proposal response
         proposalResponse = {

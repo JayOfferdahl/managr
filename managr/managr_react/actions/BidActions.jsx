@@ -122,3 +122,17 @@ export function updateBid(bid_data, proposal_uuid, session_token) {
         });
     };
 }
+
+export function bidLoadData(bid_data) {
+    return {
+        type: 'BID_LOAD_BID_DATA',
+        bid_data,
+    };
+}
+
+export function bidExistsOnProposal(exists) {
+    return {
+        type: 'BID_EXISTS_ON_PROPOSAL',
+        exists,
+    };
+}

@@ -41,9 +41,9 @@ class NavBidLinks extends React.Component {
                 <div id="bids" className="nav-secondary-category collapse in">
                 {
                     _.map(this.generateBidTuples(this.props.bid_metadata),
-                        (bid) => {
+                        (bid, index) => {
                         return (
-                            <LinkContainer className="nav-secondary-link" to={"/proposal/" + bid.link}>
+                            <LinkContainer key={index} className="nav-secondary-link" to={"/proposal/" + bid.link}>
                                 <a className="nav-secondary-link">
                                     {bid.title}
                                 </a>

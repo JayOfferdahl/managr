@@ -88,3 +88,21 @@ export function bid_form_errors(state = {}, action) {
             return state;
     }
 }
+
+export function bid_exists_on_proposal(state = false, action) {
+    switch(action.type) {
+        case 'BID_EXISTS_ON_PROPOSAL':
+            return action.exists;
+        default:
+            return state;
+    }
+}
+
+export function bid_data(state = {}, action) {
+    switch(action.type) {
+        case 'BID_LOAD_BID_DATA':
+            return action.bid_data;
+        default:
+            return state;
+    }
+}

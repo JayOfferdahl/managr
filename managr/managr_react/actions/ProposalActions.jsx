@@ -1,4 +1,5 @@
 import { loadUserProposalMetadata } from './AppActions';
+import { bidLoadData, bidExistsOnProposal } from './BidActions';
 
 export function updateProposalFormField(field_name, field_value) {
     return {
@@ -136,6 +137,12 @@ export function loadProposalFromServer(proposalUUID, sessionToken) {
             if(data['success']) {
                 dispatch(proposalLoadSuccess(data['proposal']));
                 dispatch(proposalLoadOwner(data['owner']));
+
+                // If the requesting user doesn't own the proposal, check for an existing bid
+                if(!data['owner'] && data['bid']['exists']) {
+                    dispatch(bidExistsOnProposal(data['bid']['exists']));
+                    dispatch(bidLoadData(data['bid']));
+                }
             } else {
                 dispatch(proposalLoadFailure());
             }
