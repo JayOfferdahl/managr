@@ -33,7 +33,9 @@ import { proposal_form_title,
 import { proposals } from './ShowProposalsReducer';
 
 import { proposal_metadata_load_errors,
-         proposal_metadata } from './AppReducer';
+         proposal_metadata,
+         bid_metadata_load_errors,
+         bid_metadata } from './AppReducer';
 
 import { bid_in_progress,
          bid_form_contact_number,
@@ -87,6 +89,8 @@ export default combineReducers ({
     // Navigation proposal reducers
     proposal_metadata_load_errors,
     proposal_metadata,
+    bid_metadata_load_errors,
+    bid_metadata,
 
     // Bid reducers
     bid_in_progress,

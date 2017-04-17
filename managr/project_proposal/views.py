@@ -259,3 +259,33 @@ def deleteBid(request):
     # else:
     #     return JsonResponse({'error': 'Invalid session token.'})
     pass
+
+# Returns an ordered dictionary of bids with their corresponding proposal titles as keys and the
+# proposal_uuids as values. The proposal_uuids are used to link the front end to a specific proposal.
+# Note: returns bids belonging only to the requesting user
+@csrf_exempt
+def getUserBidMetadata(request):
+    session_token = JSONParser().parse(BytesIO(request.body))
+    print("Request for bid metadata.")
+
+    if session_token:
+        # Validate user exists
+        try:
+            user = ManagrUser.objects.get(session_token = session_token)
+        except ManagrUser.DoesNotExist:
+            return JsonResponse({'error': 'Invalid request.'})
+
+        # Generate a list of project proposals and their ids
+        bids = Bid.objects.filter(owner = user).order_by('corresponding_proposal__title')
+
+        bid_metadata = OrderedDict()
+
+        for bid in bids:
+            bid_metadata[bid.corresponding_proposal.title] = bid.corresponding_proposal.proposal_uuid
+
+        return JsonResponse({
+            'success': 'Proposals returned for user.',
+            'data': bid_metadata
+        })
+    else:
+        return JsonResponse({'error': 'Invalid session token.'})

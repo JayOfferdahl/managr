@@ -4,6 +4,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { connect } from 'react-redux';
 
 import '../../assets/css/App.css';
+import NavBidLinks from './NavBidLinks';
 import NavProposalLinks from './NavProposalLinks';
 
 class NavBar extends React.Component {
@@ -51,17 +52,7 @@ class NavBar extends React.Component {
                 <NavProposalLinks />
 
                 {/* Bids section */}
-                <div className="nav-main-category" data-toggle="collapse" data-target="#bids">
-                    <p>Bids</p><span className="glyphicon glyphicon-chevron-down"></span>
-                </div>
-                <div id="bids" className="nav-secondary-category collapse in">
-                    <LinkContainer className="nav-secondary-link" to="/show-proposals">
-                        <a className="nav-secondary-link">
-                            <span className="glyphicon glyphicon-search"></span>
-                            Search Proposals
-                        </a>
-                    </LinkContainer>
-                </div>
+                <NavBidLinks />
 
                 {/* Past projects section */}
                 <div className="nav-main-category" data-toggle="collapse" data-target="#past-projects">

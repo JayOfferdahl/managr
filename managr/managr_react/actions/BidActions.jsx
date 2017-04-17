@@ -1,3 +1,6 @@
+import { loadUserBidMetadata } from './AppActions';
+
+
 export function bidBeginBidProcess() {
     return {
         type: 'BID_BEGIN_BID_PROCESS'
@@ -84,6 +87,7 @@ export function submitBid(bid_data, proposal_uuid, session_token) {
                 console.log("Successfully made the bid.");
                 dispatch(createBidSuccess(data['success']));
                 dispatch(resetBidForm());
+                dispatch(loadUserBidMetadata(session_token));
             } else {
                 dispatch(createBidFailure(data));
             }
@@ -111,6 +115,7 @@ export function updateBid(bid_data, proposal_uuid, session_token) {
             if (data['success']) {
                 dispatch(createBidSuccess(data['success']));
                 dispatch(resetBidForm());
+                dispatch(loadUserBidMetadata(session_token));
             } else {
                 dispatch(createBidFailure(data));
             }

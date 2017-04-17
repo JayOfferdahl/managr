@@ -3,7 +3,6 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { connect } from 'react-redux';
 
 import { loadUserProposalMetadata } from '../../actions/AppActions';
-import '../../assets/css/App.css';
 
 class NavProposalLinks extends React.Component {
     componentWillMount() {

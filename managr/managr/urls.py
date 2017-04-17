@@ -40,9 +40,10 @@ urlpatterns = [
     url(r'^proposals/proposal', project_proposal_views.getProposal, name='proposal'),
     url(r'^proposals/update', project_proposal_views.updateProposal, name='update_proposal'),
 
-    url(r'^bids/show-proposals', project_proposal_views.showProposals, name='show_proposals'),
-    url(r'^bids/new', project_proposal_views.newBid, name='new_bid'),
-    url(r'^bids/update', project_proposal_views.updateBid, name='update_bid'),
     url(r'^bids/delete', project_proposal_views.deleteBid, name='delete_bid'),
+    url(r'^bids/get-user-bid-metadata', project_proposal_views.getUserBidMetadata, name="get_user_bid_metadata"),
+    url(r'^bids/new', project_proposal_views.newBid, name='new_bid'),
+    url(r'^bids/show-proposals', project_proposal_views.showProposals, name='show_proposals'),
+    url(r'^bids/update', project_proposal_views.updateBid, name='update_bid'),
     # End project_proposal_views
 ]
