@@ -10,6 +10,8 @@ from rest_framework.parsers import JSONParser
 from managr_entities.app_models.managr_user import ManagrUser
 from project_proposal.app_models.proposal import Proposal
 from project_proposal.app_forms.proposal_form import ProposalForm
+from project_proposal.app_models.bid import Bid
+from project_proposal.app_forms.bid_form import BidForm
 
 # Creates a new proposal object in the database assigned to the requesting user.
 # Error messages returned if the form is invalid or the user doesn't exist.
@@ -175,3 +177,85 @@ def deleteProposal(request):
             return JsonResponse({'error': 'Invalid session token.'})
     else:
         return JsonResponse({'error': 'Invalid session token.'})
+
+# Creates a new proposal object in the database assigned to the requesting user.
+# Error messages returned if the form is invalid or the user doesn't exist.
+@csrf_exempt
+def newBid(request):
+    bid_data = JSONParser().parse(BytesIO(request.body))
+    bid_form = BidForm(bid_data)
+    print(bid_data['token'])
+    print(bid_data['proposal_uuid'])
+
+    if bid_form.is_valid():
+        print("Bid request - valid (Debug statement - project_proposal/views.py)")
+
+        # Validate user & proposal exists
+        try:
+            user = ManagrUser.objects.get(session_token = bid_data['token'])
+            print("It's the proposal...")
+            proposal = Proposal.objects.get(proposal_uuid = bid_data['proposal_uuid'])
+        except ObjectDoesNotExist:
+            return JsonResponse({'error': 'Invalid request.'})
+
+        bid = Bid.objects.create_bid(user, proposal, bid_data)
+        return JsonResponse({'success': proposal.proposal_uuid})
+    else:
+        print("Bid request - invalid (Debug statement - project_proposal/views.py)")
+        errors = dict([(key, [str(error) for error in value]) for key, value in bid_form.errors.items()])
+        return JsonResponse(errors)
+
+# Updates a proposal object in the database belonging to the requesting user.
+# Error messages returned if the form is invalid or the user/proposal doesn't exist.
+@csrf_exempt
+def updateBid(request):
+    # proposal_data = JSONParser().parse(BytesIO(request.body))
+    # proposal_form = ProposalForm(proposal_data)
+
+    # if proposal_form.is_valid():
+    #     print("Bid update request - valid (Debug statement - project_proposal/views.py)")
+        
+    #     # Validate proposal object & user object exist
+    #     try:
+    #         user = ManagrUser.objects.get(session_token = proposal_data['token'])
+    #         proposal = Proposal.objects.get(proposal_uuid = proposal_data['proposal_uuid'])
+    #     except ObjectDoesNotExist:
+    #         return JsonResponse({'error': 'Invalid request.'})
+
+    #     proposal = Proposal.objects.update_proposal(proposal, proposal_data)
+    #     return JsonResponse({'success': proposal.proposal_uuid})
+    # else:
+    #     print("Bid update request - invalid (Debug statement - project_proposal/views.py)")
+    #     errors = dict([(key, [str(error) for error in value]) for key, value in proposal_form.errors.items()])
+    #     return JsonResponse(errors)
+    pass
+
+# Removes a proposal object from the database. Ensures the requesting using owns the proposal
+# object before deleting it.
+@csrf_exempt
+def deleteBid(request):
+    # request_data = JSONParser().parse(BytesIO(request.body))
+
+    # proposal_uuid = request_data['proposal_uuid']
+    # session_token = request_data['session_token']
+
+    # if session_token and proposal_uuid:
+    #     # Validate bid object & user object exist
+    #     try:
+    #         bid = Proposal.objects.get(proposal_uuid = proposal_uuid)
+    #         user = ManagrUser.objects.get(session_token = session_token)
+    #     except ObjectDoesNotExist:
+    #         return JsonResponse({'error': 'Invalid request.'})
+        
+    #     # Check owner
+    #     if bid.owner == user:
+    #         print("Request for bid delete by owner. (Debug statement - project_proposal/views.py)")
+    #         bid.delete()
+    #         print("Bid deleted by owner. (Debug statement - project_proposal/views.py)")
+    #         return JsonResponse({'success': True })
+    #     else:
+    #         print("Request for bid delete by viewer. (Debug statement - project_proposal/views.py)")
+    #         return JsonResponse({'error': 'Invalid session token.'})
+    # else:
+    #     return JsonResponse({'error': 'Invalid session token.'})
+    pass

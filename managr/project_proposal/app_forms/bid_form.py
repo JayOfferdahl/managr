@@ -5,25 +5,17 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.forms import ModelForm
 
-from project_proposal.app_models.proposal import Proposal
+from project_proposal.app_models.bid import Bid
 
-class ProposalForm(ModelForm):
+class BidForm(ModelForm):
     class Meta:
-        model = Proposal
-        fields = ['title', 'contact_number', 'address', 'budget', 'start_date', 'end_date']
+        model = Bid
+        fields = ['contact_number', 'budget', 'start_date', 'end_date']
 
         error_messages = {
-            'title': {
-                'required': 'No title given',
-                'max_length': 'The title is too long (max 255 characters)'
-            },
             'contact_number': {
                 'required': 'No contact_number given',
                 'max_length': 'The number is too long, please use the form \"(xxx) xxx-xxxx\"'
-            },
-            'address': {
-                'required': 'No address given',
-                'max_length': 'The address is too long (max 255 characters)'
             },
             'budget': {
                 'required': 'No budget given',
@@ -81,7 +73,7 @@ class ProposalForm(ModelForm):
         return start_date
 
     def clean(self):
-        cleaned_data = super(ProposalForm, self).clean()
+        cleaned_data = super(BidForm, self).clean()
 
         # Verify start date comes before end date
         start_date = cleaned_data.get('start_date')

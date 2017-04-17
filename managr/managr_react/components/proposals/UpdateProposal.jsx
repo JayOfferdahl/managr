@@ -21,10 +21,6 @@ class UpdateProposal extends React.Component {
         }
     }
 
-    handleUpdateProposal() {
-        console.log("Updating Proposal.");
-    }
-
     handleCancelUpdate() {
         this.context.router.push("/proposal/" + this.props.params.proposal_uuid);
     }

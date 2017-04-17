@@ -2,3 +2,5 @@ local_settings.py
 *.pyc
 node_modules
 bundles
+
+managr/npm-debug\.log

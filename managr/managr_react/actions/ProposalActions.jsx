@@ -164,7 +164,7 @@ export function deleteProposal(proposalUUID, sessionToken) {
     
     const request_params = { method: 'POST', body: JSON.stringify(data) };
     return (dispatch) => {
-        fetch('http://managr.dev.biz:8000/proposals/delete-proposal', request_params)
+        fetch('http://managr.dev.biz:8000/proposals/delete', request_params)
         .then((response) => {
             if(!response.ok) {
                 console.log("Server response error: " + response.ok);

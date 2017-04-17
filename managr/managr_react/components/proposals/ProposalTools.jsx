@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { connect } from 'react-redux';
+import { beginBidProcess, cancelBidProcess } from '../../actions/BidActions';
 import { deleteProposal, resetProposalView } from '../../actions/ProposalActions';
 
 class ProposalTools extends React.Component {
@@ -8,17 +9,19 @@ class ProposalTools extends React.Component {
         if (this.props.proposal_deleted == true && prevProps.proposal_deleted == false) {
             // this.props.handleReset();
             // this.context.router.push('/summary');
-            // What should we do here?
+            // What should we do here? Right now, it just says the proposal is deleted but stays on page.
         }
     }
 
+    // If we're changing proposal, force update
     componentWillReceiveProps(next_props) {
-        // If we're changing proposal, force update
         if(next_props.proposal_uuid != this.props.proposal_uuid) {
             this.props.resetProposalView();
         }
     }
 
+    // Handles the deletion of a proposal object by first confirming that the user wishes to delete it,
+    // then calls the deleteProposal action.
     handleDelete(submitEvent) {
         if(!this.props.proposal_deleted && confirm("Are you sure you want to delete this proposal?")) {
             let session_token = localStorage.getItem("managr_session_token");
@@ -26,8 +29,13 @@ class ProposalTools extends React.Component {
         }
     }
 
-    handleBid() {
-        this.context.router.push("/create-bid/" + this.props.proposal_uuid);
+    // Updates state to reflect that a bid is in progress on the proposal page.
+    handleBidStart() {
+        this.props.beginBidProcess();
+    }
+
+    handleBidCancel() {
+        this.props.cancelBidProcess();
     }
 
     render () {
@@ -63,14 +71,30 @@ class ProposalTools extends React.Component {
                 </div>
             );
         } else {
+            let bidStatus, toolBarClass;
+            if(this.props.bid_in_progress) {
+                bidStatus = {
+                    handleClick: this.handleBidCancel.bind(this),
+                    handleClickName: "Cancel",
+                    statusText: "To submit a bid, fill out the form and click 'Create Bid'."
+                };
+                toolBarClass = "btn-default"
+            } else {
+                bidStatus = {
+                    handleClick: this.handleBidStart.bind(this),
+                    handleClickName: "Bid",
+                    statusText: "This project proposal is active. To create a bid on it, click 'Bid'."
+                };
+                toolBarClass = "btn-primary"
+            }
             return (
                 <div className="alert alert-info proposal-success">
                     <div className="proposal-tool-buttons">
-                        <button className="btn btn-sm btn-primary" onClick={this.handleBid.bind(this)}>
-                            Bid
+                        <button className={"btn btn-sm " + toolBarClass} onClick={bidStatus.handleClick}>
+                            {bidStatus.handleClickName}
                         </button>
                     </div>
-                    <p>This project proposal is active. To create a bid on it, click 'Bid'.</p>
+                    <p>{bidStatus.statusText}</p>
                 </div>
             );
         }
@@ -83,6 +107,7 @@ ProposalTools.contextTypes = {
 
 const mapStateToProps = (state) => {
     return {
+        bid_in_progress: state.bid_in_progress,
         proposal_deleted: state.proposal_deleted,
     };
 };
@@ -90,6 +115,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         deleteProposal: (proposal_uuid, session_token) => dispatch(deleteProposal(proposal_uuid, session_token)),
+        beginBidProcess: () => dispatch(beginBidProcess()),
+        cancelBidProcess: () => dispatch(cancelBidProcess()),
         resetProposalView: () => dispatch(resetProposalView()),
     };
 };

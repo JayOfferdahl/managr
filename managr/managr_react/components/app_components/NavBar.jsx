@@ -54,7 +54,7 @@ class NavBar extends React.Component {
                 <div className="nav-main-category" data-toggle="collapse" data-target="#bids">
                     <p>Bids</p><span className="glyphicon glyphicon-chevron-down"></span>
                 </div>
-                <div id="bids" className="collapse nav-secondary-category">
+                <div id="bids" className="nav-secondary-category collapse in">
                     <LinkContainer className="nav-secondary-link" to="/show-proposals">
                         <a className="nav-secondary-link">
                             <span className="glyphicon glyphicon-search"></span>
@@ -67,7 +67,7 @@ class NavBar extends React.Component {
                 <div className="nav-main-category" data-toggle="collapse" data-target="#past-projects">
                     <p>Past Projects</p><span className="glyphicon glyphicon-chevron-down"></span>
                 </div>
-                <div id="past-projects" className="collapse nav-secondary-category">
+                <div id="past-projects" className="nav-secondary-category collapse in">
                     <LinkContainer className="nav-secondary-link" to="/past-projects">
                         <a className="nav-secondary-link">
                             <span className="glyphicon glyphicon-folder-close"></span>

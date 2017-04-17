@@ -12,7 +12,6 @@ class ProposalForm extends React.Component {
     // Pushes the router to the proposal page of the newly created/updated proposal.
     componentDidUpdate(previous_props, previous_state) {
         if(this.props.proposal_form_success.success && !previous_props.proposal_form_success.success) {
-            console.log("wat");
             this.context.router.push("/proposal/" + this.props.proposal_form_success.proposal_uuid);
         }
     }

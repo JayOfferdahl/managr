@@ -39,7 +39,7 @@ class NavProposalLinks extends React.Component {
                 <div className="nav-main-category" data-toggle="collapse" data-target="#proposals">
                         <p>Proposals</p><span className="glyphicon glyphicon-chevron-down"></span>
                 </div>
-                <div id="proposals" className="collapse nav-secondary-category">
+                <div id="proposals" className="nav-secondary-category collapse in">
                 {
                     _.map(this.generateProposalTuples(this.props.proposal_metadata),
                         (proposal) => {

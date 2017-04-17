@@ -2,7 +2,6 @@ import uuid
 
 from Crypto import Random
 from django.db import models
-from managr_entities.app_models.managr_user import ManagrUser
 
 class ProposalManager(models.Manager):
     def create_proposal(self, user, proposal_data):
