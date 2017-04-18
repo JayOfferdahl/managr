@@ -28,6 +28,7 @@ import { proposal_form_title,
          proposal_load_success,
          proposal_load_failure,
          proposal_owner,
+         proposal_update_in_progress,
          proposal_deleted } from './ProposalReducer';
 
 import { proposals } from './ShowProposalsReducer';
@@ -82,6 +83,7 @@ export default combineReducers ({
     proposal_load_success,
     proposal_load_failure,
     proposal_owner,
+    proposal_update_in_progress,
     proposal_deleted,
 
     // View proposal reducers

@@ -1,30 +1,26 @@
 import React from 'react';
+
 import { connect } from 'react-redux';
 import { LinkContainer } from 'react-router-bootstrap';
-
 import { cancelBidProcess } from '../../actions/BidActions';
-import { loadProposalFromServer } from '../../actions/ProposalActions';
+import { loadProposalFromServer, cancelUpdateProposal } from '../../actions/ProposalActions';
+import { getSessionToken } from '../../assets/js/app.jsx';
 
 import Bid from '../bids/Bid';
-import ProposalTools from './ProposalTools';
+import ProposalToolBar from './ProposalToolBar';
 import ProposalLoadFailureMessage from './ProposalLoadFailureMessage';
 
 class Proposal extends React.Component {
     componentWillMount() {
-        let session_token = localStorage.getItem("managr_session_token");
-        this.props.loadProposalFromServer(this.props.params.proposal_uuid, session_token);
+        this.props.loadProposalFromServer(this.props.params.proposal_uuid);
         this.props.cancelBidProcess();
+        this.props.cancelUpdateProposal();
     };
 
     componentWillReceiveProps(next_props) {
         if(next_props.params.proposal_uuid != this.props.params.proposal_uuid) {
-            let session_token = localStorage.getItem("managr_session_token");
-            this.props.loadProposalFromServer(next_props.params.proposal_uuid, session_token);
+            this.props.loadProposalFromServer(next_props.params.proposal_uuid);
         }
-    }
-
-    handleUpdateProposal() {
-        this.context.router.push('/update-proposal/' + this.props.params.proposal_uuid);
     }
 
     render () {
@@ -32,19 +28,12 @@ class Proposal extends React.Component {
             return <ProposalLoadFailureMessage />;
         } else {
             let bid;
-            if(this.props.proposal_owner == "false")
+            if(!this.props.proposal_owner)
                 bid = <Bid proposal_uuid={this.props.params.proposal_uuid} />;
 
             return (
                 <div className="default-content">
-                    <ProposalTools
-                        owner={this.props.proposal_owner}
-                        handleClick={this.handleUpdateProposal.bind(this)}
-                        handleClickName="Edit"
-                        proposal_uuid={this.props.params.proposal_uuid}
-                        text="This proposal is live on the Managr contractor network."
-                        status="success"
-                    />
+                    <ProposalToolBar proposal_uuid={this.props.params.proposal_uuid} update={this.props.proposal_update_in_progress} />
                     <h2>Project Proposal: <b>{this.props.proposal.title}</b></h2>
                     <br/>
                     <p><b>Contact Number:</b> {this.props.proposal.contact_number}</p>
@@ -70,13 +59,15 @@ const mapStateToProps = (state) => {
         proposal: state.proposal_load_success,
         proposal_load_failure: state.proposal_load_failure,
         proposal_owner: state.proposal_owner,
+        proposal_update_in_progress: state.proposal_update_in_progress,
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        loadProposalFromServer: (proposal_uuid, session_token) => dispatch(loadProposalFromServer(proposal_uuid, session_token)),
+        loadProposalFromServer: (proposal_uuid) => dispatch(loadProposalFromServer(proposal_uuid, getSessionToken())),
         cancelBidProcess: () => dispatch(cancelBidProcess()),
+        cancelUpdateProposal: () => dispatch(cancelUpdateProposal()),
     };
 };
 

@@ -3,18 +3,17 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { connect } from 'react-redux';
 
 import { loadUserProposalMetadata } from '../../actions/AppActions';
+import { getSessionToken } from '../../assets/js/app.jsx';
 
 class NavProposalLinks extends React.Component {
     componentWillMount() {
-        var token = localStorage.getItem("managr_session_token");
-        this.props.loadUserProposalMetadata(token);
+        this.props.loadUserProposalMetadata();
     }
 
     componentWillReceiveProps(next_props) {
         // If we detect a proposal deletion, update the navbar.
         if(next_props.proposal_deleted != this.props.proposal_deleted && next_props.proposal_deleted == true) {
-            let session_token = localStorage.getItem("managr_session_token");
-            this.props.loadUserProposalMetadata(session_token);
+            this.props.loadUserProposalMetadata();
         }
     }
 
@@ -73,7 +72,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        loadUserProposalMetadata: (session_token) => dispatch(loadUserProposalMetadata(session_token)),
+        loadUserProposalMetadata: () => dispatch(loadUserProposalMetadata(getSessionToken())),
     };
 };
 

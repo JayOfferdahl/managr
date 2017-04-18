@@ -69,6 +69,31 @@ export function submitProposal(proposal_data, session_token) {
     };
 }
 
+export function beginUpdateProposalProcess() {
+    return {
+        type: 'PROPOSAL_BEGIN_UPDATE_PROCESS'
+    };
+}
+
+export function cancelUpdateProposalProcess() {
+    return {
+        type: 'PROPOSAL_CANCEL_UPDATE_PROCESS'
+    };
+}
+
+export function beginUpdateProposal() {
+    return (dispatch) => {
+        dispatch(beginUpdateProposalProcess());
+    };
+}
+
+export function cancelUpdateProposal() {
+    return (dispatch) => {
+        dispatch(cancelUpdateProposalProcess());
+        dispatch(resetProposalForm());
+    };
+}
+
 export function updateProposal(proposal_data, session_token) {
     // Add the session token to the request body
     var data = JSON.parse(JSON.stringify(proposal_data))
@@ -150,17 +175,15 @@ export function loadProposalFromServer(proposalUUID, sessionToken) {
     };
 }
 
-export function proposalDeleteSuccess(success = true) {
+export function proposalDeleteSuccess() {
     return {
-        type: 'PROPOSAL_DELETE_SUCCESS',
-        success
+        type: 'PROPOSAL_DELETE_SUCCESS'
     }
 }
 
-export function proposalDeleteFailure(failure) {
+export function proposalDeleteFailure() {
     return {
-        type: 'PROPOSAL_DELETE_FAILURE',
-        failure
+        type: 'PROPOSAL_DELETE_FAILURE'
     }
 }
 
@@ -183,7 +206,7 @@ export function deleteProposal(proposalUUID, sessionToken) {
             if(data['success']) {
                 dispatch(proposalDeleteSuccess());
             } else {
-                dispatch(proposalDeleteFailure(data['error']));
+                dispatch(proposalDeleteFailure());
             }
         });
     };

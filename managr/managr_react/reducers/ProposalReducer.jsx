@@ -109,7 +109,7 @@ export function proposal_load_success(state = {}, action) {
     }
 }
 
-export function proposal_load_failure(state = '', action) {
+export function proposal_load_failure(state = true, action) {
     switch(action.type) {
         case 'PROPOSAL_LOAD_FAILURE':
             return true;
@@ -120,24 +120,35 @@ export function proposal_load_failure(state = '', action) {
     }
 }
 
-export function proposal_owner(state = '', action) {
+export function proposal_owner(state = false, action) {
     switch(action.type) {
         case 'PROPOSAL_LOADED_BY_OWNER':
-            if(action.owner == false)
-                return "false";
+            if(!action.owner)
+                return false;
             else
-                return "true";
+                return true;
         default:
             return state;
     }
 }
 
-export function proposal_deleted(state = '', action) {
+export function proposal_update_in_progress(state = false, action) {
+    switch(action.type) {
+        case 'PROPOSAL_BEGIN_UPDATE_PROCESS':
+            return true;
+        case 'PROPOSAL_CANCEL_UPDATE_PROCESS':
+            return false;
+        default:
+            return state;
+    }
+}
+
+export function proposal_deleted(state = false, action) {
     switch(action.type) {
         case 'PROPOSAL_DELETE_SUCCESS':
-            return action.success;
+            return true;
         case 'PROPOSAL_DELETE_FAILURE':
-            return action.failure;
+            return false;
         case 'PROPOSAL_RESET_VIEW':
             return false;
         default:

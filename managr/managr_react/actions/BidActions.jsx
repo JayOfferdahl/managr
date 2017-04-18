@@ -1,6 +1,5 @@
 import { loadUserBidMetadata } from './AppActions';
 
-
 export function bidBeginBidProcess() {
     return {
         type: 'BID_BEGIN_BID_PROCESS'

@@ -1,12 +1,13 @@
 import React from 'react';
+
 import { connect } from 'react-redux';
-
-import ErrorsList from '../app_components/ErrorsList'
-
+import { getSessionToken } from '../../assets/js/app.jsx';
 import { submitProposal,
          updateProposal,
          updateProposalForm,
-         resetProposalForm } from '../../actions/ProposalActions'
+         resetProposalForm } from '../../actions/ProposalActions';
+
+import ErrorsList from '../app_components/ErrorsList';
 
 class ProposalForm extends React.Component {
     // Pushes the router to the proposal page of the newly created/updated proposal.
@@ -51,17 +52,13 @@ class ProposalForm extends React.Component {
     // Submits the form for new proposal creation
     handleSubmit(submitEvent) {
         submitEvent.preventDefault();
-        this.props.submitNewProposal(this.props, this.getSessionToken());
+        this.props.submitNewProposal(this.props);
     }
 
     // Submits the form for existing proposal update.
     handleUpdate(submitEvent) {
         submitEvent.preventDefault();
-        this.props.updateProposal(this.props, this.getSessionToken());
-    }
-
-    getSessionToken() {
-        return localStorage.getItem("managr_session_token");
+        this.props.updateProposal(this.props);
     }
 
     render() {
@@ -146,8 +143,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         updateField: (field_name, field_value) => dispatch(updateProposalForm(field_name, field_value)),
-        updateProposal: (form_fields_info, session_cookie) => dispatch(updateProposal(form_fields_info, session_cookie)),
-        submitNewProposal: (form_fields_info, session_cookie) => dispatch(submitProposal(form_fields_info, session_cookie)),
+        updateProposal: (form_fields_info) => dispatch(updateProposal(form_fields_info, getSessionToken())),
+        submitNewProposal: (form_fields_info) => dispatch(submitProposal(form_fields_info, getSessionToken())),
         handleReset: () => dispatch(resetProposalForm()),
     };
 };
