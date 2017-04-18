@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { LinkContainer } from 'react-router-bootstrap';
 import { cancelBidProcess } from '../../actions/BidActions';
-import { loadProposalFromServer, cancelUpdateProposal } from '../../actions/ProposalActions';
+import { loadProposalFromServer, cancelUpdateProposal, resetProposalView } from '../../actions/ProposalActions';
 import { getSessionToken } from '../../assets/js/app.jsx';
 
 import Bid from '../bids/Bid';
@@ -13,13 +13,13 @@ import ProposalLoadFailureMessage from './ProposalLoadFailureMessage';
 class Proposal extends React.Component {
     componentWillMount() {
         this.props.loadProposalFromServer(this.props.params.proposal_uuid);
-        this.props.cancelBidProcess();
-        this.props.cancelUpdateProposal();
+        this.props.resetProposalView();
     };
 
     componentWillReceiveProps(next_props) {
         if(next_props.params.proposal_uuid != this.props.params.proposal_uuid) {
             this.props.loadProposalFromServer(next_props.params.proposal_uuid);
+            this.props.resetProposalView();
         }
     }
 
@@ -50,10 +50,6 @@ class Proposal extends React.Component {
     }
 };
 
-Proposal.contextTypes = {
-    router: React.PropTypes.object.isRequired
-}
-
 const mapStateToProps = (state) => {
     return {
         proposal: state.proposal_load_success,
@@ -66,8 +62,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         loadProposalFromServer: (proposal_uuid) => dispatch(loadProposalFromServer(proposal_uuid, getSessionToken())),
-        cancelBidProcess: () => dispatch(cancelBidProcess()),
-        cancelUpdateProposal: () => dispatch(cancelUpdateProposal()),
+        resetProposalView: () => dispatch(resetProposalView()),
     };
 };
 

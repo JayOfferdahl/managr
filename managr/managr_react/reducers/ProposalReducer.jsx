@@ -104,6 +104,8 @@ export function proposal_load_success(state = {}, action) {
     switch(action.type) {
         case 'PROPOSAL_LOAD_SUCCESS':
             return action.data;
+        case 'PROPOSAL_LOAD_FAILURE':
+            return {};
         default:
             return state;
     }

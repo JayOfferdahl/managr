@@ -12,72 +12,77 @@ class BidTools extends React.Component {
         }
     }
 
-    // Updates state to reflect that a bid is in progress on the bid page.
+    // Updates state to reflect that a bid is in progress on the proposal page.
     handleBidStart() {
         this.props.beginBidProcess();
     }
 
+    // Updates state to reflect that a bid process is not in progress on the proposal page
     handleBidCancel() {
         this.props.cancelBidProcess();
     }
 
+    handleBeginUpdateBid() {
+        console.log("Beginning the update bid process not implemented.");
+    }
+
+    handleCancelUpdateBid() {
+        console.log("Canceling the update bid process not implemented.");
+    }
+
     render () {
-        if(this.props.owner == "true") {
-            let deleteSuccess, toolBarClass;
-            if(this.props.proposal_deleted) {
-                deleteSuccess = <p>This proposal has been deleted.</p>;
-                toolBarClass = "alert alert-warning proposal-success";
-            } else {
-                deleteSuccess = <p>{this.props.text}</p>;
-                toolBarClass = "alert alert-" + this.props.status + " proposal-success";
+        let toolFunction = {}, toolStatus = {};
+        // If a bid exists on this proposal, show edit/cancel & delete buttons
+        if(this.props.bid_exists) {
+            if(this.props.update_in_progress) {
+                toolFunction.method = this.handleCancelUpdateBid.bind(this);
+                toolFunction.text = "Cancel";
+                toolStatus.text = "To finish updating your bid, click 'Update Bid'.";
+                toolStatus.class = "info";
             }
+            toolFunction.method = this.handleBeginUpdateBid.bind(this);
+            toolFunction.text = "Edit";
+            toolStatus.text = "Your bid is live and viewable by the proposal owner.";
+            toolStatus.class = "success";
 
             return (
-                <div className={toolBarClass}>
+                <div className={"alert alert-" + toolStatus.class + " proposal-success"}>
                     <div className="proposal-tool-buttons">
                         <button
                             className="btn btn-sm btn-default"
-                            onClick={this.props.handleClick}
-                            disabled={this.props.proposal_deleted}
-                        >
-                            {this.props.handleClickName}
+                            onClick={toolFunction.method}
+                            disabled={!this.props.bid_exists}>
+                            {toolFunction.text}
                         </button>
                         <button
                             className="btn btn-sm btn-danger"
                             onClick={this.handleDeleteBid.bind(this)}
-                            disabled={this.props.proposal_deleted}
-                        >
+                            disabled={!this.props.bid_exists}>
                             Delete
                         </button>
                     </div>
-                    {deleteSuccess}
+                    <p>{toolStatus.text}</p>
                 </div>
             );
-        } else {
-            let bidStatus, toolBarClass;
-            if(this.props.bid_in_progress) {
-                bidStatus = {
-                    handleClick: this.handleBidCancel.bind(this),
-                    handleClickName: "Cancel",
-                    statusText: "To submit a bid, fill out the form and click 'Create Bid'."
-                };
-                toolBarClass = "btn-default"
-            } else {
-                bidStatus = {
-                    handleClick: this.handleBidStart.bind(this),
-                    handleClickName: "Bid",
-                    statusText: "This project proposal is active. To create a bid on it, click 'Bid'."
-                };
-                toolBarClass = "btn-primary"
-            }
+        }
+        // There's no active bid for this proposal, allow the user to start one
+        else {
+            toolFunction.method = this.handleBidStart.bind(this);
+            toolFunction.text = "Bid";
+            toolStatus.text = "This project proposal is active. To create a bid on it, click 'Bid'.";
+            toolStatus.class = "info";
+
             return (
-                <div className="alert alert-info proposal-success">
+                <div className={"alert alert-" + toolStatus.class + " proposal-success"}>
                     <div className="proposal-tool-buttons">
-                        <button className={"btn btn-sm " + toolBarClass} onClick={bidStatus.handleClick}>
-                            {bidStatus.handleClickName}
+                        <button
+                            className="btn btn-sm btn-default"
+                            onClick={toolFunction.method}
+                            disabled={this.props.bid_exists}>
+                            {toolFunction.text}
                         </button>
                     </div>
-                    <p>{bidStatus.statusText}</p>
+                    <p>{toolStatus.text}</p>
                 </div>
             );
         }
@@ -91,16 +96,14 @@ BidTools.contextTypes = {
 const mapStateToProps = (state) => {
     return {
         bid_in_progress: state.bid_in_progress,
-        proposal_deleted: state.proposal_deleted,
+        bid_exists: state.bid_exists_on_proposal,
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        deleteProposal: (proposal_uuid) => dispatch(deleteProposal(proposal_uuid, getSessionToken())),
         beginBidProcess: () => dispatch(beginBidProcess()),
         cancelBidProcess: () => dispatch(cancelBidProcess()),
-        resetProposalView: () => dispatch(resetProposalView()),
     };
 };
 

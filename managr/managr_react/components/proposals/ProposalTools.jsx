@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { connect } from 'react-redux';
-import { deleteProposal, resetProposalView } from '../../actions/ProposalActions';
+import { deleteProposal } from '../../actions/ProposalActions';
 import { getSessionToken } from '../../assets/js/app.jsx';
 
 class ProposalTools extends React.Component {
@@ -78,7 +78,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         deleteProposal: (proposal_uuid) => dispatch(deleteProposal(proposal_uuid, getSessionToken())),
-        resetProposalView: () => dispatch(resetProposalView()),
     };
 };
 

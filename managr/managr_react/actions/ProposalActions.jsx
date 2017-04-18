@@ -1,5 +1,5 @@
 import { loadUserProposalMetadata } from './AppActions';
-import { bidLoadData, bidExistsOnProposal } from './BidActions';
+import { bidLoadData, bidExistsOnProposal, cancelBidProcess } from './BidActions';
 
 export function updateProposalFormField(field_name, field_value) {
     return {
@@ -83,6 +83,7 @@ export function cancelUpdateProposalProcess() {
 
 export function beginUpdateProposal() {
     return (dispatch) => {
+        dispatch(resetProposalForm());
         dispatch(beginUpdateProposalProcess());
     };
 }
@@ -220,6 +221,8 @@ export function cleanProposalView() {
 
 export function resetProposalView() {
     return (dispatch) => {
+        dispatch(cancelBidProcess());
+        dispatch(cancelUpdateProposal());
         dispatch(cleanProposalView());
     };
 }

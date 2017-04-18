@@ -43,10 +43,6 @@ class UpdateProposal extends React.Component {
     }
 };
 
-UpdateProposal.contextTypes = {
-    router: React.PropTypes.object.isRequired
-}
-
 const mapStateToProps = (state) => {
     return {
         proposal: state.proposal_load_success,
