@@ -1,47 +1,43 @@
 import React from 'react';
+
 import { connect } from 'react-redux';
+import { submitBid,
+         updateBid,
+         cancelBidProcess,
+         updateBidForm,
+         resetBidForm } from '../../actions/BidActions';
+import { getSessionToken } from '../../assets/js/app';
 
 import ErrorsList from '../app_components/ErrorsList';
 
-import { submitBid,
-         updateBid,
-         updateBidForm,
-         resetBidForm } from '../../actions/BidActions';
-
 class BidForm extends React.Component {
     componentDidUpdate(previous_props, previous_state) {
-        if(this.props.bid_form_success.success && !previous_props.bid_form_success.success) {
-            
-        }
+        if(this.props.bid_form_success.success && !previous_props.bid_form_success.success)
+            this.props.cancelBidProcess();
     }
 
-    // // When remounting the form, populate data if it's of type update. If not, clean it.
-    // // TODO: If you're trying to fix the "wrong data after hitting the back/foward button" problem
-    // // here by using componentWillRecieveProps or whatever, good luck. I could not get it fixed.
-    // componentWillMount() {
-    //     if(this.props.update) {
-    //         this.populateBidData.bind(this);
-    //         this.populateBidData(this.props.bid_data);
-    //     }
-    // }
+    componentWillMount() {
+        if(this.props.update)
+            this.populateBidData.bind(this)(this.props.bid_data);
+    }
 
-    // componentWillUnmount() {
-    //     this.props.handleReset();
-    // }
+    componentWillUnmount() {
+        this.props.handleReset();
+    }
 
-    // // Populates initial proposal form data. This method assumes the form supports an update function.
-    // populateBidData(bid_data) {
-    //     // Setup dummy onChange event
-    //     let fieldUpdate = {};
-    //     fieldUpdate.target = {};
+    // Populates initial proposal form data. This method assumes the form supports an update function.
+    populateBidData(bid_data) {
+        // Setup dummy onChange event
+        let fieldUpdate = {};
+        fieldUpdate.target = {};
         
-    //     _.forEach(bid_data, (value, key) => {
-    //         fieldUpdate.target.name = key;
-    //         fieldUpdate.target.value = value;
+        _.forEach(bid_data, (value, key) => {
+            fieldUpdate.target.name = key;
+            fieldUpdate.target.value = value;
 
-    //         this.handleChange(fieldUpdate);
-    //     })
-    // }
+            this.handleChange(fieldUpdate);
+        })
+    }
 
     handleChange(fieldUpdate) {
         this.props.updateField(fieldUpdate.target.name, fieldUpdate.target.value);
@@ -50,17 +46,13 @@ class BidForm extends React.Component {
     // Submits the form for new proposal creation
     handleSubmit(submitEvent) {
         submitEvent.preventDefault();
-        this.props.submitBid(this.props, this.props.proposal_uuid, this.getSessionToken());
+        this.props.submitBid(this.props, this.props.proposal_uuid);
     }
 
     // Submits the form for existing proposal update.
     handleUpdate(submitEvent) {
         submitEvent.preventDefault();
-        this.props.updateBid(this.props, this.props.proposal_uuid, this.getSessionToken());
-    }
-
-    getSessionToken() {
-        return localStorage.getItem("managr_session_token");
+        this.props.updateBid(this.props, this.props.proposal_uuid);
     }
 
     render() {
@@ -132,8 +124,9 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         updateField: (field_name, field_value) => dispatch(updateBidForm(field_name, field_value)),
-        updateBid: (form_fields_info, proposal_uuid, session_cookie) => dispatch(updateBid(form_fields_info, proposal_uuid, session_cookie)),
-        submitBid: (form_fields_info, proposal_uuid, session_cookie) => dispatch(submitBid(form_fields_info, proposal_uuid, session_cookie)),
+        updateBid: (form_fields_info, proposal_uuid) => dispatch(updateBid(form_fields_info, proposal_uuid, getSessionToken())),
+        submitBid: (form_fields_info, proposal_uuid) => dispatch(submitBid(form_fields_info, proposal_uuid, getSessionToken())),
+        cancelBidProcess: () => dispatch(cancelBidProcess()),
         handleReset: () => dispatch(resetBidForm()),
     };
 };

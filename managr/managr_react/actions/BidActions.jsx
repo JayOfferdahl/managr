@@ -23,7 +23,6 @@ export function beginBidProcess() {
 export function cancelBidProcess() {
     return (dispatch) => {
         dispatch(bidCancelBidProcess());
-        dispatch(bidExistsOnProposal(false));
         dispatch(resetBidForm());
     };
 }
@@ -136,10 +135,10 @@ export function bidDeleteFailure() {
     }
 }
 
-export function deleteBid(proposal_uuid, sessionToken) {
+export function deleteBid(proposal_uuid, session_token) {
     let data = {};
     data.proposal_uuid = proposal_uuid;
-    data.session_token = sessionToken;
+    data.session_token = session_token;
     
     const request_params = { method: 'POST', body: JSON.stringify(data) };
     return (dispatch) => {

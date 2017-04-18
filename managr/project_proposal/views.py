@@ -21,8 +21,6 @@ def newProposal(request):
     proposal_form = ProposalForm(proposal_data)
 
     if proposal_form.is_valid():
-        print("Proposal request - valid (Debug statement - project_proposal/views.py)")
-
         # Validate user exists
         try:
             user = ManagrUser.objects.get(session_token = proposal_data['token'])
@@ -32,7 +30,6 @@ def newProposal(request):
         proposal = Proposal.objects.create_proposal(user, proposal_data)
         return JsonResponse({'success': proposal.proposal_uuid})
     else:
-        print("Proposal request - invalid (Debug statement - project_proposal/views.py)")
         errors = dict([(key, [str(error) for error in value]) for key, value in proposal_form.errors.items()])
         return JsonResponse(errors)
 
@@ -44,8 +41,6 @@ def updateProposal(request):
     proposal_form = ProposalForm(proposal_data)
 
     if proposal_form.is_valid():
-        print("Proposal update request - valid (Debug statement - project_proposal/views.py)")
-
         # Validate proposal object & user object exist
         try:
             user = ManagrUser.objects.get(session_token = proposal_data['token'])
@@ -56,7 +51,6 @@ def updateProposal(request):
         proposal = Proposal.objects.update_proposal(proposal, proposal_data)
         return JsonResponse({'success': proposal.proposal_uuid})
     else:
-        print("Proposal update request - invalid (Debug statement - project_proposal/views.py)")
         errors = dict([(key, [str(error) for error in value]) for key, value in proposal_form.errors.items()])
         return JsonResponse(errors)
 
@@ -142,10 +136,8 @@ def getProposal(request):
 
         # Check owner
         if proposal.owner == user:
-            print("Request for proposal by owner. (Debug statement - project_proposal/views.py)")
             requestOwnsProposal = True
         else:
-            print("Request for proposal by viewer. (Debug statement - project_proposal/views.py)")
             requestOwnsProposal = False
 
             try:
@@ -199,32 +191,24 @@ def deleteProposal(request):
 
         # Check owner
         if proposal.owner == user:
-            print("Request for proposal delete by owner. (Debug statement - project_proposal/views.py)")
             proposal.delete()
-            print("Proposal deleted by owner. (Debug statement - project_proposal/views.py)")
             return JsonResponse({'success': True })
         else:
-            print("Request for proposal delete by viewer. (Debug statement - project_proposal/views.py)")
             return JsonResponse({'error': 'Invalid session token.'})
     else:
         return JsonResponse({'error': 'Invalid session token.'})
 
-# Creates a new proposal object in the database assigned to the requesting user.
+# Creates a new bid object in the database assigned to the requesting user.
 # Error messages returned if the form is invalid or the user doesn't exist.
 @csrf_exempt
 def newBid(request):
     bid_data = JSONParser().parse(BytesIO(request.body))
     bid_form = BidForm(bid_data)
-    print(bid_data['token'])
-    print(bid_data['proposal_uuid'])
 
     if bid_form.is_valid():
-        print("Bid request - valid (Debug statement - project_proposal/views.py)")
-
         # Validate user & proposal exists
         try:
             user = ManagrUser.objects.get(session_token = bid_data['token'])
-            print("It's the proposal...")
             proposal = Proposal.objects.get(proposal_uuid = bid_data['proposal_uuid'])
         except ObjectDoesNotExist:
             return JsonResponse({'error': 'Invalid request.'})
@@ -232,12 +216,11 @@ def newBid(request):
         bid = Bid.objects.create_bid(user, proposal, bid_data)
         return JsonResponse({'success': proposal.proposal_uuid})
     else:
-        print("Bid request - invalid (Debug statement - project_proposal/views.py)")
         errors = dict([(key, [str(error) for error in value]) for key, value in bid_form.errors.items()])
         return JsonResponse(errors)
 
-# Updates a proposal object in the database belonging to the requesting user.
-# Error messages returned if the form is invalid or the user/proposal doesn't exist.
+# Updates a bid object in the database belonging to the requesting user.
+# Error messages returned if the form is invalid or the user/bid doesn't exist.
 @csrf_exempt
 def updateBid(request):
     # proposal_data = JSONParser().parse(BytesIO(request.body))
@@ -261,7 +244,7 @@ def updateBid(request):
     #     return JsonResponse(errors)
     pass
 
-# Removes a proposal object from the database. Ensures the requesting using owns the proposal
+# Removes a bid object from the database. Ensures the requesting using owns the bid
 # object before deleting it.
 @csrf_exempt
 def deleteBid(request):
@@ -274,19 +257,15 @@ def deleteBid(request):
         # Validate bid object & user object exist
         try:
             bid = Bid.objects.get(corresponding_proposal__proposal_uuid = proposal_uuid)
-            print("Found a bid object that matches.")
             user = ManagrUser.objects.get(session_token = session_token)
         except ObjectDoesNotExist:
             return JsonResponse({'error': 'Invalid request.'})
         
         # Check owner
         if bid.owner == user:
-            print("Request for bid delete by owner. (Debug statement - project_proposal/views.py)")
             bid.delete()
-            print("Bid deleted by owner. (Debug statement - project_proposal/views.py)")
             return JsonResponse({'success': True })
         else:
-            print("Request for bid delete by viewer. (Debug statement - project_proposal/views.py)")
             return JsonResponse({'error': 'Invalid session token.'})
     else:
         return JsonResponse({'error': 'Invalid session token.'})
@@ -297,7 +276,6 @@ def deleteBid(request):
 @csrf_exempt
 def getUserBidMetadata(request):
     session_token = JSONParser().parse(BytesIO(request.body))
-    print("Request for bid metadata.")
 
     if session_token:
         # Validate user exists

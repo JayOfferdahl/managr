@@ -5,8 +5,8 @@ import BidForm from './BidForm';
 
 class Bid extends React.Component {
     render () {
-        // If the bid exists, show the bid in text
-        if(this.props.bid_exists) {
+        // If the bid exists & we're not updating it, show the bid in text
+        if(this.props.bid_exists && !this.props.bid_in_progress) {
             return (
                 <div>
                     <hr />
@@ -20,24 +20,33 @@ class Bid extends React.Component {
                     <p><b>Description:</b> {this.props.bid_data.description}</p>
                 </div>
             );
-        } else {
-            if(this.props.bid_in_progress) {
-                return (
-                    <div>
-                        <hr />
-                        <h3>Create a bid for this project</h3>
-                        <p>Once you create a bid for this proposal the proposal owner will have to accept it. Afterwards, you will then be notified.</p>
-                        <br/>
-                        <BidForm
-                            update={false}
-                            submitMessage="Create Bid"
-                            proposal_uuid={this.props.proposal_uuid}
-                        />
-                    </div>
-                );
+        } else if(this.props.bid_in_progress) {
+            let bidFormProps = {};
+            if(this.props.bid_exists) {
+                bidFormProps.title = "Update your existing bid";
+                bidFormProps.text = "Your updated bid will be viewable by the proposal owner."
+                bidFormProps.submit = "Update Bid"
             } else {
-                return false;
+                bidFormProps.title = "Create a bid for this project";
+                bidFormProps.text = "Once you create a bid for this proposal the proposal owner will have to accept it. Afterwards, you will then be nitified.";
+                bidFormProps.submit = "Create Bid"
             }
+            return (
+                <div>
+                    <hr />
+                    <h3>{bidFormProps.title}</h3>
+                    <p>{bidFormProps.text}</p>
+                    <br/>
+                    <BidForm
+                        update={this.props.bid_exists}
+                        bid_data={this.props.bid_data}
+                        submitMessage={bidFormProps.submit}
+                        proposal_uuid={this.props.proposal_uuid}
+                    />
+                </div>
+            );
+        } else {
+            return false;
         }
     }
 }

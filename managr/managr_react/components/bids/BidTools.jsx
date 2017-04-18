@@ -1,7 +1,9 @@
 import React from 'react';
 
 import { connect } from 'react-redux';
-import { beginBidProcess, cancelBidProcess, deleteBid } from '../../actions/BidActions';
+import { beginBidProcess,
+         cancelBidProcess,
+         deleteBid } from '../../actions/BidActions';
 import { getSessionToken } from '../../assets/js/app.jsx';
 
 class BidTools extends React.Component {
@@ -12,28 +14,21 @@ class BidTools extends React.Component {
         }
     }
 
-    handleBeginUpdateBid() {
-        console.log("Beginning the update bid process not implemented.");
-    }
-
-    handleCancelUpdateBid() {
-        console.log("Canceling the update bid process not implemented.");
-    }
-
     render () {
         let toolFunction = {}, toolStatus = {};
         // If a bid exists on this proposal, show edit/cancel & delete buttons
         if(this.props.bid_exists) {
-            if(this.props.update_in_progress) {
-                toolFunction.method = this.handleCancelUpdateBid.bind(this);
+            if(this.props.bid_in_progress) {
+                toolFunction.method = this.props.cancelBidProcess;
                 toolFunction.text = "Cancel";
                 toolStatus.text = "To finish updating your bid, click 'Update Bid'.";
                 toolStatus.class = "info";
+            } else {
+                toolFunction.method = this.props.beginBidProcess;
+                toolFunction.text = "Edit";
+                toolStatus.text = "Your bid is live and viewable by the proposal owner.";
+                toolStatus.class = "success";
             }
-            toolFunction.method = this.handleBeginUpdateBid.bind(this);
-            toolFunction.text = "Edit";
-            toolStatus.text = "Your bid is live and viewable by the proposal owner.";
-            toolStatus.class = "success";
 
             return (
                 <div className={"alert alert-" + toolStatus.class + " proposal-success"}>
@@ -100,6 +95,8 @@ const mapDispatchToProps = (dispatch) => {
         deleteBid: (proposal_uuid) => dispatch(deleteBid(proposal_uuid, getSessionToken())),
         beginBidProcess: () => dispatch(beginBidProcess()),
         cancelBidProcess: () => dispatch(cancelBidProcess()),
+        beginUpdateBidProcess: () => dispatch(beginUpdateBidProcess()),
+        cancelUpdateBidProcess: () => dispatch(cancelUpdateBidProcess()),
     };
 };
 

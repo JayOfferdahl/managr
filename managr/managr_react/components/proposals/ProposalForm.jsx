@@ -21,10 +21,8 @@ class ProposalForm extends React.Component {
     // TODO: If you're trying to fix the "wrong data after hitting the back/foward button" problem
     // here by using componentWillRecieveProps or whatever, good luck. I could not get it fixed.
     componentWillMount() {
-        if(this.props.update) {
-            this.populateProposalData.bind(this);
-            this.populateProposalData(this.props.proposal_data);
-        }
+        if(this.props.update)
+            this.populateProposalData.bind(this)(this.props.proposal_data);
     }
 
     componentWillUnmount() {

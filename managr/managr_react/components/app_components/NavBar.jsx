@@ -66,8 +66,6 @@ class NavBar extends React.Component {
                         </a>
                     </LinkContainer>
                 </div>
-                <br/>
-                <p>Note: Projects/past projects need to have a list of projects associated with the user, and they should link to that project page which shows relevant information about the project.</p>
             </Nav>
         );
     }

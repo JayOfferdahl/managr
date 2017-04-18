@@ -223,6 +223,7 @@ export function resetProposalView() {
     return (dispatch) => {
         dispatch(cancelBidProcess());
         dispatch(cancelUpdateProposal());
+        dispatch(bidExistsOnProposal(false));
         dispatch(cleanProposalView());
     };
 }
