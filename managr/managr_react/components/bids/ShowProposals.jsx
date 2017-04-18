@@ -20,7 +20,6 @@ class ShowProposals extends React.Component {
         this.props.loadProposalsFromServer(token);
     };
 
-
     handleSubmit(submitEvent) {
         submitEvent.preventDefault();
         this.props.loadProposalFromServer(this.props);
@@ -41,9 +40,6 @@ class ShowProposals extends React.Component {
 
 const options = {
   onRowClick: function(row) {
-    //this.context.router.push('/proposals/:' + row.uuid);
-    //console.log(row.uuid);
-    //fetch('http://managr.dev.biz:8000/proposals/proposal', {method : 'post', body : row.uuid});
     browserHistory.push('/proposal/' + row.uuid);
   }
 };
@@ -57,7 +53,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         loadProposalsFromServer: (token) => dispatch(loadProposalsFromServer(token)),
-        // loadProposalFromServer: (proposalID) => dispatch(loadProposalFromServer(proposalID))
     };
 };
 
