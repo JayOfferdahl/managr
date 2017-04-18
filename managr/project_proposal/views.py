@@ -25,7 +25,7 @@ def newProposal(request):
         try:
             user = ManagrUser.objects.get(session_token = proposal_data['token'])
         except ManagrUser.DoesNotExist:
-            return JsonResponse({'error': 'Invalid session token.'})
+            return JsonResponse({'error': 'Invalid request.'})
 
         proposal = Proposal.objects.create_proposal(user, proposal_data)
         return JsonResponse({'success': proposal.proposal_uuid})
@@ -48,8 +48,11 @@ def updateProposal(request):
         except ObjectDoesNotExist:
             return JsonResponse({'error': 'Invalid request.'})
 
-        proposal = Proposal.objects.update_proposal(proposal, proposal_data)
-        return JsonResponse({'success': proposal.proposal_uuid})
+        if proposal.owner == user:
+            proposal = Proposal.objects.update_proposal(proposal, proposal_data)
+            return JsonResponse({'success': proposal.proposal_uuid})
+        else:
+            return JsonResponse({'error': 'Invalid request.'})
     else:
         errors = dict([(key, [str(error) for error in value]) for key, value in proposal_form.errors.items()])
         return JsonResponse(errors)
@@ -81,7 +84,7 @@ def getUserProposalMetadata(request):
             'data': proposal_metadata
         })
     else:
-        return JsonResponse({'error': 'Invalid session token.'})
+        return JsonResponse({'error': 'Invalid request.'})
 
 def buildProposalsList(user):
     #proposals = Proposal.objects.all()
@@ -194,9 +197,9 @@ def deleteProposal(request):
             proposal.delete()
             return JsonResponse({'success': True })
         else:
-            return JsonResponse({'error': 'Invalid session token.'})
+            return JsonResponse({'error': 'Invalid request.'})
     else:
-        return JsonResponse({'error': 'Invalid session token.'})
+        return JsonResponse({'error': 'Invalid request.'})
 
 # Creates a new bid object in the database assigned to the requesting user.
 # Error messages returned if the form is invalid or the user doesn't exist.
@@ -223,26 +226,28 @@ def newBid(request):
 # Error messages returned if the form is invalid or the user/bid doesn't exist.
 @csrf_exempt
 def updateBid(request):
-    # proposal_data = JSONParser().parse(BytesIO(request.body))
-    # proposal_form = ProposalForm(proposal_data)
+    bid_data = JSONParser().parse(BytesIO(request.body))
+    bid_form = BidForm(bid_data)
 
-    # if proposal_form.is_valid():
-    #     print("Bid update request - valid (Debug statement - project_proposal/views.py)")
-        
-    #     # Validate proposal object & user object exist
-    #     try:
-    #         user = ManagrUser.objects.get(session_token = proposal_data['token'])
-    #         proposal = Proposal.objects.get(proposal_uuid = proposal_data['proposal_uuid'])
-    #     except ObjectDoesNotExist:
-    #         return JsonResponse({'error': 'Invalid request.'})
+    if bid_form.is_valid():
+        proposal_uuid = bid_data['proposal_uuid']
+        session_token = bid_data['session_token']
 
-    #     proposal = Proposal.objects.update_proposal(proposal, proposal_data)
-    #     return JsonResponse({'success': proposal.proposal_uuid})
-    # else:
-    #     print("Bid update request - invalid (Debug statement - project_proposal/views.py)")
-    #     errors = dict([(key, [str(error) for error in value]) for key, value in proposal_form.errors.items()])
-    #     return JsonResponse(errors)
-    pass
+        # Validate proposal object & user object exist
+        try:
+            bid = Bid.objects.get(corresponding_proposal__proposal_uuid = proposal_uuid)
+            user = ManagrUser.objects.get(session_token = session_token)
+        except ObjectDoesNotExist:
+            return JsonResponse({'error': 'Invalid request.'})
+
+        if bid.owner == user:
+            bid = Bid.objects.update_bid(bid, bid_data)
+            return JsonResponse({'success': True})
+        else:
+            return JsonResponse({'error': 'Invalid request.'})
+    else:
+        errors = dict([(key, [str(error) for error in value]) for key, value in bid_form.errors.items()])
+        return JsonResponse(errors)
 
 # Removes a bid object from the database. Ensures the requesting using owns the bid
 # object before deleting it.
@@ -266,9 +271,9 @@ def deleteBid(request):
             bid.delete()
             return JsonResponse({'success': True })
         else:
-            return JsonResponse({'error': 'Invalid session token.'})
+            return JsonResponse({'error': 'Invalid request.'})
     else:
-        return JsonResponse({'error': 'Invalid session token.'})
+        return JsonResponse({'error': 'Invalid request.'})
 
 # Returns an ordered dictionary of bids with their corresponding proposal titles as keys and the
 # proposal_uuids as values. The proposal_uuids are used to link the front end to a specific proposal.
@@ -297,4 +302,4 @@ def getUserBidMetadata(request):
             'data': bid_metadata
         })
     else:
-        return JsonResponse({'error': 'Invalid session token.'})
+        return JsonResponse({'error': 'Invalid request.'})

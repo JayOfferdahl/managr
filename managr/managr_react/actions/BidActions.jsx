@@ -98,7 +98,7 @@ export function submitBid(bid_data, proposal_uuid, session_token) {
 export function updateBid(bid_data, proposal_uuid, session_token) {
     // Add the session token to the request body
     var data = JSON.parse(JSON.stringify(bid_data))
-    data.token = session_token;
+    data.session_token = session_token;
     data.proposal_uuid = proposal_uuid;
 
     const request_params = { method: 'POST', body: JSON.stringify(data)};
@@ -116,6 +116,7 @@ export function updateBid(bid_data, proposal_uuid, session_token) {
                 dispatch(createBidSuccess(data['success']));
                 dispatch(resetBidForm());
                 dispatch(loadUserBidMetadata(session_token));
+                dispatch(loadProposalFromServer(proposal_uuid, session_token));
             } else {
                 dispatch(createBidFailure(data));
             }
