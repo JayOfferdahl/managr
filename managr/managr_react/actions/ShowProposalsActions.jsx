@@ -16,7 +16,7 @@ export function loadProposalsFromServer(sessionToken) {
     const request_params = { method: 'POST', body: JSON.stringify(sessionToken) };
 
     return (dispatch) => {
-        fetch('http://managr.dev.biz:8000/bids/showproposals', request_params)
+        fetch('http://managr.dev.biz:8000/bids/show-proposals', request_params)
             .then((response) => {
                 if(!response.ok) {
                     console.log("Server response error: " + response.ok);
