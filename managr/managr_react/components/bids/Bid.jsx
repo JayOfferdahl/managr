@@ -1,8 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { cancelBidProcess } from '../../actions/BidActions';
-
 import BidForm from './BidForm';
 
 class Bid extends React.Component {
@@ -23,19 +21,23 @@ class Bid extends React.Component {
                 </div>
             );
         } else {
-            return (
-            <div>
-                <hr />
-                <h3>Create a bid for this project</h3>
-                <p>Once you create a bid for this proposal the proposal owner will have to accept it. Afterwards, you will then be notified.</p>
-                <br/>
-                <BidForm
-                    update={false}
-                    submitMessage="Create Bid"
-                    proposal_uuid={this.props.proposal_uuid}
-                />
-            </div>
-            );
+            if(this.props.bid_in_progress) {
+                return (
+                    <div>
+                        <hr />
+                        <h3>Create a bid for this project</h3>
+                        <p>Once you create a bid for this proposal the proposal owner will have to accept it. Afterwards, you will then be notified.</p>
+                        <br/>
+                        <BidForm
+                            update={false}
+                            submitMessage="Create Bid"
+                            proposal_uuid={this.props.proposal_uuid}
+                        />
+                    </div>
+                );
+            } else {
+                return false;
+            }
         }
     }
 }
@@ -49,9 +51,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-    return {
-        cancelBidProcess: () => dispatch(cancelBidProcess()),
-    };
+    return {};
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Bid);

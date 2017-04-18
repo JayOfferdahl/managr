@@ -47,7 +47,8 @@ import { bid_in_progress,
          bid_form_success,
          bid_form_errors,
          bid_exists_on_proposal,
-         bid_data, } from './BidReducer';
+         bid_data,
+         bid_deleted } from './BidReducer';
 
 export default combineReducers ({
     // Registration reducers
@@ -107,4 +108,5 @@ export default combineReducers ({
     bid_form_errors,
     bid_exists_on_proposal,
     bid_data,
+    bid_deleted,
 });

@@ -9,11 +9,11 @@ import { submitBid,
          resetBidForm } from '../../actions/BidActions';
 
 class BidForm extends React.Component {
-    // componentDidUpdate(previous_props, previous_state) {
-    //     if(this.props.proposal_form_success.success && !previous_props.proposal_form_success.success) {
-    //         this.props.handleReset();
-    //     }
-    // }
+    componentDidUpdate(previous_props, previous_state) {
+        if(this.props.bid_form_success.success && !previous_props.bid_form_success.success) {
+            
+        }
+    }
 
     // // When remounting the form, populate data if it's of type update. If not, clean it.
     // // TODO: If you're trying to fix the "wrong data after hitting the back/foward button" problem

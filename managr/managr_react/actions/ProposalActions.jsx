@@ -144,9 +144,9 @@ export function proposalLoadOwner(owner) {
     }
 }
 
-export function loadProposalFromServer(proposalUUID, sessionToken) {
+export function loadProposalFromServer(proposal_uuid, sessionToken) {
     let data = {};
-    data.proposal_uuid = proposalUUID;
+    data.proposal_uuid = proposal_uuid;
     data.session_token = sessionToken;
     
     const request_params = { method: 'POST', body: JSON.stringify(data) };
@@ -188,9 +188,9 @@ export function proposalDeleteFailure() {
     }
 }
 
-export function deleteProposal(proposalUUID, sessionToken) {
+export function deleteProposal(proposal_uuid, sessionToken) {
     let data = {};
-    data.proposal_uuid = proposalUUID;
+    data.proposal_uuid = proposal_uuid;
     data.session_token = sessionToken;
     
     const request_params = { method: 'POST', body: JSON.stringify(data) };

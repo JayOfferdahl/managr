@@ -1,25 +1,15 @@
 import React from 'react';
 
 import { connect } from 'react-redux';
-import { beginBidProcess, cancelBidProcess } from '../../actions/BidActions';
+import { beginBidProcess, cancelBidProcess, deleteBid } from '../../actions/BidActions';
 import { getSessionToken } from '../../assets/js/app.jsx';
 
 class BidTools extends React.Component {
     // Handles the deletion of a bid object by first confirming that the user wishes to delete it
     handleDeleteBid(submitEvent) {
         if(!this.props.proposal_deleted && confirm("Are you sure you want to delete this bid?")) {
-            console.log("Delete bid not implemented.");
+            this.props.deleteBid(this.props.proposal_uuid);
         }
-    }
-
-    // Updates state to reflect that a bid is in progress on the proposal page.
-    handleBidStart() {
-        this.props.beginBidProcess();
-    }
-
-    // Updates state to reflect that a bid process is not in progress on the proposal page
-    handleBidCancel() {
-        this.props.cancelBidProcess();
     }
 
     handleBeginUpdateBid() {
@@ -67,18 +57,23 @@ class BidTools extends React.Component {
         }
         // There's no active bid for this proposal, allow the user to start one
         else {
-            toolFunction.method = this.handleBidStart.bind(this);
-            toolFunction.text = "Bid";
-            toolStatus.text = "This project proposal is active. To create a bid on it, click 'Bid'.";
-            toolStatus.class = "info";
+            if(!this.props.bid_in_progress) {
+                toolFunction.method = this.props.beginBidProcess;
+                toolFunction.text = "Bid";
+                toolStatus.text = "This project proposal is active. To create a bid on it, click 'Bid'.";
+            }
+            else {
+                toolFunction.method = this.props.cancelBidProcess;
+                toolFunction.text = "Cancel";
+                toolStatus.text = "To finish creating a bid, fill out the form and click 'Create Bid'.";
+            }
 
             return (
-                <div className={"alert alert-" + toolStatus.class + " proposal-success"}>
+                <div className={"alert alert-info proposal-success"}>
                     <div className="proposal-tool-buttons">
                         <button
                             className="btn btn-sm btn-default"
-                            onClick={toolFunction.method}
-                            disabled={this.props.bid_exists}>
+                            onClick={toolFunction.method}>
                             {toolFunction.text}
                         </button>
                     </div>
@@ -102,6 +97,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
+        deleteBid: (proposal_uuid) => dispatch(deleteBid(proposal_uuid, getSessionToken())),
         beginBidProcess: () => dispatch(beginBidProcess()),
         cancelBidProcess: () => dispatch(cancelBidProcess()),
     };

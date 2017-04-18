@@ -265,31 +265,31 @@ def updateBid(request):
 # object before deleting it.
 @csrf_exempt
 def deleteBid(request):
-    # request_data = JSONParser().parse(BytesIO(request.body))
+    request_data = JSONParser().parse(BytesIO(request.body))
 
-    # proposal_uuid = request_data['proposal_uuid']
-    # session_token = request_data['session_token']
+    proposal_uuid = request_data['proposal_uuid']
+    session_token = request_data['session_token']
 
-    # if session_token and proposal_uuid:
-    #     # Validate bid object & user object exist
-    #     try:
-    #         bid = Proposal.objects.get(proposal_uuid = proposal_uuid)
-    #         user = ManagrUser.objects.get(session_token = session_token)
-    #     except ObjectDoesNotExist:
-    #         return JsonResponse({'error': 'Invalid request.'})
+    if session_token and proposal_uuid:
+        # Validate bid object & user object exist
+        try:
+            bid = Bid.objects.get(corresponding_proposal__proposal_uuid = proposal_uuid)
+            print("Found a bid object that matches.")
+            user = ManagrUser.objects.get(session_token = session_token)
+        except ObjectDoesNotExist:
+            return JsonResponse({'error': 'Invalid request.'})
         
-    #     # Check owner
-    #     if bid.owner == user:
-    #         print("Request for bid delete by owner. (Debug statement - project_proposal/views.py)")
-    #         bid.delete()
-    #         print("Bid deleted by owner. (Debug statement - project_proposal/views.py)")
-    #         return JsonResponse({'success': True })
-    #     else:
-    #         print("Request for bid delete by viewer. (Debug statement - project_proposal/views.py)")
-    #         return JsonResponse({'error': 'Invalid session token.'})
-    # else:
-    #     return JsonResponse({'error': 'Invalid session token.'})
-    pass
+        # Check owner
+        if bid.owner == user:
+            print("Request for bid delete by owner. (Debug statement - project_proposal/views.py)")
+            bid.delete()
+            print("Bid deleted by owner. (Debug statement - project_proposal/views.py)")
+            return JsonResponse({'success': True })
+        else:
+            print("Request for bid delete by viewer. (Debug statement - project_proposal/views.py)")
+            return JsonResponse({'error': 'Invalid session token.'})
+    else:
+        return JsonResponse({'error': 'Invalid session token.'})
 
 # Returns an ordered dictionary of bids with their corresponding proposal titles as keys and the
 # proposal_uuids as values. The proposal_uuids are used to link the front end to a specific proposal.
