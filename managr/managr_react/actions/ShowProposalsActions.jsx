@@ -12,22 +12,30 @@ export function proposalsLoadFailure(error) {
     }
 }
 
-export function loadProposalsFromServer() {
+export function loadProposalsFromServer(sessionToken) {
+    const request_params = { method: 'POST', body: JSON.stringify(sessionToken) };
+
     return (dispatch) => {
-        fetch('http://managr.dev.biz:8000/bids/show-proposals')
-        .then((response) => {
-            if(!response.ok) {
-                console.log("Server response error: " + response.ok);
-            }
-            return response;
-        })
-        .then((response) => response.json())
-        .then( (data) => {
-            if(data) {
-                dispatch(proposalsLoadSuccess(data));
-            } else {
-                dispatch(proposalsLoadFailure("There was an error loading data from the server."));
-            }
-        });
+        fetch('http://managr.dev.biz:8000/bids/showproposals', request_params)
+            .then((response) => {
+                if(!response.ok) {
+                    console.log("Server response error: " + response.ok);
+                }
+                return response;
+            })
+            .then((response) => response.json())
+            .then( (data) => {
+                if(data) {
+                  /*  data.forEach( (row) => {
+                      let cur_uuid = row['uuid']
+                      let cur_name = row['name']
+                      row['name'] = <LinkContainer to="/proposal"/>
+                    })*/
+                    dispatch(proposalsLoadSuccess(data));
+                  }
+               else {
+                    dispatch(proposalsLoadFailure("There was an error loading data from the server."));
+                }
+            });
     };
 }
