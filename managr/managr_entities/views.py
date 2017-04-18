@@ -11,6 +11,7 @@ from rest_framework.parsers import JSONParser
 from managr_entities.app_forms.registration_form import RegistrationForm
 from managr_entities.app_forms.login_form import LoginForm
 from managr_entities.app_forms.create_contractor_company_form import CreateContractorCompanyForm
+from managr_entities.app_forms.create_client_company_form import CreateClientCompanyForm
 from managr_entities.app_models.managr_user import ManagrUser
 from managr_entities.app_models.company import Company
 
@@ -80,7 +81,7 @@ def ensureAuth(request):
 		managr_user.save()
 		return JsonResponse({'failure': 'Unable to authenticate'})
 	else:
-		return JsonResponse({'success': 'Successful authentication'})
+		return JsonResponse({'success': 'Successful authentication', 'user_first_and_last': managr_user.first_name + ' ' + managr_user.last_name})
 
 @csrf_exempt
 def createContractorCompany(request):
@@ -88,10 +89,26 @@ def createContractorCompany(request):
 	contractor_company_creation_form = CreateContractorCompanyForm(company_data)
 
 	if contractor_company_creation_form.is_valid():
-		print(company_data)
-		new_company = Company.objects.create_contractor_company(company_data['company_name'], company_data['company_email'], company_data['address'], company_data['city'], states_array[int(company_data['state'])], company_data['postal_code'], company_data['description'])
+		creator_or_owner = ManagrUser.objects.get(session_token = company_data['session_token']) 
+		new_company = Company.objects.create_contractor_company(creator_or_owner, company_data['company_name'], company_data['company_email'], company_data['address'], company_data['city'], states_array[int(company_data['state'])], company_data['postal_code'], company_data['description']) 
+		creator_or_owner.company = new_company 
+		creator_or_owner.save() 
 		return JsonResponse({'success': 'Successful company creation'})
 	else:
 		errors = dict([(key, [str(error) for error in value]) for key, value in contractor_company_creation_form.errors.items()])
 		return JsonResponse(errors)
 
+@csrf_exempt
+def createClientCompany(request):
+	company_data = JSONParser().parse(BytesIO(request.body))
+	client_company_creation_form = CreateClientCompanyForm(company_data)
+
+	if client_company_creation_form.is_valid():
+		creator_or_owner = ManagrUser.objects.get(session_token = company_data['session_token']) 
+		new_company = Company.objects.create_client_company(creator_or_owner, company_data['company_name'], company_data['company_email'], company_data['address'], company_data['city'], states_array[int(company_data['state'])], company_data['postal_code'], company_data['description']) 
+		creator_or_owner.company = new_company 
+		creator_or_owner.save() 
+		return JsonResponse({'success': 'Successful company creation'})
+	else:
+		errors = dict([(key, [str(error) for error in value]) for key, value in client_company_creation_form.errors.items()])
+		return JsonResponse(errors)

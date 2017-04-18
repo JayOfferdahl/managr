@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import ContractorCompanyCreationForm from './ContractorCompanyCreationForm'
+import ClientCompanyCreationForm from './ClientCompanyCreationForm'
 
 class CreateCompanyPage extends React.Component {
     render() {
@@ -11,7 +12,7 @@ class CreateCompanyPage extends React.Component {
             case '1':
                 return (<div>Join existing contractor flow</div>);
             case '2':
-                return (<div>Client company creation form</div>);
+                return (<ClientCompanyCreationForm />);
             default:
                 return (<div>404 Error</div>);
         }

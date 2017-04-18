@@ -11,6 +11,7 @@ from helpers.hstore_helper import *
 class Company(models.Model):
 	name = models.CharField(max_length = 255)
 	company_uuid = models.UUIDField(default = uuid.uuid4, editable = False)
+	owner_or_creator = models.ForeignKey('ManagrUser', on_delete = models.PROTECT, related_name = '+') 
 
 	COMPANY_TYPE_CHOICES = (
 		(0, 'construction'),

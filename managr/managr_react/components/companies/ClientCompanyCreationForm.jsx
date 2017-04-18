@@ -6,13 +6,13 @@ import SelectGroup from '../app_components/SelectGroup';
 import Textfield from '../app_components/Textfield';
 import TextareaField from '../app_components/TextareaField';
 
-import { updateCompanyCreationForm, createContractorCompany } from '../../actions/CompanyCreationActions';
+import { updateCompanyCreationForm, createClientCompany } from '../../actions/CompanyCreationActions';
 
 import { states_array } from '../../assets/js/StatesArray';
 
 // import { updateRegistrationForm, registerWithServer, loginAfterRegistration, resetRegistrationForm } from '../../actions/RegistrationActions';
 
-class ContractorCompanyCreationForm extends React.Component {
+class ClientCompanyCreationForm extends React.Component {
     componentDidUpdate(prevProps, prevState) {
         if (this.props.creation_success == true && prevProps.creation_success == false) {
             // Push to summary for now, probably want to redirect to some sort of company view in the future
@@ -31,7 +31,7 @@ class ContractorCompanyCreationForm extends React.Component {
 
     render() {
         return (
-            <form className="contractor-company-creation-form" onSubmit={this.handleSubmit.bind(this)}>
+            <form className="client-company-creation-form" onSubmit={this.handleSubmit.bind(this)}>
                 <ErrorsList errors={this.props.creation_errors} />
                 <Textfield type="text" placeholder="Company Name" onChange={this.handleChange.bind(this)} currentText={this.props.company_name} fieldName="company_name" />
                 <Textfield type="text" placeholder="Company Email" onChange={this.handleChange.bind(this)} currentText={this.props.company_email} fieldName="company_email" />
@@ -50,7 +50,7 @@ class ContractorCompanyCreationForm extends React.Component {
     }
 }
 
-ContractorCompanyCreationForm.contextTypes = {
+ClientCompanyCreationForm.contextTypes = {
     router: React.PropTypes.object.isRequired
 }
 
@@ -71,8 +71,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         updateField: (field_name, field_value) => dispatch(updateCompanyCreationForm(field_name, field_value)),
-        submitCompanyCreation: (form_fields_info, session_token) => dispatch(createContractorCompany(form_fields_info, session_token))
+        submitCompanyCreation: (form_fields_info, session_token) => dispatch(createClientCompany(form_fields_info, session_token))
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ContractorCompanyCreationForm);
+export default connect(mapStateToProps, mapDispatchToProps)(ClientCompanyCreationForm);

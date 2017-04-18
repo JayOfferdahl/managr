@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 import { first_name, last_name, username, email, password, password_confirmation, registration_errors, registration_success, user_type } from './RegistrationReducer';
 import { username_or_email, login_errors, login_success, logout_success } from './LoginReducer';
-import { is_authenticated } from './AuthenticationReducer';
+import { is_authenticated, user_first_and_last } from './AuthenticationReducer';
 import { title, address, contact_number, budget, start_date, end_date, description, proposal_success, proposal_errors, proposal } from './ProposalReducer';
 import { company_name, company_email, city, state, postal_code, creation_success, creation_errors } from './CompanyCreationReducer';
 import { proposals } from './ShowProposalsReducer';
@@ -21,6 +21,7 @@ export default combineReducers ({
 	login_errors,
 	login_success,
 	logout_success,
+	user_first_and_last,
 	is_authenticated,
 
 	title,

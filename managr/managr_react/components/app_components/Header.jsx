@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
+
 import { Row } from 'react-bootstrap';
 
 import LogoutButton from '../signup/LogoutButton'
@@ -15,7 +17,7 @@ class Header extends React.Component {
                 <img src={logo} className="app-logo" alt="logo" />
                 <div className="avatar-section">
                     <div className="avatar-text">
-                        <p><b>John Smith</b></p>
+                        <p><b>{this.props.user_first_and_last}</b></p>
                     </div>
                     <img src={avatar} className="avatar-icon" alt="avatar" />
                     <LogoutButton />
@@ -25,4 +27,15 @@ class Header extends React.Component {
     }
 }
 
-export default Header;
+const mapStateToProps = (state) => {
+    return {
+        user_first_and_last: state.user_first_and_last
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
