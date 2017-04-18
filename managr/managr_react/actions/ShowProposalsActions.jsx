@@ -26,11 +26,6 @@ export function loadProposalsFromServer(sessionToken) {
             .then((response) => response.json())
             .then( (data) => {
                 if(data) {
-                  /*  data.forEach( (row) => {
-                      let cur_uuid = row['uuid']
-                      let cur_name = row['name']
-                      row['name'] = <LinkContainer to="/proposal"/>
-                    })*/
                     dispatch(proposalsLoadSuccess(data));
                   }
                else {

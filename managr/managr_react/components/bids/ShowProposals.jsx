@@ -20,7 +20,6 @@ class ShowProposals extends React.Component {
         this.props.loadProposalsFromServer(token);
     };
 
-
     handleSubmit(submitEvent) {
         submitEvent.preventDefault();
         this.props.loadProposalFromServer(this.props);
@@ -54,7 +53,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         loadProposalsFromServer: (token) => dispatch(loadProposalsFromServer(token)),
-        // loadProposalFromServer: (proposalID) => dispatch(loadProposalFromServer(proposalID))
     };
 };
 
