@@ -5,7 +5,6 @@ import { Router, browserHistory } from 'react-router';
 
 import '../../assets/css/App.css';
 import { loadProposalsFromServer } from '../../actions/ShowProposalsActions';
-import '../../assets/css/App.css';
 
 function numericSortFunc(a, b, order) {
     if (order === 'desc') {
@@ -17,8 +16,10 @@ function numericSortFunc(a, b, order) {
 
 class ShowProposals extends React.Component {
     componentWillMount() {
-        this.props.loadProposalsFromServer();
+        var token = localStorage.getItem("managr_session_token");
+        this.props.loadProposalsFromServer(token);
     };
+
 
     handleSubmit(submitEvent) {
         submitEvent.preventDefault();
@@ -55,7 +56,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        loadProposalsFromServer: () => dispatch(loadProposalsFromServer()),
+        loadProposalsFromServer: (token) => dispatch(loadProposalsFromServer(token)),
         // loadProposalFromServer: (proposalID) => dispatch(loadProposalFromServer(proposalID))
     };
 };

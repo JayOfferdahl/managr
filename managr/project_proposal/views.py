@@ -43,7 +43,7 @@ def updateProposal(request):
 
     if proposal_form.is_valid():
         print("Proposal update request - valid (Debug statement - project_proposal/views.py)")
-        
+
         # Validate proposal object & user object exist
         try:
             user = ManagrUser.objects.get(session_token = proposal_data['token'])
@@ -87,8 +87,10 @@ def getUserProposalMetadata(request):
     else:
         return JsonResponse({'error': 'Invalid session token.'})
 
-def buildProposalsList():
-    proposals = Proposal.objects.all()
+def buildProposalsList(user):
+    #proposals = Proposal.objects.all()
+    print(user)
+    proposals = Proposal.objects.exclude(owner = user)
     proposalList = list()
     for proposal in proposals:
         proposalList.append({
@@ -101,9 +103,18 @@ def buildProposalsList():
             })
     return proposalList
 
+# Returns all proposals not created by the requesting user
 @csrf_exempt
 def showProposals(request):
-    return JsonResponse(buildProposalsList(), safe = False)
+    session_token = JSONParser().parse(BytesIO(request.body))
+
+    if session_token:
+        # Validate user exists
+        try:
+            user = ManagrUser.objects.get(session_token = session_token)
+        except ManagrUser.DoesNotExist:
+            return JsonResponse({'error': 'Invalid request.'})
+    return JsonResponse(buildProposalsList(user), safe = False)
 
 # Returns a proposal object based on the proposal_uuid. If the requesting user owns the requested
 # proposal, a flag is set to true indicating so. In either case, the entire proposal is returned.
@@ -121,7 +132,7 @@ def getProposal(request):
             user = ManagrUser.objects.get(session_token = session_token)
         except ObjectDoesNotExist:
             return JsonResponse({'error': 'Invalid request.'})
-        
+
         # Check owner
         if proposal.owner == user:
             print("Request for proposal by owner. (Debug statement - project_proposal/views.py)")
@@ -163,7 +174,7 @@ def deleteProposal(request):
             user = ManagrUser.objects.get(session_token = session_token)
         except ObjectDoesNotExist:
             return JsonResponse({'error': 'Invalid request.'})
-        
+
         # Check owner
         if proposal.owner == user:
             print("Request for proposal delete by owner. (Debug statement - project_proposal/views.py)")
