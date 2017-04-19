@@ -29,7 +29,8 @@ import { proposal_form_title,
          proposal_load_failure,
          proposal_owner,
          proposal_update_in_progress,
-         proposal_deleted } from './ProposalReducer';
+         proposal_deleted,
+         bids_on_proposal } from './ProposalReducer';
 
 import { proposals } from './ShowProposalsReducer';
 
@@ -86,6 +87,7 @@ export default combineReducers ({
     proposal_owner,
     proposal_update_in_progress,
     proposal_deleted,
+    bids_on_proposal,
 
     // View proposal reducers
     // TODO: Rename this to reflect purpose

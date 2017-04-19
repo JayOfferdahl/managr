@@ -34,14 +34,15 @@ urlpatterns = [
     # End managr_entities_views
 
     # Begin project_proposal_views
-    url(r'^proposals/delete', project_proposal_views.deleteProposal, name="delete_proposal"),
-    url(r'^proposals/get-user-proposal-metadata', project_proposal_views.getUserProposalMetadata, name="get_user_proposal_metadata"),
+    url(r'^proposals/delete', project_proposal_views.deleteProposal, name='delete_proposal'),
+    url(r'^proposals/get-user-proposal-metadata', project_proposal_views.getUserProposalMetadata, name='get_user_proposal_metadata'),
+    url(r'^proposals/load-bids', project_proposal_views.loadBidsOnProposal, name='load_bids_on_proposal'),
     url(r'^proposals/new', project_proposal_views.newProposal, name='new_proposal'),
     url(r'^proposals/proposal', project_proposal_views.getProposal, name='proposal'),
     url(r'^proposals/update', project_proposal_views.updateProposal, name='update_proposal'),
 
     url(r'^bids/delete', project_proposal_views.deleteBid, name='delete_bid'),
-    url(r'^bids/get-user-bid-metadata', project_proposal_views.getUserBidMetadata, name="get_user_bid_metadata"),
+    url(r'^bids/get-user-bid-metadata', project_proposal_views.getUserBidMetadata, name='get_user_bid_metadata'),
     url(r'^bids/new', project_proposal_views.newBid, name='new_bid'),
     url(r'^bids/show-proposals', project_proposal_views.showProposals, name='show_proposals'),
     url(r'^bids/update', project_proposal_views.updateBid, name='update_bid'),

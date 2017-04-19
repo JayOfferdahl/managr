@@ -157,3 +157,16 @@ export function proposal_deleted(state = false, action) {
             return state;
     }
 }
+
+export function bids_on_proposal(state = [], action) {
+    switch(action.type) {
+        case 'BIDS_LOAD_SUCCESS':
+            return action.data;
+        case 'BIDS_LOAD_FAILURE':
+            return [];
+        case 'PROPOSAL_RESET_VIEW':
+            return [];
+        default:
+            return state;
+    }
+}

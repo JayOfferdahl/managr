@@ -25,10 +25,8 @@ export function loadUserProposalMetadata(session_token) {
             .then((response) => response.json())
             .then((data) => {
                 if (data['success']) {
-                    console.log("Proposal metadata loaded. (Debug statement - AppActions.jsx)");
                     dispatch(proposalMetadataLoadSuccess(data['data']));
                 } else {
-                    console.log("Error loading proposal metadata: %o (Debug statement - AppActions.jsx)", data);
                     dispatch(proposalMetadataLoadFailure(data['error']));
                 }
             });
@@ -62,10 +60,8 @@ export function loadUserBidMetadata(session_token) {
             .then((response) => response.json())
             .then((data) => {
                 if (data['success']) {
-                    console.log("Bid metadata loaded. (Debug statement - AppActions.jsx)");
                     dispatch(bidMetadataLoadSuccess(data['data']));
                 } else {
-                    console.log("Error loading bid metadata: %o (Debug statement - AppActions.jsx)", data);
                     dispatch(bidMetadataLoadFailure(data['error']));
                 }
             });

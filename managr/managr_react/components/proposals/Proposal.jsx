@@ -7,6 +7,7 @@ import { loadProposalFromServer, cancelUpdateProposal, resetProposalView } from 
 import { getSessionToken } from '../../assets/js/app.jsx';
 
 import Bid from '../bids/Bid';
+import ProposalBidsList from'./ProposalBidsList';
 import ProposalToolBar from './ProposalToolBar';
 import ProposalLoadFailureMessage from './ProposalLoadFailureMessage';
 
@@ -27,9 +28,12 @@ class Proposal extends React.Component {
         if(this.props.proposal_load_failure) {
             return <ProposalLoadFailureMessage />;
         } else {
-            let bid;
-            if(!this.props.proposal_owner)
-                bid = <Bid proposal_uuid={this.props.params.proposal_uuid} />;
+            let content;
+            if(this.props.proposal_owner) {
+                content = <ProposalBidsList proposal_uuid={this.props.params.proposal_uuid} />
+            } else {
+                content = <Bid proposal_uuid={this.props.params.proposal_uuid} />;
+            }
 
             return (
                 <div className="default-content">
@@ -43,7 +47,7 @@ class Proposal extends React.Component {
                     <p><b>Desired End Date:</b> {this.props.proposal.end_date}</p>
                     <br/>
                     <p><b>Description:</b> {this.props.proposal.description}</p>
-                    {bid}
+                    {content}
                 </div>
             );
         }

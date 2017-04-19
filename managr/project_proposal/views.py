@@ -303,3 +303,42 @@ def getUserBidMetadata(request):
         })
     else:
         return JsonResponse({'error': 'Invalid request.'})
+
+# Returns all bids associated with a project proposal. Checks that the requesting user
+# owns the proposal before returning bids associated with it.
+@csrf_exempt
+def loadBidsOnProposal(request):
+    request_data = JSONParser().parse(BytesIO(request.body))
+
+    proposal_uuid = request_data['proposal_uuid']
+    session_token = request_data['session_token']
+
+    if session_token and proposal_uuid:
+        # Validate user and proposal exist
+        try:
+            user = ManagrUser.objects.get(session_token = session_token)
+            proposal = Proposal.objects.get(proposal_uuid = proposal_uuid)
+        except ObjectDoesNotExist:
+            return JsonResponse({'error': 'Invalid request.'})
+
+        # If the proposal owner is the requesting body, return the list of bids
+        if proposal.owner == user:
+            bids = Bid.objects.filter(corresponding_proposal__proposal_uuid = proposal_uuid)
+            bidsList = list()
+
+            for bid in bids:
+                bidsList.append({
+                    'budget': bid.budget,
+                    'start_date': bid.start_date,
+                    'end_date': bid.end_date,
+                    'contact_number': bid.contact_number,
+                    'description': bid.details['description'],
+                })
+            return JsonResponse({
+                'success': True,
+                'data': bidsList,
+            })
+        else:
+            return JsonResponse({'error': 'Invalid request.'})
+    else:
+        return JsonResponse({'error': 'Invalid request.'})

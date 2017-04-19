@@ -144,10 +144,10 @@ export function proposalLoadOwner(owner) {
     }
 }
 
-export function loadProposalFromServer(proposal_uuid, sessionToken) {
+export function loadProposalFromServer(proposal_uuid, session_token) {
     let data = {};
     data.proposal_uuid = proposal_uuid;
-    data.session_token = sessionToken;
+    data.session_token = session_token;
     
     const request_params = { method: 'POST', body: JSON.stringify(data) };
     return (dispatch) => {
@@ -168,6 +168,8 @@ export function loadProposalFromServer(proposal_uuid, sessionToken) {
                 if(!data['owner'] && data['bid']['exists']) {
                     dispatch(bidExistsOnProposal(data['bid']['exists']));
                     dispatch(bidLoadData(data['bid']));
+                } else if(data['owner']) {
+                    dispatch(loadBidsFromServer(proposal_uuid, session_token));
                 }
             } else {
                 dispatch(proposalLoadFailure());
@@ -188,10 +190,10 @@ export function proposalDeleteFailure() {
     }
 }
 
-export function deleteProposal(proposal_uuid, sessionToken) {
+export function deleteProposal(proposal_uuid, session_token) {
     let data = {};
     data.proposal_uuid = proposal_uuid;
-    data.session_token = sessionToken;
+    data.session_token = session_token;
     
     const request_params = { method: 'POST', body: JSON.stringify(data) };
     return (dispatch) => {
@@ -225,5 +227,44 @@ export function resetProposalView() {
         dispatch(cancelUpdateProposal());
         dispatch(bidExistsOnProposal(false));
         dispatch(cleanProposalView());
+    };
+}
+
+export function bidsLoadSuccess(data) {
+    return {
+        type: 'BIDS_LOAD_SUCCESS',
+        data
+    }
+}
+
+export function bidsLoadFailure() {
+    return {
+        type: 'BIDS_LOAD_FAILURE'
+    }
+}
+
+export function loadBidsFromServer(proposal_uuid, session_token) {
+    let data = {};
+    data.proposal_uuid = proposal_uuid;
+    data.session_token = session_token;
+
+    const request_params = { method: 'POST', body: JSON.stringify(data) };
+    return (dispatch) => {
+        fetch('http://managr.dev.biz:8000/proposals/load-bids', request_params)
+        .then((response) => {
+            if(!response.ok) {
+                console.log("Server response error: " + response.ok);
+            }
+            return response;
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            if(data['success']) {
+                dispatch(bidsLoadSuccess(data['data']));
+              }
+           else {
+                dispatch(bidsLoadFailure());
+            }
+        });
     };
 }
