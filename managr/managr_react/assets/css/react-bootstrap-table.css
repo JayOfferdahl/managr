@@ -58,6 +58,7 @@
 
 .react-bs-table .table-bordered > tbody > tr > td {
   outline: none !important;
+  vertical-align: middle;
 }
 
 .react-bs-table .table-bordered > tbody > tr > td.default-focus-cell {
@@ -303,4 +304,12 @@ td.react-bs-table-expand-cell {
 
 .bounceOut {
   animation-name: bounceOut;
+}
+
+.react-bs-table-button {
+  padding: 3px;
+}
+
+.react-bs-table-buttons button {
+  margin: 0px 7px;
 }

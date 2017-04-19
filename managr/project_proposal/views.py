@@ -13,6 +13,22 @@ from project_proposal.app_forms.proposal_form import ProposalForm
 from project_proposal.app_models.bid import Bid
 from project_proposal.app_forms.bid_form import BidForm
 
+def prettyFormatContact(contactNumber):
+    # Build a new string
+    formattedContact = "("
+    i = 0
+
+    for c in contactNumber:
+        if c.isdigit():
+            formattedContact += c
+            i += 1
+            if i == 3:
+                formattedContact += ") "
+            elif i == 6:
+                formattedContact += "-"
+
+    return formattedContact
+
 # Creates a new proposal object in the database assigned to the requesting user.
 # Error messages returned if the form is invalid or the user doesn't exist.
 @csrf_exempt
@@ -147,7 +163,7 @@ def getProposal(request):
                 bid = Bid.objects.get(owner = user, corresponding_proposal__proposal_uuid = proposal_uuid)
                 bidResponse = {
                     "exists": True,
-                    "contact_number": bid.contact_number,
+                    "contact_number": prettyFormatContact(bid.contact_number),
                     "budget": bid.budget,
                     "start_date": bid.start_date,
                     "end_date": bid.end_date,
@@ -161,7 +177,7 @@ def getProposal(request):
         proposalResponse = {
             "title": proposal.title,
             "address": proposal.address,
-            "contact_number": proposal.contact_number,
+            "contact_number": prettyFormatContact(proposal.contact_number),
             "budget": proposal.budget,
             "start_date": proposal.start_date,
             "end_date": proposal.end_date,
@@ -329,10 +345,11 @@ def loadBidsOnProposal(request):
             for bid in bids:
                 bidsList.append({
                     'budget': bid.budget,
-                    'start_date': bid.start_date,
-                    'end_date': bid.end_date,
-                    'contact_number': bid.contact_number,
+                    'start_date': bid.start_date.strftime("%B %d, %Y"),
+                    'end_date': bid.end_date.strftime("%B %d, %Y"),
+                    'contact_number': prettyFormatContact(bid.contact_number),
                     'description': bid.details['description'],
+                    'bid_uuid': bid.bid_uuid,
                 })
             return JsonResponse({
                 'success': True,

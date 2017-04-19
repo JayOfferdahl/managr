@@ -20,6 +20,27 @@ class ProposalBidsList extends React.Component {
         }
     };
 
+    handleAcceptBid(bid_uuid) {
+        console.log("Handling the acception of bid uuid: " + bid_uuid);
+    }
+
+    handleDeclineBid(bid_uuid) {
+        console.log("Handling the declination of bid uuid: " + bid_uuid);
+    }
+
+    bidTableButtons(cell, row) {
+        return (
+            <div className="react-bs-table-buttons">
+                <button onClick={this.handleAcceptBid.bind(this, row.bid_uuid)} className="btn btn-success">
+                    <span className="glyphicon glyphicon-ok" />
+                </button>
+                <button onClick={this.handleDeclineBid.bind(this, row.bid_uuid)} className="btn btn-danger">
+                    <span className="glyphicon glyphicon-remove" />
+                </button>
+            </div>
+        );
+    }
+
     render () {
         return (
                 <div>
@@ -30,8 +51,9 @@ class ProposalBidsList extends React.Component {
                         <TableHeaderColumn isKey={true} dataSort={true} dataField='budget'>Budget</TableHeaderColumn>
                         <TableHeaderColumn dataSort={true} dataField='start_date'>Start Date</TableHeaderColumn>
                         <TableHeaderColumn dataSort={true} dataField='end_date'>End Date</TableHeaderColumn>
-                        <TableHeaderColumn dataSort={true} dataField='contact_number'>Contact</TableHeaderColumn>
-                        <TableHeaderColumn dataSort={true} dataField='description'>Description</TableHeaderColumn>
+                        <TableHeaderColumn dataField='contact_number'>Contact</TableHeaderColumn>
+                        <TableHeaderColumn dataField='description'>Description</TableHeaderColumn>
+                        <TableHeaderColumn dataField="buttons" width="123" dataFormat={this.bidTableButtons.bind(this)}>Accept/Decline</TableHeaderColumn>
                     </BootstrapTable>
                 </div>
             );

@@ -1,3 +1,5 @@
+import uuid
+
 from django.db import models
 
 class BidManager(models.Manager):
@@ -9,7 +11,8 @@ class BidManager(models.Manager):
             start_date = bid_data['start_date'],
             end_date = bid_data['end_date'],
             budget = bid_data['budget'],
-            details = {'description': bid_data['description']}
+            details = {'description': bid_data['description']},
+            bid_uuid = self.generate_bid_uuid(),
         )
 
         bid.save()
@@ -26,3 +29,6 @@ class BidManager(models.Manager):
 
         bid.save()
         return bid
+
+    def generate_bid_uuid(self):
+        return uuid.UUID(bytes = Random.get_random_bytes(16))

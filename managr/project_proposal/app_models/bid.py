@@ -8,6 +8,8 @@ from managr_entities.app_models.managr_user import ManagrUser
 from project_proposal.app_models.proposal import Proposal
 from project_proposal.app_managers.bid import BidManager
 
+import uuid
+
 class Bid(models.Model):
     corresponding_proposal = models.ForeignKey(Proposal, on_delete = models.CASCADE)
     owner = models.ForeignKey(ManagrUser, on_delete = models.CASCADE)
@@ -19,6 +21,8 @@ class Bid(models.Model):
         'description'
     ]
     details = HStoreField()
+
+    bid_uuid = models.UUIDField(default = uuid.uuid4, editable = False)
 
     def clean(self, *args, **kwargs):
         if self.details != None:
