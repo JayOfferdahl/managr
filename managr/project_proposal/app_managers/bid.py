@@ -1,5 +1,6 @@
 import uuid
 
+from Crypto import Random
 from django.db import models
 
 class BidManager(models.Manager):
