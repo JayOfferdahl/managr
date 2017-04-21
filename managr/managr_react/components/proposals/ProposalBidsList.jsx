@@ -2,7 +2,9 @@ import React from 'react';
 
 import { connect } from 'react-redux';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
-import { loadBidsFromServer } from '../../actions/ProposalActions';
+import { loadBidsFromServer,
+         declineBid,
+         acceptBid } from '../../actions/ProposalActions';
 import { getSessionToken } from '../../assets/js/app.jsx';
 
 import '../../assets/css/react-bootstrap-table.css';
@@ -12,20 +14,18 @@ class ProposalBidsList extends React.Component {
         this.props.loadBidsFromServer(this.props.proposal_uuid);
     };
 
-    numericSortFunc(a, b, order) {
-        if (order === 'desc') {
-            return Number(b.budget) - Number(a.budget);
-        } else {
-            return Number(a.budget) - Number(b.budget);
-        }
-    };
-
     handleAcceptBid(bid_uuid) {
-        console.log("Handling the acception of bid uuid: " + bid_uuid);
+        if(confirm("Are you sure you want to accept this bid?")) {
+            console.log("accepting bid...");
+            this.props.acceptBid(this.props.proposal_uuid, bid_uuid);
+            console.log("bid accepted");
+        }
     }
 
     handleDeclineBid(bid_uuid) {
-        console.log("Handling the declination of bid uuid: " + bid_uuid);
+        console.log("declining bid...");
+        this.props.declineBid(this.props.proposal_uuid, bid_uuid);
+        console.log("bid declined.");
     }
 
     bidTableButtons(cell, row) {
@@ -60,12 +60,6 @@ class ProposalBidsList extends React.Component {
     }
 };
 
-const options = {
-    onRowClick: function(row) {
-        console.log(row.uuid);
-    }
-};
-
 const mapStateToProps = (state) => {
     return {
         bids: state.bids_on_proposal,
@@ -75,6 +69,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         loadBidsFromServer: (proposal_uuid) => dispatch(loadBidsFromServer(proposal_uuid, getSessionToken())),
+        declineBid: (proposal_uuid, bid_uuid) => dispatch(declineBid(proposal_uuid, bid_uuid, getSessionToken())),
+        acceptBid: (proposal_uuid, bid_uuid) => dispatch(acceptBid(proposal_uuid, bid_uuid, getSessionToken())),
     };
 };
 

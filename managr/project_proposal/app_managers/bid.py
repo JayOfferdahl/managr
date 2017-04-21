@@ -27,9 +27,22 @@ class BidManager(models.Manager):
         bid.end_date = bid_data['end_date']
         bid.budget = bid_data['budget']
         bid.details = {'description': bid_data['description']}
+        bid.bid_declined = False
 
         bid.save()
         return bid
 
     def generate_bid_uuid(self):
         return uuid.UUID(bytes = Random.get_random_bytes(16))
+
+    def decline_bid(self, bid):
+        bid.bid_declined = True
+        bid.save()
+
+    def deactivate_proposal(self, proposal):
+        # Get all bids associated with this proposal
+        bids = self.filter(corresponding_proposal = proposal)
+
+        for bid in bids:
+            bid.proposal_removed = True
+            bid.save()

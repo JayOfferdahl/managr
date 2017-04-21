@@ -119,3 +119,25 @@ export function bid_deleted(state = false, action) {
             return state;
     }
 }
+
+export function bid_declined(state = false, action) {
+    switch(action.type) {
+        case 'BID_LOAD_BID_DECLINED':
+            return true;
+        case 'BID_LOAD_BID_VALID':
+            return false;
+        default:
+            return state;
+    }
+}
+
+export function proposal_removed(state = false, action) {
+    switch(action.type) {
+        case 'BID_LOAD_PROPOSAL_REMOVED':
+            return true;
+        case 'BID_LOAD_BID_VALID':
+            return false;
+        default:
+            return state;
+    }
+}

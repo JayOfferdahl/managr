@@ -64,6 +64,9 @@ def updateProposal(request):
         except ObjectDoesNotExist:
             return JsonResponse({'error': 'Invalid request.'})
 
+        if proposal.active == False:
+            return JsonResponse({'error': 'Invalid request.'})
+
         if proposal.owner == user:
             proposal = Proposal.objects.update_proposal(proposal, proposal_data)
             return JsonResponse({'success': proposal.proposal_uuid})
@@ -88,12 +91,14 @@ def getUserProposalMetadata(request):
             return JsonResponse({'error': 'Invalid request.'})
 
         # Generate a list of project proposals and their ids
-        proposals = Proposal.objects.filter(owner = user).order_by('title')
+        proposals = Proposal.objects.filter(owner = user).exclude(active = False).order_by('title')
 
         proposal_metadata = OrderedDict()
 
         for proposal in proposals:
-            proposal_metadata[proposal.title] = proposal.proposal_uuid
+            bidsExist = Bid.objects.filter(corresponding_proposal__proposal_uuid = proposal.proposal_uuid).exclude(bid_declined = True).count() > 0
+            metadata = {'proposal_uuid': proposal.proposal_uuid, 'flagged': bidsExist}
+            proposal_metadata[proposal.title] = metadata
 
         return JsonResponse({
             'success': 'Proposals returned for user.',
@@ -103,9 +108,7 @@ def getUserProposalMetadata(request):
         return JsonResponse({'error': 'Invalid request.'})
 
 def buildProposalsList(user):
-    #proposals = Proposal.objects.all()
-    print(user)
-    proposals = Proposal.objects.exclude(owner = user)
+    proposals = Proposal.objects.exclude(owner = user).exclude(active = False)
     proposalList = list()
     for proposal in proposals:
         proposalList.append({
@@ -168,6 +171,8 @@ def getProposal(request):
                     "start_date": bid.start_date,
                     "end_date": bid.end_date,
                     "description": bid.details['description'],
+                    "bid_declined": bid.bid_declined,
+                    "proposal_removed": bid.proposal_removed,
                 }
             # If the bid doesn't exist, return nothing
             except Bid.DoesNotExist:
@@ -182,6 +187,7 @@ def getProposal(request):
             "start_date": proposal.start_date,
             "end_date": proposal.end_date,
             "description": proposal.details['description'],
+            "active": proposal.active
         }
 
         return JsonResponse({
@@ -190,6 +196,8 @@ def getProposal(request):
             'proposal': proposalResponse,
             'bid': bidResponse,
         })
+    else:
+        return JsonResponse({'error': 'Invalid request.'})
 
 # Removes a proposal object from the database. Ensures the requesting using owns the proposal
 # object before deleting it.
@@ -210,7 +218,8 @@ def deleteProposal(request):
 
         # Check owner
         if proposal.owner == user:
-            proposal.delete()
+            Bid.objects.deactivate_proposal(proposal)
+            Proposal.objects.deactivate(proposal)
             return JsonResponse({'success': True })
         else:
             return JsonResponse({'error': 'Invalid request.'})
@@ -230,6 +239,9 @@ def newBid(request):
             user = ManagrUser.objects.get(session_token = bid_data['token'])
             proposal = Proposal.objects.get(proposal_uuid = bid_data['proposal_uuid'])
         except ObjectDoesNotExist:
+            return JsonResponse({'error': 'Invalid request.'})
+
+        if proposal.active == False:
             return JsonResponse({'error': 'Invalid request.'})
 
         bid = Bid.objects.create_bid(user, proposal, bid_data)
@@ -311,7 +323,11 @@ def getUserBidMetadata(request):
         bid_metadata = OrderedDict()
 
         for bid in bids:
-            bid_metadata[bid.corresponding_proposal.title] = bid.corresponding_proposal.proposal_uuid
+            metadata = {
+                'proposal_uuid': bid.corresponding_proposal.proposal_uuid,
+                'flagged': bid.bid_declined or bid.proposal_removed
+            }
+            bid_metadata[bid.corresponding_proposal.title] = metadata
 
         return JsonResponse({
             'success': 'Proposals returned for user.',
@@ -339,7 +355,7 @@ def loadBidsOnProposal(request):
 
         # If the proposal owner is the requesting body, return the list of bids
         if proposal.owner == user:
-            bids = Bid.objects.filter(corresponding_proposal__proposal_uuid = proposal_uuid)
+            bids = Bid.objects.filter(corresponding_proposal__proposal_uuid = proposal_uuid).exclude(bid_declined = True)
             bidsList = list()
 
             for bid in bids:
@@ -355,6 +371,38 @@ def loadBidsOnProposal(request):
                 'success': True,
                 'data': bidsList,
             })
+        else:
+            return JsonResponse({'error': 'Invalid request.'})
+    else:
+        return JsonResponse({'error': 'Invalid request.'})
+
+@csrf_exempt
+def acceptBid(request):
+    print("Server recieved bid acceptal request.")
+    return JsonResponse({'success': True})
+
+@csrf_exempt
+def declineBid(request):
+    request_data = JSONParser().parse(BytesIO(request.body))
+
+    session_token = request_data['session_token']
+    proposal_uuid = request_data['proposal_uuid']
+    bid_uuid = request_data['bid_uuid']
+
+    if session_token and proposal_uuid and bid_uuid:
+        # Validate user and proposal exist
+        try:
+            user = ManagrUser.objects.get(session_token = session_token)
+            proposal = Proposal.objects.get(proposal_uuid = proposal_uuid)
+            bid = Bid.objects.get(bid_uuid = bid_uuid)
+        except ObjectDoesNotExist:
+            return JsonResponse({'error': 'Invalid request.'})
+
+        # If the proposal owner is the requesting body, return the list of bids
+        if bid.corresponding_proposal == proposal:
+            Bid.objects.decline_bid(bid)
+
+            return JsonResponse({'success': True})
         else:
             return JsonResponse({'error': 'Invalid request.'})
     else:

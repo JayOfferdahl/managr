@@ -36,3 +36,7 @@ class ProposalManager(models.Manager):
 
     def generate_project_uuid(self):
         return uuid.UUID(bytes = Random.get_random_bytes(16))
+
+    def deactivate(self, proposal):
+        proposal.active = False
+        proposal.save()

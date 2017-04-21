@@ -21,10 +21,11 @@ class NavBidLinks extends React.Component {
     generateBidTuples(bid_metadata) {
         let tuples = [];
 
-        _.forEach(bid_metadata, (value, key) => {
+        _.forEach(bid_metadata, (metadata, key) => {
             let bid = {}
             bid['title'] = key;
-            bid['link'] = value;
+            bid['link'] = metadata.proposal_uuid;
+            bid['flagged'] = metadata.flagged;
 
             tuples.push(bid);
         })
@@ -42,10 +43,14 @@ class NavBidLinks extends React.Component {
                 {
                     _.map(this.generateBidTuples(this.props.bid_metadata),
                         (bid, index) => {
+                        let notification;
+                        if(bid.flagged)
+                            notification = <span className="glyphicon glyphicon-alert nav-status-icon icon-danger" />
                         return (
                             <LinkContainer key={index} className="nav-secondary-link" to={"/proposal/" + bid.link}>
                                 <a className="nav-secondary-link">
                                     {bid.title}
+                                    {notification}
                                 </a>
                             </LinkContainer>
                         );

@@ -34,6 +34,8 @@ urlpatterns = [
     # End managr_entities_views
 
     # Begin project_proposal_views
+    url(r'^proposals/accept-bid', project_proposal_views.acceptBid, name='accept_bid'),
+    url(r'^proposals/decline-bid', project_proposal_views.declineBid, name='decline_bid'),
     url(r'^proposals/delete', project_proposal_views.deleteProposal, name='delete_proposal'),
     url(r'^proposals/get-user-proposal-metadata', project_proposal_views.getUserProposalMetadata, name='get_user_proposal_metadata'),
     url(r'^proposals/load-bids', project_proposal_views.loadBidsOnProposal, name='load_bids_on_proposal'),

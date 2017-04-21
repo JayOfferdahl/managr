@@ -18,7 +18,14 @@ class BidTools extends React.Component {
         let toolFunction = {}, toolStatus = {};
         // If a bid exists on this proposal, show edit/cancel & delete buttons
         if(this.props.bid_exists) {
-            if(this.props.bid_in_progress) {
+            let toolsDisabled = this.props.proposal_removed;
+
+            if(toolsDisabled) {
+                toolFunction.method = null;
+                toolFunction.text = "Edit";
+                toolStatus.text = "This proposal is no longer active. You can safely delete this bid.";
+                toolStatus.class = "danger";
+            } else if(this.props.bid_in_progress) {
                 toolFunction.method = this.props.cancelBidProcess;
                 toolFunction.text = "Cancel";
                 toolStatus.text = "To finish updating your bid, click 'Update Bid'.";
@@ -26,8 +33,14 @@ class BidTools extends React.Component {
             } else {
                 toolFunction.method = this.props.beginBidProcess;
                 toolFunction.text = "Edit";
-                toolStatus.text = "Your bid is live and viewable by the proposal owner.";
-                toolStatus.class = "success";
+                
+                if(this.props.bid_declined) {
+                    toolStatus.text = "Your bid has been declined by the proposal owner, please update and resubmit.";
+                    toolStatus.class = "warning";
+                } else {
+                    toolStatus.text = "Your bid is live and viewable by the proposal owner.";
+                    toolStatus.class = "success";
+                }
             }
 
             return (
@@ -36,13 +49,12 @@ class BidTools extends React.Component {
                         <button
                             className="btn btn-sm btn-default"
                             onClick={toolFunction.method}
-                            disabled={!this.props.bid_exists}>
+                            disabled={toolsDisabled}>
                             {toolFunction.text}
                         </button>
                         <button
                             className="btn btn-sm btn-danger"
-                            onClick={this.handleDeleteBid.bind(this)}
-                            disabled={!this.props.bid_exists}>
+                            onClick={this.handleDeleteBid.bind(this)}>
                             Delete
                         </button>
                     </div>
@@ -87,6 +99,8 @@ const mapStateToProps = (state) => {
     return {
         bid_in_progress: state.bid_in_progress,
         bid_exists: state.bid_exists_on_proposal,
+        bid_declined: state.bid_declined,
+        proposal_removed: state.proposal_removed,
     };
 };
 

@@ -21,7 +21,8 @@ class Bid(models.Model):
         'description'
     ]
     details = HStoreField()
-
+    bid_declined = models.BooleanField(default = False)
+    proposal_removed = models.BooleanField(default = False)
     bid_uuid = models.UUIDField(default = uuid.uuid4, editable = False)
 
     def clean(self, *args, **kwargs):

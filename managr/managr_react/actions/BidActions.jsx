@@ -162,10 +162,41 @@ export function deleteBid(proposal_uuid, session_token) {
     };
 }
 
-export function bidLoadData(bid_data) {
+export function bidLoadBidData(bid_data) {
     return {
         type: 'BID_LOAD_BID_DATA',
         bid_data,
+    };
+}
+
+export function bidLoadBidDeclined() {
+    return {
+        type: 'BID_LOAD_BID_DECLINED'
+    };
+}
+
+export function bidLoadProposalRemoved() {
+    return {
+        type: 'BID_LOAD_PROPOSAL_REMOVED'
+    };
+}
+
+export function bidLoadBidValid() {
+    return {
+        type: 'BID_LOAD_BID_VALID'
+    };
+}
+
+export function bidLoadData(bid_data) {
+    return (dispatch) => {
+        dispatch(bidLoadBidData(bid_data));
+
+        if(bid_data['proposal_removed'])
+            dispatch(bidLoadProposalRemoved());
+        else if(bid_data['bid_declined'])
+            dispatch(bidLoadBidDeclined());
+        else
+            dispatch(bidLoadBidValid());
     };
 }
 

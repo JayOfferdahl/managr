@@ -20,10 +20,11 @@ class NavProposalLinks extends React.Component {
     generateProposalTuples(proposal_metadata) {
         let tuples = [];
 
-        _.forEach(proposal_metadata, (value, key) => {
+        _.forEach(proposal_metadata, (metadata, key) => {
             let proposal = {}
             proposal['title'] = key;
-            proposal['link'] = value;
+            proposal['link'] = metadata.proposal_uuid;
+            proposal['flagged'] = metadata.flagged;
 
             tuples.push(proposal);
         })
@@ -41,10 +42,14 @@ class NavProposalLinks extends React.Component {
                 {
                     _.map(this.generateProposalTuples(this.props.proposal_metadata),
                         (proposal, index) => {
+                        let notification;
+                        if(proposal.flagged)
+                            notification = <span className="glyphicon glyphicon-exclamation-sign nav-status-icon icon-success" />
                         return (
                             <LinkContainer key={index} className="nav-secondary-link" to={"/proposal/" + proposal.link}>
                                 <a className="nav-secondary-link">
                                     {proposal.title}
+                                    {notification}
                                 </a>
                             </LinkContainer>
                         );

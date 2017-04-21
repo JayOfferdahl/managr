@@ -261,9 +261,58 @@ export function loadBidsFromServer(proposal_uuid, session_token) {
         .then((data) => {
             if(data['success']) {
                 dispatch(bidsLoadSuccess(data['data']));
-              }
-           else {
+            }
+            else {
                 dispatch(bidsLoadFailure());
+            }
+        });
+    };
+}
+
+export function declineBid(proposal_uuid, bid_uuid, session_token) {
+    let data = {};
+    data.proposal_uuid = proposal_uuid;
+    data.bid_uuid = bid_uuid;
+    data.session_token = session_token;
+
+    const request_params = { method: 'POST', body: JSON.stringify(data) };
+    return (dispatch) => {
+        fetch('http://managr.dev.biz:8000/proposals/decline-bid', request_params)
+        .then((response) => {
+            if(!response.ok) {
+                console.log("Server response error: " + response.ok);
+            }
+            return response;
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            if(data['success']) {
+                // Reload bids into bid table
+                dispatch(loadBidsFromServer(proposal_uuid, session_token));
+            }
+        });
+    };
+}
+
+export function acceptBid(proposal_uuid, bid_uuid, session_token) {
+    let data = {};
+    data.proposal_uuid = proposal_uuid;
+    data.bid_uuid = bid_uuid;
+    data.session_token = session_token;
+
+    const request_params = { method: 'POST', body: JSON.stringify(data) };
+    return (dispatch) => {
+        fetch('http://managr.dev.biz:8000/proposals/accept-bid', request_params)
+        .then((response) => {
+            if(!response.ok) {
+                console.log("Server response error: " + response.ok);
+            }
+            return response;
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            if(data['success']) {
+                console.log("Just accepted a bid.");
             }
         });
     };
