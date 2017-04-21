@@ -289,6 +289,7 @@ export function declineBid(proposal_uuid, bid_uuid, session_token) {
             if(data['success']) {
                 // Reload bids into bid table
                 dispatch(loadBidsFromServer(proposal_uuid, session_token));
+                dispatch(loadUserProposalMetadata(session_token));
             }
         });
     };
@@ -313,6 +314,7 @@ export function acceptBid(proposal_uuid, bid_uuid, session_token) {
         .then((data) => {
             if(data['success']) {
                 console.log("Just accepted a bid.");
+                dispatch(loadUserProposalMetadata(session_token));
             }
         });
     };

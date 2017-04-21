@@ -15,7 +15,7 @@ export function proposalMetadataLoadFailure(failure) {
 export function loadUserProposalMetadata(session_token) {
     const request_params = { method: 'POST', body: JSON.stringify(session_token) };
     return (dispatch) => {
-        fetch('http://managr.dev.biz:8000/proposals/get-user-proposal-metadata', request_params)
+        fetch('http://managr.dev.biz:8000/proposals/get-metadata', request_params)
             .then((response) => {
                 if (!response.ok) {
                     // Server response was not okay
@@ -50,7 +50,7 @@ export function bidMetadataLoadFailure(failure) {
 export function loadUserBidMetadata(session_token) {
     const request_params = { method: 'POST', body: JSON.stringify(session_token) };
     return (dispatch) => {
-        fetch('http://managr.dev.biz:8000/bids/get-user-bid-metadata', request_params)
+        fetch('http://managr.dev.biz:8000/bids/get-metadata', request_params)
             .then((response) => {
                 if (!response.ok) {
                     // Server response was not okay

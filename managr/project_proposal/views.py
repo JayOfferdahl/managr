@@ -13,6 +13,8 @@ from project_proposal.app_forms.proposal_form import ProposalForm
 from project_proposal.app_models.bid import Bid
 from project_proposal.app_forms.bid_form import BidForm
 
+
+# Formats a contact number (10 digits) into a readable format of '(xxx) xxx-xxxx'
 def prettyFormatContact(contactNumber):
     # Build a new string
     formattedContact = "("
@@ -28,6 +30,7 @@ def prettyFormatContact(contactNumber):
                 formattedContact += "-"
 
     return formattedContact
+
 
 # Creates a new proposal object in the database assigned to the requesting user.
 # Error messages returned if the form is invalid or the user doesn't exist.
@@ -48,6 +51,7 @@ def newProposal(request):
     else:
         errors = dict([(key, [str(error) for error in value]) for key, value in proposal_form.errors.items()])
         return JsonResponse(errors)
+
 
 # Updates a proposal object in the database belonging to the requesting user.
 # Error messages returned if the form is invalid or the user/proposal doesn't exist.
@@ -75,6 +79,7 @@ def updateProposal(request):
     else:
         errors = dict([(key, [str(error) for error in value]) for key, value in proposal_form.errors.items()])
         return JsonResponse(errors)
+
 
 # Returns an ordered dictionary of proposals with their titles as keys and their proposal_uuids
 # as values. The proposal_uuids are used to link the front end to a specific proposal.
@@ -107,6 +112,7 @@ def getUserProposalMetadata(request):
     else:
         return JsonResponse({'error': 'Invalid request.'})
 
+
 def buildProposalsList(user):
     proposals = Proposal.objects.exclude(owner = user).exclude(active = False)
     proposalList = list()
@@ -121,6 +127,7 @@ def buildProposalsList(user):
         })
     return proposalList
 
+
 # Returns all proposals not created by the requesting user
 @csrf_exempt
 def showProposals(request):
@@ -133,6 +140,7 @@ def showProposals(request):
         except ManagrUser.DoesNotExist:
             return JsonResponse({'error': 'Invalid request.'})
     return JsonResponse(buildProposalsList(user), safe = False)
+
 
 # Returns a proposal object based on the proposal_uuid. If the requesting user owns the requested
 # proposal, a flag is set to true indicating so. In either case, the entire proposal is returned.
@@ -199,6 +207,7 @@ def getProposal(request):
     else:
         return JsonResponse({'error': 'Invalid request.'})
 
+
 # Removes a proposal object from the database. Ensures the requesting using owns the proposal
 # object before deleting it.
 @csrf_exempt
@@ -221,10 +230,9 @@ def deleteProposal(request):
             Bid.objects.deactivate_proposal(proposal)
             Proposal.objects.deactivate(proposal)
             return JsonResponse({'success': True })
-        else:
-            return JsonResponse({'error': 'Invalid request.'})
-    else:
-        return JsonResponse({'error': 'Invalid request.'})
+
+    return JsonResponse({'error': 'Invalid request.'})
+
 
 # Creates a new bid object in the database assigned to the requesting user.
 # Error messages returned if the form is invalid or the user doesn't exist.
@@ -249,6 +257,7 @@ def newBid(request):
     else:
         errors = dict([(key, [str(error) for error in value]) for key, value in bid_form.errors.items()])
         return JsonResponse(errors)
+
 
 # Updates a bid object in the database belonging to the requesting user.
 # Error messages returned if the form is invalid or the user/bid doesn't exist.
@@ -277,6 +286,7 @@ def updateBid(request):
         errors = dict([(key, [str(error) for error in value]) for key, value in bid_form.errors.items()])
         return JsonResponse(errors)
 
+
 # Removes a bid object from the database. Ensures the requesting using owns the bid
 # object before deleting it.
 @csrf_exempt
@@ -298,10 +308,9 @@ def deleteBid(request):
         if bid.owner == user:
             bid.delete()
             return JsonResponse({'success': True })
-        else:
-            return JsonResponse({'error': 'Invalid request.'})
-    else:
-        return JsonResponse({'error': 'Invalid request.'})
+    
+    return JsonResponse({'error': 'Invalid request.'})
+
 
 # Returns an ordered dictionary of bids with their corresponding proposal titles as keys and the
 # proposal_uuids as values. The proposal_uuids are used to link the front end to a specific proposal.
@@ -333,8 +342,9 @@ def getUserBidMetadata(request):
             'success': 'Proposals returned for user.',
             'data': bid_metadata
         })
-    else:
-        return JsonResponse({'error': 'Invalid request.'})
+
+    return JsonResponse({'error': 'Invalid request.'})
+
 
 # Returns all bids associated with a project proposal. Checks that the requesting user
 # owns the proposal before returning bids associated with it.
@@ -371,16 +381,41 @@ def loadBidsOnProposal(request):
                 'success': True,
                 'data': bidsList,
             })
-        else:
-            return JsonResponse({'error': 'Invalid request.'})
-    else:
-        return JsonResponse({'error': 'Invalid request.'})
+    
+    return JsonResponse({'error': 'Invalid request.'})
 
+
+# Accepts a bid given exisiting proposal/bid objects. Ensure the requesting body owns the proposal
+# and that the bid to be accepted corresponds with the given proposal before creating the project
+# object, inactivating the proposal object, and deleting the bid object.
 @csrf_exempt
 def acceptBid(request):
-    print("Server recieved bid acceptal request.")
-    return JsonResponse({'success': True})
+    request_data = JSONParser().parse(BytesIO(request.body))
 
+    session_token = request_data['session_token']
+    proposal_uuid = request_data['proposal_uuid']
+    bid_uuid = request_data['bid_uuid']
+
+    if session_token and proposal_uuid and bid_uuid:
+        # Validate user, proposal, and bid exist
+        try:
+            user = ManagrUser.objects.get(session_token = session_token)
+            proposal = Proposal.objects.get(proposal_uuid = proposal_uuid)
+            bid = Bid.objects.get(bid_uuid = bid_uuid)
+        except ObjectDoesNotExist:
+            return JsonResponse({'error': 'Invalid request.'})
+
+        # Ensure bid/proposal correspond and requesting entitiy is the proposal owner
+        if bid.corresponding_proposal == proposal and proposal.owner == user:
+            print("This is a valid bid acceptance request.")
+            # Strategy -> Create project object -> Deactivate proposal -> Delete associated bid
+            return JsonResponse({'success': True})
+    
+    return JsonResponse({'error': 'Invalid request.'})
+
+
+# Declines a bid given existing proposal/bid objects. Ensures the requesting body owns the proposal
+# and that the bid to be declined corresponds with the given proposal before flagging the bid.
 @csrf_exempt
 def declineBid(request):
     request_data = JSONParser().parse(BytesIO(request.body))
@@ -390,7 +425,7 @@ def declineBid(request):
     bid_uuid = request_data['bid_uuid']
 
     if session_token and proposal_uuid and bid_uuid:
-        # Validate user and proposal exist
+        # Validate user, proposal, and bid exist
         try:
             user = ManagrUser.objects.get(session_token = session_token)
             proposal = Proposal.objects.get(proposal_uuid = proposal_uuid)
@@ -398,12 +433,10 @@ def declineBid(request):
         except ObjectDoesNotExist:
             return JsonResponse({'error': 'Invalid request.'})
 
-        # If the proposal owner is the requesting body, return the list of bids
+        # Ensure bid/proposal correspond
         if bid.corresponding_proposal == proposal:
             Bid.objects.decline_bid(bid)
 
             return JsonResponse({'success': True})
-        else:
-            return JsonResponse({'error': 'Invalid request.'})
-    else:
-        return JsonResponse({'error': 'Invalid request.'})
+
+    return JsonResponse({'error': 'Invalid request.'})
