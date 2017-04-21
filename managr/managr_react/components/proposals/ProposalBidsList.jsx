@@ -23,9 +23,7 @@ class ProposalBidsList extends React.Component {
     }
 
     handleDeclineBid(bid_uuid) {
-        console.log("declining bid...");
         this.props.declineBid(this.props.proposal_uuid, bid_uuid);
-        console.log("bid declined.");
     }
 
     bidTableButtons(cell, row) {

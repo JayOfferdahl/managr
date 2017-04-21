@@ -32,8 +32,6 @@ import { proposal_form_title,
          proposal_deleted,
          bids_on_proposal } from './ProposalReducer';
 
-import { proposals } from './ShowProposalsReducer';
-
 import { proposal_metadata_load_errors,
          proposal_metadata,
          bid_metadata_load_errors,
@@ -51,7 +49,8 @@ import { bid_in_progress,
          bid_data,
          bid_deleted,
          bid_declined,
-         proposal_removed } from './BidReducer';
+         proposal_removed,
+         proposals } from './BidReducer';
 
 export default combineReducers ({
     // Registration reducers
@@ -91,10 +90,6 @@ export default combineReducers ({
     proposal_deleted,
     bids_on_proposal,
 
-    // View proposal reducers
-    // TODO: Rename this to reflect purpose
-    proposals,
-
     // Navigation proposal reducers
     proposal_metadata_load_errors,
     proposal_metadata,
@@ -114,5 +109,6 @@ export default combineReducers ({
     bid_data,
     bid_deleted,
     bid_declined,
-    proposal_removed
+    proposal_removed,
+    proposals
 });

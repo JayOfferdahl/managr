@@ -1,10 +1,12 @@
 import React from 'react';
+
 import { connect } from 'react-redux';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import { Router, browserHistory } from 'react-router';
+import { loadProposalsFromServer } from '../../actions/BidActions';
+import { getSessionToken } from '../../assets/js/app.jsx';
 
 import '../../assets/css/App.css';
-import { loadProposalsFromServer } from '../../actions/ShowProposalsActions';
 
 function numericSortFunc(a, b, order) {
     if (order === 'desc') {
@@ -16,8 +18,7 @@ function numericSortFunc(a, b, order) {
 
 class ShowProposals extends React.Component {
     componentWillMount() {
-        var token = localStorage.getItem("managr_session_token");
-        this.props.loadProposalsFromServer(token);
+        this.props.loadProposalsFromServer();
     };
 
     handleSubmit(submitEvent) {
@@ -52,7 +53,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        loadProposalsFromServer: (token) => dispatch(loadProposalsFromServer(token)),
+        loadProposalsFromServer: () => dispatch(loadProposalsFromServer(getSessionToken())),
     };
 };
 

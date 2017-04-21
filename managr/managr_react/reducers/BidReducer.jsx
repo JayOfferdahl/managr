@@ -141,3 +141,12 @@ export function proposal_removed(state = false, action) {
             return state;
     }
 }
+
+export function proposals(state = [], action) {
+    switch(action.type) {
+        case 'PROPOSALS_LOAD_SUCCESS':
+            return action.data;
+        default:
+            return state;
+    }
+}
