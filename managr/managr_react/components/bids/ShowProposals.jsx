@@ -1,10 +1,11 @@
 import React from 'react';
+
 import { connect } from 'react-redux';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import { Router, browserHistory } from 'react-router';
+import { loadProposalsFromServer } from '../../actions/BidActions';
+import { getSessionToken } from '../../assets/js/app.jsx';
 
-import '../../assets/css/App.css';
-import { loadProposalsFromServer } from '../../actions/ShowProposalsActions';
 import '../../assets/css/App.css';
 
 function numericSortFunc(a, b, order) {
@@ -40,9 +41,6 @@ class ShowProposals extends React.Component {
 
 const options = {
   onRowClick: function(row) {
-    //this.context.router.push('/proposals/:' + row.uuid);
-    //console.log(row.uuid);
-    //fetch('http://managr.dev.biz:8000/proposals/proposal', {method : 'post', body : row.uuid});
     browserHistory.push('/proposal/' + row.uuid);
   }
 };
@@ -55,8 +53,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        loadProposalsFromServer: () => dispatch(loadProposalsFromServer()),
-        // loadProposalFromServer: (proposalID) => dispatch(loadProposalFromServer(proposalID))
+        loadProposalsFromServer: () => dispatch(loadProposalsFromServer(getSessionToken())),
     };
 };
 

@@ -6,8 +6,6 @@ import NavAndHeader from './components/app_components/NavAndHeader'
 
 import EnsureAuthenticated from './components/authentication/EnsureAuthenticated'
 
-import CreateBid from './components/bids/CreateBid'
-import UpdateBid from './components/bids/UpdateBid'
 import CreateProposal from './components/proposals/CreateProposal'
 import UpdateProposal from './components/proposals/UpdateProposal'
 
@@ -49,8 +47,6 @@ export default (
             <Route path="/finance" component={Finance}/>
             <Route path="/documents" component={DocumentsList}/>
 
-            <Route path="/create-bid/:proposal_uuid" component={CreateBid}/>
-            <Route path="/update-bid/:bid_uuid" component={UpdateBid}/>
             <Route path="/show-proposals" component={ShowProposals}/>
             
             <Route path="/create-proposal" component={CreateProposal}/>

@@ -187,3 +187,17 @@ html, body, #app, .App {
 .default-content h2 {
     margin-top: 0px;
 }
+
+.nav-status-icon {
+    float: right;
+    margin-top: 3px;
+    margin-right: 3px !important;
+}
+
+.icon-danger {
+    color: yellow;
+}
+
+.icon-success {
+    color: LawnGreen;
+}

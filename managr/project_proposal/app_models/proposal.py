@@ -24,6 +24,8 @@ class Proposal(models.Model):
 	]
 	details = HStoreField()
 
+	active = models.BooleanField(default = True)
+
 	def clean(self, *args, **kwargs):
 		if self.details != None:
 			has_valid_details = verify_keys_before_save(self.details, self.DETAILS_FIELDS)

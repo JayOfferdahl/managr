@@ -2,12 +2,9 @@ import uuid
 
 from Crypto import Random
 from django.db import models
-from managr_entities.app_models.managr_user import ManagrUser
 
 class ProposalManager(models.Manager):
     def create_proposal(self, user, proposal_data):
-        print("Creating proposal object (Debug statement - project_proposal/app_managers/proposal.py)")
-
         proposal = self.create(
             owner = user,
             title = proposal_data['title'],
@@ -24,8 +21,6 @@ class ProposalManager(models.Manager):
         return proposal
 
     def update_proposal(self, proposal, proposal_data):
-        print("Updating proposal object (Debug statment - project_proposal/app_managers/proposal.py)")
-
         # TODO: Only update fields that changed --> not too big of a deal here since the data
         # structure is so small, but this is bad practice to write over fields that didn't change.
         proposal.title = proposal_data['title']
@@ -41,3 +36,7 @@ class ProposalManager(models.Manager):
 
     def generate_project_uuid(self):
         return uuid.UUID(bytes = Random.get_random_bytes(16))
+
+    def deactivate(self, proposal):
+        proposal.active = False
+        proposal.save()

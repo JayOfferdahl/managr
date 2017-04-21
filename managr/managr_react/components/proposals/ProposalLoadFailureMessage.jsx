@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { LinkContainer } from 'react-router-bootstrap';
 
 class ProposalLoadFailureMessage extends React.Component {
