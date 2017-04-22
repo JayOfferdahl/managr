@@ -35,8 +35,6 @@ def updateProposal(request):
 def getUserProposalMetadata(request):
     session_token = JSONParser().parse(BytesIO(request.body))
 
-    print(session_token)
-
     if session_token:
         user = ManagrUser.objects.get(session_token=session_token)
         if user:

@@ -1,0 +1,76 @@
+.full {
+    width: 100%;
+}
+
+.todo {
+    color: red;
+}
+
+.project-form {
+    font-size: 15px;
+    max-width: 790px;
+}
+
+.project-form label {
+    width: 70px;
+}
+
+.project-form input {
+    width: 200px;
+    padding: 7px;
+}
+
+.budget-form-group {
+    display: table;
+}
+
+.budget-form-group label {
+    padding: 7px 0px;
+    margin: 0;
+}
+
+.input-group {
+    width: 200px;
+    float: right;
+}
+
+.input-group input {
+    font-size: 15px;
+    height: 39px;
+}
+
+.input-tel input{
+    width: auto;
+}
+
+.project-form-section {
+    width: 375px;
+    float: left;
+}
+
+.project-form-section.project-form-section-left {
+    margin-right: 40px;
+}
+
+.project-form-description label {
+    clear: left;
+    float: left;
+}
+
+.project-form textarea {
+    display: inline-block;
+    width: 615px;
+    height: 300px;
+    padding: 7px;
+}
+
+.project-form-submit {
+    padding: 10px;
+    width: 100%;
+    margin: 5px 0px;
+}
+
+.project-success {
+    padding: 10px;
+    margin: 0px 0px 10px 0px;
+}

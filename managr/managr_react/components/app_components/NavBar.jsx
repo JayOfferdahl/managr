@@ -5,47 +5,14 @@ import { connect } from 'react-redux';
 
 import '../../assets/css/App.css';
 import NavProposalLinks from './NavProposalLinks';
+import NavProjectLinks from './NavProjectLinks';
 
 class NavBar extends React.Component {
     render() {
         return (
             <Nav className="nav-links-container">
                 {/* Projects section */}
-                <div className="nav-main-category" data-toggle="collapse" data-target="#projects">
-                    <p>Projects</p><span className="glyphicon glyphicon-chevron-down"></span>
-                </div>
-                <div id="projects" className="nav-secondary-category collapse in">
-                    <LinkContainer className="nav-secondary-link" to="/summary">
-                        <a className="nav-secondary-link">
-                            <span className="glyphicon glyphicon-home"></span>
-                            Project Overview
-                        </a>
-                    </LinkContainer>
-                    <LinkContainer className="nav-secondary-link" to="/milestones">
-                        <a className="nav-secondary-link">
-                            <span className="glyphicon glyphicon-tasks"></span>
-                            Milestones
-                        </a>
-                    </LinkContainer>
-                    <LinkContainer to="/finance">
-                        <a className="nav-secondary-link">
-                            <span className="glyphicon glyphicon-usd"></span>
-                            Finance
-                        </a>
-                    </LinkContainer>
-                    <LinkContainer className="nav-secondary-link" to="/documents">
-                        <a className="nav-secondary-link">
-                            <span className="glyphicon glyphicon-file"></span>
-                            Documents
-                        </a>
-                    </LinkContainer>
-                    <LinkContainer className="nav-secondary-link" to="/project-settings">
-                        <a className="nav-secondary-link">
-                            <span className="glyphicon glyphicon-cog"></span>
-                            Settings
-                        </a>
-                    </LinkContainer>
-                </div>
+                <NavProjectLinks />
 
                 {/* Proposals section */}
                 <NavProposalLinks />

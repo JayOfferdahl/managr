@@ -18,7 +18,6 @@ class RegistrationForm extends React.Component {
 					this.context.router.push('/create-company-0');
 					break;
 				case '1':
-					console.log('join contractor');
 					this.context.router.push('/create-company-1');
 					break;
 				case '2':

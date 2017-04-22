@@ -12,6 +12,7 @@ from managr_entities.app_forms.registration_form import RegistrationForm
 from managr_entities.app_forms.login_form import LoginForm
 from managr_entities.app_forms.create_contractor_company_form import CreateContractorCompanyForm
 from managr_entities.app_forms.create_client_company_form import CreateClientCompanyForm
+from managr_entities.app_forms.join_company_form import JoinCompanyForm
 from managr_entities.app_models.managr_user import ManagrUser
 from managr_entities.app_models.company import Company
 
@@ -111,4 +112,18 @@ def createClientCompany(request):
 		return JsonResponse({'success': 'Successful company creation'})
 	else:
 		errors = dict([(key, [str(error) for error in value]) for key, value in client_company_creation_form.errors.items()])
+		return JsonResponse(errors)
+
+@csrf_exempt
+def joinCompany(request):
+	company_key_and_session_token = JSONParser().parse(BytesIO(request.body))
+	join_company_form = JoinCompanyForm(company_key_and_session_token)
+
+	if join_company_form.is_valid():
+		managr_user = ManagrUser.objects.get(session_token = company_key_and_session_token['session_token'])
+		managr_user.company = Company.objects.get(company_key = company_key_and_session_token['company_key'])
+		managr_user.save()
+		return JsonResponse({'success': 'Successfully joined company'})
+	else:
+		errors = dict([(key, [str(error) for error in value]) for key, value in join_company_form.errors.items()])
 		return JsonResponse(errors)

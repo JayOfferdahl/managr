@@ -6,7 +6,7 @@ import SelectGroup from '../app_components/SelectGroup';
 import Textfield from '../app_components/Textfield';
 import TextareaField from '../app_components/TextareaField';
 
-import { updateCompanyCreationForm, createContractorCompany } from '../../actions/CompanyCreationActions';
+import { updateCompanyForm, createContractorCompany } from '../../actions/CompanyCreationActions';
 
 import { states_array } from '../../assets/js/StatesArray';
 
@@ -70,7 +70,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        updateField: (field_name, field_value) => dispatch(updateCompanyCreationForm(field_name, field_value)),
+        updateField: (field_name, field_value) => dispatch(updateCompanyForm(field_name, field_value)),
         submitCompanyCreation: (form_fields_info, session_token) => dispatch(createContractorCompany(form_fields_info, session_token))
     };
 };
