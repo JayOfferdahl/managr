@@ -28,13 +28,17 @@ class ShowProposals extends React.Component {
 
     render () {
         return (
-            <BootstrapTable data = { this.props.proposals } options = { options } striped hover pagination>
-                <TableHeaderColumn isKey = { true } dataSort={ true } filter={ { type: 'TextFilter'} } dataField='name'>Name</TableHeaderColumn>
-                <TableHeaderColumn dataSort={ true } filter={ { type: 'TextFilter'} } dataField='location'>Location</TableHeaderColumn>
-                <TableHeaderColumn dataSort={ true } sortFunc={ numericSortFunc } dataField='budget'>Budget</TableHeaderColumn>
-                <TableHeaderColumn dataSort={ true } dataField='start'>Start Date</TableHeaderColumn>
-                <TableHeaderColumn dataSort={ true } dataField='end'>End Date</TableHeaderColumn>
-            </BootstrapTable>
+            <div className="default-content show-proposals-table">
+                <h2>Search for a New Project</h2>
+                <br/>
+                <BootstrapTable data={this.props.proposals} options={options} striped hover pagination>
+                    <TableHeaderColumn isKey={true} dataSort={true} filter={{type: 'TextFilter'}} dataField='name'>Name</TableHeaderColumn>
+                    <TableHeaderColumn dataSort={true} filter={{type: 'TextFilter'}} dataField='location'>Location</TableHeaderColumn>
+                    <TableHeaderColumn dataSort={true} sortFunc={numericSortFunc} dataField='budget'>Budget</TableHeaderColumn>
+                    <TableHeaderColumn dataSort={true} dataField='start'>Start Date</TableHeaderColumn>
+                    <TableHeaderColumn dataSort={true} dataField='end'>End Date</TableHeaderColumn>
+                </BootstrapTable>
+            </div>
         );
     }
 };

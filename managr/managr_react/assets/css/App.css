@@ -201,3 +201,7 @@ html, body, #app, .App {
 .icon-success {
     color: LawnGreen;
 }
+
+.show-proposals-table .react-bs-container-body table>tbody>tr:hover {
+  cursor: pointer;
+}
