@@ -12,8 +12,8 @@ class Milestone(models.Model):
 
     # (string) the task text
     text = models.CharField(max_length = 255)
-    # (string) the date when a task is scheduled to begin in the format "DD-MM-YYYY"
-    start_date = models.CharField(max_length = 10)
+    # the date when a task is scheduled to begin in the format "DD-MM-YYYY"
+    start_date = models.DateTimeField()
     # (number) the task duration
     duration = models.PositiveIntegerField(default = 0)
 
@@ -33,7 +33,7 @@ class Milestone(models.Model):
     task_type = models.CharField(max_length = 9, choices = TASK_TYPES, default = 0, blank = True)
 
     # (string, number) the id of the parent task
-    parent_id = models.IntegerField(null = True)
+    parent_id = models.BigIntegerField(null = True)
 
     # Unimplemented optional properties
     # (array) ids of links that comes out from the task
@@ -54,6 +54,6 @@ class Milestone(models.Model):
     # (boolean) specifies whether the task branch will be opened initially (to show child tasks)
     task_open = models.BooleanField(default = True, blank = True)
 
-    # (string) the date when a task is scheduled to be completed. Used as an alternative to the
+    # the date when a task is scheduled to be completed. Used as an alternative to the
     # duration property for setting the duration of the task
-    end_date = models.CharField(max_length = 10, blank = True)
+    end_date = models.DateTimeField()

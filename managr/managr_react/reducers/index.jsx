@@ -1,5 +1,4 @@
 import { combineReducers } from 'redux';
-import { milestones } from './MilestonesReducer';
 
 import { first_name,
          last_name,
@@ -112,7 +111,4 @@ export default combineReducers ({
     bid_declined,
     proposal_removed,
     proposals,
-    
-    // Milestones reducers
-    milestones,
 });

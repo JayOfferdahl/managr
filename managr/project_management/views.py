@@ -1,61 +1,176 @@
 from django.http import JsonResponse
+from django.http import HttpResponse
 from django.shortcuts import render
 
 from django.views.decorators.csrf import csrf_exempt
 
+from project_management.app_models.project import Project
 from project_management.app_models.milestone import Milestone
 from project_management.app_models.milestone_link import MilestoneLink
 
 @csrf_exempt
 def getMilestones(request):
-    # tasks =  {
-    #     "data":[
-    #         {"id":1, "text":"Backend Connection","start_date":"01-04-2013", "duration":11,
-    #         "progress": 0.6, "open": "true"},
-    #         {"id":2, "text":"Has Been",   "start_date":"03-04-2013", "duration":5, 
-    #         "progress": 1,   "open": "true", "parent":1},
-    #         {"id":3, "text":"Established!",   "start_date":"02-04-2013", "duration":7, 
-    #         "progress": 0.5, "open": "true", "parent":1},
-    #         {"id":4, "text":"Here's a task, if you care.", "start_date":"03-04-2013", "duration":2, 
-    #         "progress": 1,   "open": "true", "parent":3},
-    #         {"id":5, "text":"This is from the django server!", "start_date":"04-04-2013", "duration":3, 
-    #         "progress": 0.8, "open": "true", "parent":3},
-    #         {"id":6, "text":"Task #2.3", "start_date":"05-04-2013", "duration":4, 
-    #         "progress": 0.2, "open": "true", "parent":3}
-    #     ],
-    #     "links":[
-    #         {"id":1, "source":1, "target":2, "type":"1"},
-    #         {"id":2, "source":1, "target":3, "type":"1"},
-    #         {"id":3, "source":3, "target":4, "type":"1"},
-    #         {"id":4, "source":4, "target":5, "type":"0"},
-    #         {"id":5, "source":5, "target":6, "type":"0"}
-    #     ]
-    # }
-
-    return JsonResponse(buildMilestoneDictionary(10))
-
-# Builds the dictionary of milestone objects with the given project_uuid
-def buildMilestoneDictionary(project_uuid):
-    milestones = Milestone.objects.all()
     milestoneDict = dict()
     milestoneDict['data'] = []
-
+    milestoneDict['links'] = []
+    
+    # Get all milestone objects for this project
+    milestones = Milestone.objects.all()
     for milestone in milestones:
         milestoneDict['data'].append({
             "id":           milestone.id,
             "text":         milestone.text,
-            "start_date":   milestone.start_date,
+            "start_date":   milestone.start_date.strftime("%Y-%m-%d %H:%M"),
             "duration":     milestone.duration,
             "task_type":    milestone.task_type,
-            "parent_id":    milestone.parent_id,
+            "parent":       milestone.parent_id,
             "level":        milestone.level,
             "progress":     milestone.progress,
             "open":         milestone.task_open,
-            "end_date":     milestone.end_date
-            })
+            "end_date":     milestone.end_date.strftime("%Y-%m-%d %H:%M")
+        })
+
+    # Get all milestone link objects for this project
+    milestoneLinks = MilestoneLink.objects.all()
+    for link in milestoneLinks:
+        milestoneDict['links'].append({
+            "source":   link.source,
+            "target":   link.target,
+            "type":     link.task_type,
+        })
+
     print(milestoneDict)
-    return milestoneDict
+    return JsonResponse(milestoneDict)    
 
+@csrf_exempt
+def dataProcessor(request):    
+    if request.method == 'POST':
+        request_type = request.POST['!nativeeditor_status']
+        for key, value in request.POST.items():
+            print(key, value)
 
-def updateMilestones(request):
-    pass
+        # If the source field is present, it's a link
+        if 'source' in request.POST:
+            if request_type == 'inserted':
+                link = MilestoneLink()
+
+                # TODO -> Get the correct project from the front end.
+                link.project = Project.objects.all()[0]
+                link.source = request.POST['source']
+                link.target = request.POST['target']
+                link.task_type = request.POST['type']
+                link.save()
+                response = {
+                    'type' : 'insert',
+                    'sid': request.POST['id'],
+                    'tid': link.id
+                }
+            elif request_type == 'deleted':
+                link = Link(pk = request.POST['id'])
+                link.delete()
+                response = {
+                    'type': 'update',
+                    'sid': request.POST['id'],
+                    'tid': '0'
+                }
+            elif request_type == 'updated':
+                link = Link(pk = request.POST['id'])
+                link.source = request.POST['source']
+                link.target = request.POST['target']
+                link.task_type = request.POST['type']
+                link.save()
+                response = {
+                    'type': 'update',
+                    'sid': link.id,
+                    'tid': link.id
+                }
+            else:
+                response = {
+                    'type': 'error',
+                    'sid': request.POST['id'],
+                    'tid': '0'
+                }
+        else:
+            if request_type == 'inserted':
+                milestone = Milestone()
+                
+                # Required
+
+                # TODO -> Get the correct project from the front end.
+                milestone.project = Project.objects.all()[0]
+                milestone.text = request.POST['text']
+                milestone.start_date = request.POST['start_date']
+                milestone.duration = request.POST['duration']
+
+                # Optional
+                if 'task_type' in request.POST:
+                    milestone.task_type = request.POST['task_type']
+                if 'parent' in request.POST:
+                    milestone.parent_id = request.POST['parent']
+                if 'level' in request.POST and request.POST['level']:
+                    milestone.level = request.POST['level']
+                if 'progress' in request.POST:
+                    milestone.progress = float(request.POST['progress'])
+                if 'task_open' in request.POST:
+                    milestone.task_open = request.POST['task_open']
+                if 'end_date' in request.POST:
+                    milestone.end_date = request.POST['end_date']
+
+                print(request.POST['parent'])
+                
+                milestone.save()
+
+                response = {
+                    'type' : 'insert',
+                    'sid': request.POST['id'],
+                    'tid': milestone.id
+                }
+            elif request_type == 'deleted':
+                milestone = Milestone(pk = request.POST['id'])
+                milestone.delete()
+                response = {
+                    'type': 'delete',
+                    'sid': request.POST['id'],
+                    'tid': '0'
+                }
+            elif request_type == 'updated':
+                milestone = Milestone.objects.get(pk = request.POST['id'])
+                print(milestone)
+
+                # Required
+                milestone.text = request.POST['text']
+                milestone.start_date = request.POST['start_date']
+                milestone.duration = request.POST['duration']
+
+                # Optional
+                if 'task_type' in request.POST:
+                    milestone.task_type = request.POST['task_type']
+                if 'parent' in request.POST:
+                    milestone.parent_id = request.POST['parent']
+                if 'level' in request.POST and request.POST['level']:
+                    print(request.POST['level'])
+                    milestone.level = request.POST['level']
+                if 'progress' in request.POST:
+                    milestone.progress = float(request.POST['progress'])
+                if 'task_open' in request.POST:
+                    milestone.task_open = request.POST['task_open']
+                if 'end_date' in request.POST:
+                    milestone.end_date = request.POST['end_date']
+                
+                milestone.save()
+
+                response = {
+                    'type': 'update',
+                    'sid': milestone.id,
+                    'tid': milestone.id
+                }
+            else:
+                response = {
+                    'type': 'error',
+                    'sid': request.POST['id'],
+                    'tid': '0'
+                }
+
+        print(response)
+        return HttpResponse(response)
+    return HttpResponse({'error': 'Invalid request method.'})

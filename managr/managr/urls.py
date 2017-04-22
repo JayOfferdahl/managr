@@ -53,6 +53,6 @@ urlpatterns = [
 
     # Begin project_management_views
     url(r'^milestones/get$', project_management_views.getMilestones, name='get_milestones'),
-    url(r'^milestones/update$', project_management_views.updateMilestones, name='update_milestones'),
+    url(r'^milestones/data-processor$', project_management_views.dataProcessor, name='data_processor'),
     # End project_management_views
 ]

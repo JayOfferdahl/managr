@@ -10,9 +10,9 @@ class MilestoneLink(models.Model):
     # Required properties of a task object ########################################################
 
     # (number) ids of a task that the dependency will start from
-    source = models.IntegerField()
+    source = models.BigIntegerField()
     # (number) ids of a task that the dependency will end with
-    target = models.IntegerField()
+    target = models.BigIntegerField()
 
     # (string) the dependency type
     LINK_TYPES = (
