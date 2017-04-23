@@ -14,6 +14,12 @@ class ProjectOverview extends React.Component {
         this.props.fetchProjectInformation(this.props.params.project_uuid);
     }
 
+    componentWillReceiveProps(nextProps) {
+        if(this.props.params.project_uuid != nextProps.params.project_uuid) {
+            this.props.fetchProjectInformation(nextProps.params.project_uuid);
+        }
+    }
+
     render () {
         return (
             <Row className="project-content-section">
@@ -44,7 +50,6 @@ ProjectOverview.contextTypes = {
 
 const mapStateToProps = (state) => {
     return {
-        overview_project_name: state.overview_project_name,
         project_overview_name: state.project_overview_name,
         project_overview_description: state.project_overview_description,
         project_overview_budget: state.project_overview_budget,
