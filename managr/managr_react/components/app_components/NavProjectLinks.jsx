@@ -37,16 +37,51 @@ class NavProjectLinks extends React.Component {
                     _.map(this.generateProjectTuples(this.props.project_metadata),
                         (project, index) => {
                         return (
-                            <LinkContainer key={index} className="nav-secondary-link" to={"/project/" + project.link}>
-                                <a className="nav-secondary-link">
-                                    {project.title}
-                                </a>
-                            </LinkContainer>
+                            <div key={index}>
+                                <div className="nav-secondary-link" data-toggle="collapse" data-target={"#" + project.link}>
+                                    <a>
+                                        {project.title}
+                                        <span className="glyphicon glyphicon-chevron-down nav-status-icon"></span>
+                                    </a>
+                                </div>
+                                <div id={project.link} className="nav-tertiary-category collapse in">
+                                    <LinkContainer className="nav-sub-link" to={"/project/" + project.link}>
+                                        <a>
+                                            <span className="glyphicon glyphicon-home"></span>
+                                            Project Overview
+                                        </a>
+                                    </LinkContainer>
+                                    <LinkContainer className="nav-sub-link" to={"/milestones/" + project.link}>
+                                        <a>
+                                            <span className="glyphicon glyphicon-tasks"></span>
+                                            Milestones
+                                        </a>
+                                    </LinkContainer>
+                                    <LinkContainer className="nav-sub-link" to={"/finance/" + project.link}>
+                                        <a>
+                                            <span className="glyphicon glyphicon-usd"></span>
+                                            Finance
+                                        </a>
+                                    </LinkContainer>
+                                    <LinkContainer className="nav-sub-link" to={"/documents/" + project.link}>
+                                        <a>
+                                            <span className="glyphicon glyphicon-file"></span>
+                                            Documents
+                                        </a>
+                                    </LinkContainer>
+                                    <LinkContainer className="nav-sub-link" to={"/project-settings/" + project.link}>
+                                        <a>
+                                            <span className="glyphicon glyphicon-cog"></span>
+                                            Settings
+                                        </a>
+                                    </LinkContainer>
+                                </div>
+                            </div>
                         );
                     })
                 }
                     <LinkContainer className="nav-secondary-link" to="/create-project">
-                        <a className="nav-secondary-link">
+                        <a>
                             <span className="glyphicon glyphicon-plus"></span>
                             New Project
                         </a>

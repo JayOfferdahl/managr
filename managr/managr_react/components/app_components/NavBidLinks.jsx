@@ -48,7 +48,7 @@ class NavBidLinks extends React.Component {
                             notification = <span className="glyphicon glyphicon-alert nav-status-icon icon-danger" />
                         return (
                             <LinkContainer key={index} className="nav-secondary-link" to={"/proposal/" + bid.link}>
-                                <a className="nav-secondary-link">
+                                <a>
                                     {bid.title}
                                     {notification}
                                 </a>
@@ -57,7 +57,7 @@ class NavBidLinks extends React.Component {
                     })
                 }
                     <LinkContainer className="nav-secondary-link" to="/show-proposals">
-                        <a className="nav-secondary-link">
+                        <a>
                             <span className="glyphicon glyphicon-search"></span>
                             Search Proposals
                         </a>

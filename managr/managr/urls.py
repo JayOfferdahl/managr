@@ -57,8 +57,8 @@ urlpatterns = [
     # End project_proposal_views
 
     # Begin project_management_views
-    url(r'^milestones/get$', project_management_views.getMilestones, name='get_milestones'),
-    url(r'^milestones/data-processor$', project_management_views.dataProcessor, name='data_processor'),
+    url(r'^milestones/get/(?P<project_uuid>[a-zA-Z0-9\-]*)$', project_management_views.getMilestones, name='get_milestones'),
+    url(r'^milestones/data-processor/(?P<project_uuid>[a-zA-Z0-9\-]*)$', project_management_views.dataProcessor, name='data_processor'),
 
     url(r'^projects/get-user-project-metadata', project_management_views.getUserProjectMetadata, name='get_user_project_metadata'),
     url(r'^projects/create-new-project', project_management_views.createNewProject, name='create_new_project'),

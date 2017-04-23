@@ -37,23 +37,22 @@ export default (
     <Route path="signup" component={SignupPage} />
     <Route component={EnsureAuthenticated}>
         <Route component={NavAndHeader}>
-            {/* TODO: Add dashboard route which shows all projects/proposals/bids */}
+            {/* Dashboard */}
             <Route path="dashboard" component={Dashboard} />
+            
             {/* Project Routes */}
-            <Route path="project/:project_uuid" component={ProjectOverview}></Route>
-            {/*
-                <Route component={Overview}>
-                    <Route path="summary" component={Summary}/>
-                    <Route path="equipment" component={Equipment}/>
-                    <Route path="labor" component={Labor}/>
-                    <Route path="materials" component={Materials}/>
-                    <Route path="activity" component={Activity}/>
-                </Route>
-            */}
-            <Route path="finance" component={Finance}/>
-            <Route path="milestones" component={Milestones}/>
-            <Route path="documents" component={DocumentsList}/>
-            <Route path="project-settings" component={ProjectSettings}/>
+            <Route path="project/:project_uuid" component={ProjectOverview}>
+                <Route component={Summary}/>
+                <Route component={Equipment}/>
+                <Route component={Labor}/>
+                <Route component={Materials}/>
+                <Route component={Activity}/>
+            </Route>
+
+            <Route path="finance/:project_uuid" component={Finance}/>
+            <Route path="milestones/:project_uuid" component={Milestones}/>
+            <Route path="documents/:project_uuid" component={DocumentsList}/>
+            <Route path="project-settings/:project_uuid" component={ProjectSettings}/>
             <Route path="create-project" component={CreateProject} />
 
             {/* Proposal/Bid Routes */}
