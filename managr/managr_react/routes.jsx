@@ -50,9 +50,9 @@ export default (
             </Route>
 
             <Route path="project/:project_uuid/documents" component={DocumentsList}/>
-            <Route path="finance/:project_uuid" component={Finance}/>
-            <Route path="milestones/:project_uuid" component={Milestones}/>
-            <Route path="project-settings/:project_uuid" component={ProjectSettings}/>
+            <Route path="project/:project_uuid/finance" component={Finance}/>
+            <Route path="project/:project_uuid/milestones" component={Milestones}/>
+            <Route path="project/:project_uuid/project-settings" component={ProjectSettings}/>
             <Route path="create-project" component={CreateProject} />
 
             {/* Proposal/Bid Routes */}

@@ -44,32 +44,32 @@ class NavProjectLinks extends React.Component {
                                         <span className="glyphicon glyphicon-chevron-down nav-status-icon"></span>
                                     </a>
                                 </div>
-                                <div id={project.link} className="nav-tertiary-category collapse in">
+                                <div id={project.link} className="nav-tertiary-category collapse">
                                     <LinkContainer className="nav-sub-link" to={"/project-overview/" + project.link}>
                                         <a>
                                             <span className="glyphicon glyphicon-home"></span>
                                             Project Overview
                                         </a>
                                     </LinkContainer>
-                                    <LinkContainer className="nav-sub-link" to={"/milestones/" + project.link}>
+                                    <LinkContainer className="nav-sub-link" to={"/project/" + project.link + "/milestones"}>
                                         <a>
                                             <span className="glyphicon glyphicon-tasks"></span>
                                             Milestones
                                         </a>
                                     </LinkContainer>
-                                    <LinkContainer className="nav-sub-link" to={"/finance/" + project.link}>
+                                    <LinkContainer className="nav-sub-link" to={"/project/" + project.link + "/finance"}>
                                         <a>
                                             <span className="glyphicon glyphicon-usd"></span>
                                             Finance
                                         </a>
                                     </LinkContainer>
-                                    <LinkContainer className="nav-sub-link" to={"/documents/" + project.link}>
+                                    <LinkContainer className="nav-sub-link" to={"/project/" + project.link + "/documents"}>
                                         <a>
                                             <span className="glyphicon glyphicon-file"></span>
                                             Documents
                                         </a>
                                     </LinkContainer>
-                                    <LinkContainer className="nav-sub-link" to={"/project-settings/" + project.link}>
+                                    <LinkContainer className="nav-sub-link" to={"/project/" + project.link + "/project-settings"}>
                                         <a>
                                             <span className="glyphicon glyphicon-cog"></span>
                                             Settings
