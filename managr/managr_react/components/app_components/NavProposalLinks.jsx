@@ -47,7 +47,7 @@ class NavProposalLinks extends React.Component {
                             notification = <span className="glyphicon glyphicon-exclamation-sign nav-status-icon icon-success" />
                         return (
                             <LinkContainer key={index} className="nav-secondary-link" to={"/proposal/" + proposal.link}>
-                                <a className="nav-secondary-link">
+                                <a>
                                     {proposal.title}
                                     {notification}
                                 </a>
@@ -56,7 +56,7 @@ class NavProposalLinks extends React.Component {
                     })
                 }
                     <LinkContainer className="nav-secondary-link" to="/create-proposal">
-                        <a className="nav-secondary-link">
+                        <a>
                             <span className="glyphicon glyphicon-plus"></span>
                             New Proposal
                         </a>

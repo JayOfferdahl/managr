@@ -64,7 +64,7 @@ html, body, #app, .App {
 .nav-secondary-link:last-child {
     border-bottom: 0px;
 }
-.nav-secondary-link {
+.nav-secondary-link, .nav-sub-link {
     color: white;
     font-size: 16px;
     width: 100%;
@@ -78,7 +78,7 @@ html, body, #app, .App {
 .nav-links-container a {
     color: white;
 }
-.nav-status-icon {
+.nav-status-icon, .nav-tertiary-category span.glyphicon {
     float: right;
     margin-top: 3px;
     margin-right: 3px !important;
@@ -88,6 +88,12 @@ html, body, #app, .App {
 }
 .icon-success {
     color: LawnGreen;
+}
+.nav-tertiary-category {
+    background-color: #6584A2;
+}
+.nav-sub-link {
+    font-size: 14px;
 }
 /* End side nav bar styles */
 
