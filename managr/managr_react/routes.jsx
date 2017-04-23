@@ -41,7 +41,7 @@ export default (
             <Route path="dashboard" component={Dashboard} />
             
             {/* Project Routes */}
-            <Route path="project/:project_uuid" component={ProjectOverview}>
+            <Route path="project-overview/:project_uuid" component={ProjectOverview}>
                 <Route component={Summary}/>
                 <Route component={Equipment}/>
                 <Route component={Labor}/>
@@ -49,9 +49,9 @@ export default (
                 <Route component={Activity}/>
             </Route>
 
+            <Route path="project/:project_uuid/documents" component={DocumentsList}/>
             <Route path="finance/:project_uuid" component={Finance}/>
             <Route path="milestones/:project_uuid" component={Milestones}/>
-            <Route path="documents/:project_uuid" component={DocumentsList}/>
             <Route path="project-settings/:project_uuid" component={ProjectSettings}/>
             <Route path="create-project" component={CreateProject} />
 
