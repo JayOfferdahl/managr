@@ -24,6 +24,11 @@ class LoginPage extends React.Component {
         }
     }
 
+    componentWillReceiveProps(nextProps) {
+        if(nextProps.is_authenticated)
+            this.context.router.push('/dashboard');
+    }
+
     render() {
         if (this.props.is_authenticated == true) {
             return (

@@ -10,6 +10,8 @@ import EnsureAuthenticated from './components/authentication/EnsureAuthenticated
 
 import NavAndHeader from './components/app_components/NavAndHeader'
 
+import Dashboard from './components/app_components/Dashboard'
+
 import Proposal from './components/proposals/Proposal'
 import CreateProposal from './components/proposals/CreateProposal'
 import UpdateProposal from './components/proposals/UpdateProposal'
@@ -36,7 +38,7 @@ export default (
     <Route component={EnsureAuthenticated}>
         <Route component={NavAndHeader}>
             {/* TODO: Add dashboard route which shows all projects/proposals/bids */}
-
+            <Route path="dashboard" component={Dashboard} />
             {/* Project Routes */}
             <Route path="project/:project_uuid" component={ProjectOverview}></Route>
             {/*
