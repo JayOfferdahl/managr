@@ -51,3 +51,30 @@ export function new_project_uuid(state = '', action) {
             return state;
     }
 }
+
+export function project_overview_name(state = '', action) {
+    switch(action.type) {
+        case 'PROJECT_INFO_FETCH_SUCCESS':
+            return action.project_info.project_name;
+        default:
+         return state;
+    }
+}
+
+export function project_overview_description(state = '', action) {
+    switch(action.type) {
+        case 'PROJECT_INFO_FETCH_SUCCESS':
+            return action.project_info.project_description;
+        default:
+         return state;
+    }
+}
+
+export function project_overview_budget(state = '', action) {
+    switch(action.type) {
+        case 'PROJECT_INFO_FETCH_SUCCESS':
+            return action.project_info.project_budget;
+        default:
+         return state;
+    }
+}

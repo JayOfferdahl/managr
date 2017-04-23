@@ -30,6 +30,13 @@ export function updateCreatedProjectUUID(new_project_uuid) {
     }
 }
 
+export function fetchProjectInfoSuccess(project_info) {
+    return {
+        type: 'PROJECT_INFO_FETCH_SUCCESS',
+        project_info
+    }
+}
+
 export function createNewProject(project_data, session_token) {
     let data = JSON.parse(JSON.stringify(project_data))
     data.session_token = session_token;
@@ -71,9 +78,9 @@ export function fetchProjectInfoFromServer(project_uuid, session_token) {
         .then((response) => response.json())
         .then((data) => {
             if (data['success']) {
-                console.log(data);
+                dispatch(fetchProjectInfoSuccess(data));
             } else {
-                // dispatch(createProjectFailure(data));
+                console.log('Project Info fetch failed - see fetchProjectInfoFromServer function in Project Actions');
             }
         });
     };

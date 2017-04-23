@@ -11,8 +11,8 @@ import TextareaField from '../app_components/TextareaField';
 
 class JoinCompanyForm extends React.Component {
     componentDidUpdate(prevProps, prevState) {
-        if (this.props.join_success == true && prevProps.join_success == false) {
-            this.context.router.push('/summary');
+        if (this.props.company_join_success == true && prevProps.company_join_success == false) {
+            this.context.router.push('/dashboard');
         }
     }
 
@@ -28,7 +28,7 @@ class JoinCompanyForm extends React.Component {
     render() {
         return (
             <form className="join-company-form" onSubmit={this.handleSubmit.bind(this)}>
-                <ErrorsList errors={this.props.join_errors} />
+                <ErrorsList errors={this.props.company_join_errors} />
                 <div className="join-company-helper-text">Enter the company key of the company you wish to join</div>
                 <Textfield type="text" placeholder="Company Key" onChange={this.handleChange.bind(this)} currentText={this.props.company_key} fieldName="company_key" />
                 <div className="form-group">
@@ -48,8 +48,8 @@ JoinCompanyForm.contextTypes = {
 const mapStateToProps = (state) => {
     return {
         company_key: state.company_key,
-        join_success: state.join_success,
-        join_errors: state.join_errors
+        company_join_success: state.company_join_success,
+        company_join_errors: state.company_join_errors
     };
 };
 

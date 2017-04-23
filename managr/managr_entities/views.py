@@ -91,7 +91,7 @@ def createContractorCompany(request):
 
 	if contractor_company_creation_form.is_valid():
 		creator_or_owner = ManagrUser.objects.get(session_token = company_data['session_token']) 
-		new_company = Company.objects.create_contractor_company(creator_or_owner, company_data['company_name'], company_data['company_email'], company_data['address'], company_data['city'], states_array[int(company_data['state'])], company_data['postal_code'], company_data['description']) 
+		new_company = Company.objects.create_contractor_company(creator_or_owner, company_data['company_name'], company_data['company_email'], company_data['company_address'], company_data['company_city'], states_array[int(company_data['company_state'])], company_data['company_postal_code'], company_data['company_description']) 
 		creator_or_owner.company = new_company 
 		creator_or_owner.save() 
 		return JsonResponse({'success': 'Successful company creation'})
@@ -106,7 +106,7 @@ def createClientCompany(request):
 
 	if client_company_creation_form.is_valid():
 		creator_or_owner = ManagrUser.objects.get(session_token = company_data['session_token']) 
-		new_company = Company.objects.create_client_company(creator_or_owner, company_data['company_name'], company_data['company_email'], company_data['address'], company_data['city'], states_array[int(company_data['state'])], company_data['postal_code'], company_data['description']) 
+		new_company = Company.objects.create_client_company(creator_or_owner, company_data['company_name'], company_data['company_email'], company_data['company_address'], company_data['company_city'], states_array[int(company_data['company_state'])], company_data['company_postal_code'], company_data['company_description']) 
 		creator_or_owner.company = new_company 
 		creator_or_owner.save() 
 		return JsonResponse({'success': 'Successful company creation'})

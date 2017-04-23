@@ -42,13 +42,11 @@ export default (
             {/* Project Routes */}
             <Route path="project/:project_uuid" component={ProjectOverview}></Route>
             {/*
-                <Route component={Overview}>
-                    <Route path="summary" component={Summary}/>
-                    <Route path="equipment" component={Equipment}/>
-                    <Route path="labor" component={Labor}/>
-                    <Route path="materials" component={Materials}/>
-                    <Route path="activity" component={Activity}/>
-                </Route>
+                <Route component={Summary}/>
+                <Route component={Equipment}/>
+                <Route component={Labor}/>
+                <Route component={Materials}/>
+                <Route component={Activity}/>
             */}
             <Route path="finance" component={Finance}/>
             <Route path="milestones" component={Milestones}/>

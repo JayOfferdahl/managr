@@ -20,9 +20,9 @@ export function company_email(state = '', action) {
     }
 }
 
-export function city(state = '', action) {
+export function company_address(state = '', action) {
     switch(action.type) {
-        case 'UPDATE_COMPANY_CREATION_CITY_FIELD':
+        case 'UPDATE_COMPANY_CREATION_COMPANY_ADDRESS_FIELD':
             return action.field_value;
         case 'CLEAN_COMPANY_CREATION_FORM':
             return '';
@@ -31,9 +31,9 @@ export function city(state = '', action) {
     }
 }
 
-export function state(state = '', action) {
+export function company_city(state = '', action) {
     switch(action.type) {
-        case 'UPDATE_COMPANY_CREATION_STATE_FIELD':
+        case 'UPDATE_COMPANY_CREATION_COMPANY_CITY_FIELD':
             return action.field_value;
         case 'CLEAN_COMPANY_CREATION_FORM':
             return '';
@@ -42,9 +42,31 @@ export function state(state = '', action) {
     }
 }
 
-export function postal_code(state = '', action) {
+export function company_state(state = '', action) {
     switch(action.type) {
-        case 'UPDATE_COMPANY_CREATION_POSTAL_CODE_FIELD':
+        case 'UPDATE_COMPANY_CREATION_COMPANY_STATE_FIELD':
+            return action.field_value;
+        case 'CLEAN_COMPANY_CREATION_FORM':
+            return '';
+        default:
+            return state;
+    }
+}
+
+export function company_postal_code(state = '', action) {
+    switch(action.type) {
+        case 'UPDATE_COMPANY_CREATION_COMPANY_POSTAL_CODE_FIELD':
+            return action.field_value;
+        case 'CLEAN_COMPANY_CREATION_FORM':
+            return '';
+        default:
+            return state;
+    }
+}
+
+export function company_description(state = '', action) {
+    switch(action.type) {
+        case 'UPDATE_COMPANY_CREATION_COMPANY_DESCRIPTION_FIELD':
             return action.field_value;
         case 'CLEAN_COMPANY_CREATION_FORM':
             return '';
@@ -64,7 +86,7 @@ export function company_key(state = '', action) {
     }
 }
 
-export function creation_success(state = false, action) {
+export function company_creation_success(state = false, action) {
     switch(action.type) {
         case 'CREATE_CONTRACTOR_COMPANY_SUCCESS':
             return action.success;
@@ -75,7 +97,7 @@ export function creation_success(state = false, action) {
     }
 }
 
-export function creation_errors(state = {}, action) {
+export function company_creation_errors(state = {}, action) {
     switch(action.type) {
         case 'CREATE_CONTRACTOR_COMPANY_FAILURE':
             return action.errors_data;
@@ -86,7 +108,7 @@ export function creation_errors(state = {}, action) {
     }
 }
 
-export function join_success(state = false, action) {
+export function company_join_success(state = false, action) {
     switch(action.type) {
         case 'JOIN_COMPANY_SUCCESS':
             return action.success;
@@ -97,7 +119,7 @@ export function join_success(state = false, action) {
     }
 }
 
-export function join_errors(state = {}, action) {
+export function company_join_errors(state = {}, action) {
     switch(action.type) {
         case 'JOIN_COMPANY_FAILURE':
             return action.errors_data;

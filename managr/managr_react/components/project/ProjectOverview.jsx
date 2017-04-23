@@ -18,7 +18,9 @@ class ProjectOverview extends React.Component {
         return (
             <Row className="project-content-section">
                 <Row className="project-overview-section">
-                    <p className="project-name">Westminister School Renovation</p>
+                    <p className="project-name">{this.props.project_overview_name}</p>
+                    <p className="project-description">Description: {this.props.project_overview_description}</p>
+                    <p className="project-budget">Budget: {this.props.project_overview_budget}</p>
                     <Col className="" xs={6} md={6}>
                         <p>Overall Project Progress: <b>TODO</b></p>
                     </Col>
@@ -43,6 +45,10 @@ ProjectOverview.contextTypes = {
 const mapStateToProps = (state) => {
     return {
         overview_project_name: state.overview_project_name,
+        project_overview_name: state.project_overview_name,
+        project_overview_description: state.project_overview_description,
+        project_overview_budget: state.project_overview_budget,
+
     };
 };
 

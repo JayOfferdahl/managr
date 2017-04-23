@@ -54,18 +54,23 @@ import { create_project_name,
          create_project_budget,
          create_project_success,
          create_project_errors,
-         new_project_uuid } from './ProjectReducer';
+         new_project_uuid,
+         project_overview_name,
+         project_overview_description,
+         project_overview_budget } from './ProjectReducer';
 
 import { company_name,
          company_email,
-         city,
-         state,
-         postal_code,
-         creation_success,
-         creation_errors,
+         company_address,
+         company_city,
+         company_state,
+         company_postal_code,
+         company_description,
+         company_creation_success,
+         company_creation_errors,
          company_key,
-         join_success,
-         join_errors } from './CompanyCreationReducer';
+         company_join_success,
+         company_join_errors } from './CompanyCreationReducer';
 
 import { proposal_metadata_load_errors,
          proposal_metadata,
@@ -140,14 +145,16 @@ export default combineReducers ({
     // Company creation reducers
     company_name,
     company_email,
-    city,
-    state,
-    postal_code,
-    creation_success,
-    creation_errors,
+    company_address,
+    company_city,
+    company_state,
+    company_postal_code,
+    company_description,
+    company_creation_success,
+    company_creation_errors,
     company_key,
-    join_success,
-    join_errors,
+    company_join_success,
+    company_join_errors,
 
     // Project creation reducers
     create_project_name,
@@ -156,4 +163,7 @@ export default combineReducers ({
     create_project_success,
     create_project_errors,
     new_project_uuid,
+    project_overview_name,
+    project_overview_description,
+    project_overview_budget,
 });
