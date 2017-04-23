@@ -67,8 +67,6 @@ import { company_name,
          join_success,
          join_errors } from './CompanyCreationReducer';
 
-import { proposals } from './ShowProposalsReducer';
-
 import { proposal_metadata_load_errors,
          proposal_metadata,
          bid_metadata_load_errors,

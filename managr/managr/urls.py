@@ -39,7 +39,6 @@ urlpatterns = [
     url(r'^companies/join-company', managr_entities_views.joinCompany, name='join_company'),
     # End managr_entities_views
 
-
     # Begin project_proposal_views
     url(r'^proposals/accept-bid', project_proposal_views.acceptBid, name='accept_bid'),
     url(r'^proposals/decline-bid', project_proposal_views.declineBid, name='decline_bid'),
@@ -57,11 +56,10 @@ urlpatterns = [
     url(r'^bids/update', project_proposal_views.updateBid, name='update_bid'),
     # End project_proposal_views
 
-
     # Begin project_management_views
     url(r'^milestones/get$', project_management_views.getMilestones, name='get_milestones'),
     url(r'^milestones/data-processor$', project_management_views.dataProcessor, name='data_processor'),
-  
+
     url(r'^projects/get-user-project-metadata', project_management_views.getUserProjectMetadata, name='get_user_project_metadata'),
     url(r'^projects/create-new-project', project_management_views.createNewProject, name='create_new_project'),
     url(r'^projects/get-project-info', project_management_views.getProjectInfo, name='get_project_info'),
