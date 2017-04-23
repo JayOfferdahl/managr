@@ -74,6 +74,8 @@ import { proposal_metadata_load_errors,
          project_metadata_load_errors,
          project_metadata } from './AppReducer';
 
+import { reload_milestones } from './MilestonesReducer';
+
 export default combineReducers ({
     // Registration reducers
     first_name,
@@ -156,4 +158,7 @@ export default combineReducers ({
     create_project_success,
     create_project_errors,
     new_project_uuid,
+
+    // Milestones reducers
+    reload_milestones,
 });

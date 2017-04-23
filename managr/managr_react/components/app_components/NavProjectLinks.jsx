@@ -37,14 +37,14 @@ class NavProjectLinks extends React.Component {
                     _.map(this.generateProjectTuples(this.props.project_metadata),
                         (project, index) => {
                         return (
-                            <div>
+                            <div key={index}>
                                 <div className="nav-secondary-link" data-toggle="collapse" data-target={"#" + project.link}>
                                     <a>
                                         {project.title}
                                         <span className="glyphicon glyphicon-chevron-down nav-status-icon"></span>
                                     </a>
                                 </div>
-                                <div id={project.link} className="nav-tertiary-category collapse">
+                                <div id={project.link} className="nav-tertiary-category collapse in">
                                     <LinkContainer className="nav-sub-link" to={"/summary/" + project.link}>
                                         <a>
                                             <span className="glyphicon glyphicon-home"></span>

@@ -82,13 +82,13 @@ def getProjectInfo(request):
 
 
 @csrf_exempt
-def getMilestones(request):
+def getMilestones(request, project_uuid):
     milestoneDict = dict()
     milestoneDict['data'] = []
     milestoneDict['links'] = []
     
     # Get all milestone objects for this project
-    milestones = Milestone.objects.all()
+    milestones = Milestone.objects.filter(project__project_uuid = project_uuid)
     for milestone in milestones:
         milestoneDict['data'].append({
             "id":           milestone.id,
@@ -104,7 +104,7 @@ def getMilestones(request):
         })
 
     # Get all milestone link objects for this project
-    milestoneLinks = MilestoneLink.objects.all()
+    milestoneLinks = MilestoneLink.objects.filter(project__project_uuid = project_uuid)
     for link in milestoneLinks:
         milestoneDict['links'].append({
             "source":   link.source,
@@ -112,23 +112,25 @@ def getMilestones(request):
             "type":     link.task_type,
         })
 
-    print(milestoneDict)
     return JsonResponse(milestoneDict)    
 
 @csrf_exempt
-def dataProcessor(request):    
+def dataProcessor(request, project_uuid):
+    requestError = {'error': 'Invalid request method.'}
+
     if request.method == 'POST':
         request_type = request.POST['!nativeeditor_status']
-        for key, value in request.POST.items():
-            print(key, value)
 
         # If the source field is present, it's a link
         if 'source' in request.POST:
             if request_type == 'inserted':
                 link = MilestoneLink()
 
-                # TODO -> Get the correct project from the front end.
-                link.project = Project.objects.all()[0]
+                try:
+                    link.project = Project.objects.get(project_uuid = project_uuid)
+                except ObjectDoesNotExist:
+                    return HttpResponse(requestError)
+
                 link.source = request.POST['source']
                 link.target = request.POST['target']
                 link.task_type = request.POST['type']
@@ -139,7 +141,11 @@ def dataProcessor(request):
                     'tid': link.id
                 }
             elif request_type == 'deleted':
-                link = Link(pk = request.POST['id'])
+                try:
+                    link = Link(pk = request.POST['id'])
+                except ObjectDoesNotExist:
+                    return HttpResponse(requestError)
+
                 link.delete()
                 response = {
                     'type': 'update',
@@ -147,7 +153,11 @@ def dataProcessor(request):
                     'tid': '0'
                 }
             elif request_type == 'updated':
-                link = Link(pk = request.POST['id'])
+                try:
+                    link = Link(pk = request.POST['id'])
+                except ObjectDoesNotExist:
+                    return HttpResponse(requestError)
+
                 link.source = request.POST['source']
                 link.target = request.POST['target']
                 link.task_type = request.POST['type']
@@ -168,9 +178,11 @@ def dataProcessor(request):
                 milestone = Milestone()
                 
                 # Required
+                try:
+                    milestone.project = Project.objects.get(project_uuid = project_uuid)
+                except ObjectDoesNotExist:
+                    return HttpResponse(requestError)
 
-                # TODO -> Get the correct project from the front end.
-                milestone.project = Project.objects.all()[0]
                 milestone.text = request.POST['text']
                 milestone.start_date = request.POST['start_date']
                 milestone.duration = request.POST['duration']
@@ -188,8 +200,6 @@ def dataProcessor(request):
                     milestone.task_open = request.POST['task_open']
                 if 'end_date' in request.POST:
                     milestone.end_date = request.POST['end_date']
-
-                print(request.POST['parent'])
                 
                 milestone.save()
 
@@ -199,7 +209,11 @@ def dataProcessor(request):
                     'tid': milestone.id
                 }
             elif request_type == 'deleted':
-                milestone = Milestone(pk = request.POST['id'])
+                try:
+                    milestone = Milestone(pk = request.POST['id'])
+                except ObjectDoesNotExist:
+                    return HttpResponse(requestError)
+
                 milestone.delete()
                 response = {
                     'type': 'delete',
@@ -207,8 +221,11 @@ def dataProcessor(request):
                     'tid': '0'
                 }
             elif request_type == 'updated':
-                milestone = Milestone.objects.get(pk = request.POST['id'])
-                print(milestone)
+                try:
+                    milestone = Milestone.objects.get(pk = request.POST['id'])
+                except ObjectDoesNotExist:
+                    return HttpResponse(requestError)
+
 
                 # Required
                 milestone.text = request.POST['text']
@@ -221,7 +238,6 @@ def dataProcessor(request):
                 if 'parent' in request.POST:
                     milestone.parent_id = request.POST['parent']
                 if 'level' in request.POST and request.POST['level']:
-                    print(request.POST['level'])
                     milestone.level = request.POST['level']
                 if 'progress' in request.POST:
                     milestone.progress = float(request.POST['progress'])
@@ -244,6 +260,5 @@ def dataProcessor(request):
                     'tid': '0'
                 }
 
-        print(response)
         return HttpResponse(response)
-    return HttpResponse({'error': 'Invalid request method.'})
+    return HttpResponse(requestError)

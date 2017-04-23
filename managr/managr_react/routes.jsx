@@ -51,7 +51,7 @@ export default (
                 </Route>
             */}
             <Route path="finance" component={Finance}/>
-            <Route path="milestones" component={Milestones}/>
+            <Route path="milestones/:project_uuid" component={Milestones}/>
             <Route path="documents" component={DocumentsList}/>
             <Route path="project-settings" component={ProjectSettings}/>
             <Route path="create-project" component={CreateProject} />
