@@ -7,7 +7,7 @@ import { logoutOfServer, resetLogoutState } from '../../actions/LoginActions';
 class LogoutButton extends React.Component {
 	componentDidUpdate(prevProps, prevState) {
 		if (this.props.logout_success == true && prevProps.logout_success == false) {
-			this.context.router.push('/login');
+			this.context.router.push('/');
 			this.props.handleResetLogout();
 			localStorage.removeItem('managr_session_token');
 		}

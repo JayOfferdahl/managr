@@ -15,6 +15,8 @@ export function proposal_form_address(state = '', action) {
             return action.field_value;
         case 'PROPOSAL_FORM_CLEAN_FORM':
             return '';
+        case 'UPDATE_COMPANY_CREATION_ADDRESS_FIELD':
+            return action.field_value;
         default:
             return state;
     }
@@ -70,6 +72,8 @@ export function proposal_form_description(state = '', action) {
             return action.field_value;
         case 'PROPOSAL_FORM_CLEAN_FORM':
             return '';
+        case 'UPDATE_COMPANY_CREATION_DESCRIPTION_FIELD':
+            return action.field_value;
         default:
             return state;
     }

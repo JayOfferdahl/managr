@@ -20,6 +20,13 @@ export function setAuthenticatedStateToParam(authState) {
 	}
 }
 
+export function updateLoggedInName(first_and_last) {
+	return {
+		type: 'UPDATE_USER_FIRST_AND_LAST',
+		first_and_last
+	}
+}
+
 export function authenticateWithManagrServer(managr_session_token) {
 	const request_params = { method: 'POST', body: JSON.stringify(managr_session_token) };
 	return (dispatch) => {
@@ -34,6 +41,7 @@ export function authenticateWithManagrServer(managr_session_token) {
 			.then((data) => {
 				if (data['success']) {
 					dispatch(authenticationSuccess(true));
+					dispatch(updateLoggedInName(data['user_first_and_last']));
 				} else {
 					localStorage.removeItem('managr_session_token');
 					dispatch(authenticationFailure(false));

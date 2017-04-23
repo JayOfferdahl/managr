@@ -22,6 +22,7 @@ from . import views as managr_views
 from managr_entities import views as managr_entities_views
 from project_management import views as project_management_views
 from project_proposal import views as project_proposal_views
+from project_management import views as project_management_views
 
 urlpatterns = [
     # Organize these url patterns by which views they belong to
@@ -32,7 +33,12 @@ urlpatterns = [
     url(r'^accounts/logout', managr_entities_views.logout, name='logout'),
     url(r'^accounts/signup', managr_entities_views.register, name='register'),
     url(r'^accounts/ensure-auth', managr_entities_views.ensureAuth, name='ensure_auth'),
+
+    url(r'^companies/create-contractor-company', managr_entities_views.createContractorCompany, name='create_contractor_company'),
+    url(r'^companies/create-client-company', managr_entities_views.createClientCompany, name='create_client_company'),
+    url(r'^companies/join-company', managr_entities_views.joinCompany, name='join_company'),
     # End managr_entities_views
+
 
     # Begin project_proposal_views
     url(r'^proposals/accept-bid', project_proposal_views.acceptBid, name='accept_bid'),
@@ -51,8 +57,13 @@ urlpatterns = [
     url(r'^bids/update', project_proposal_views.updateBid, name='update_bid'),
     # End project_proposal_views
 
+
     # Begin project_management_views
     url(r'^milestones/get$', project_management_views.getMilestones, name='get_milestones'),
     url(r'^milestones/data-processor$', project_management_views.dataProcessor, name='data_processor'),
+  
+    url(r'^projects/get-user-project-metadata', project_management_views.getUserProjectMetadata, name='get_user_project_metadata'),
+    url(r'^projects/create-new-project', project_management_views.createNewProject, name='create_new_project'),
+    url(r'^projects/get-project-info', project_management_views.getProjectInfo, name='get_project_info'),
     # End project_management_views
 ]

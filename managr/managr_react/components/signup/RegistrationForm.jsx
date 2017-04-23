@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { LinkContainer } from 'react-router-bootstrap';
 
-import ErrorsList from '../app_components/ErrorsList'
+import ErrorsList from '../app_components/ErrorsList';
+import SelectGroup from '../app_components/SelectGroup';
 import Textfield from '../app_components/Textfield';
 
 import { updateRegistrationForm, registerWithServer, loginAfterRegistration, resetRegistrationForm } from '../../actions/RegistrationActions';
@@ -11,8 +12,20 @@ import { updateRegistrationForm, registerWithServer, loginAfterRegistration, res
 class RegistrationForm extends React.Component {
 	componentDidUpdate(prevProps, prevState) {
 		if (this.props.registration_success == true && prevProps.registration_success == false) {
-			// Potentially reset the form here
-			this.context.router.push('/overview');
+			// Depending on how the user signed up, they will be redirected to different views
+			switch(this.props.user_type) {
+				case '0':
+					this.context.router.push('/create-company-0');
+					break;
+				case '1':
+					this.context.router.push('/create-company-1');
+					break;
+				case '2':
+					this.context.router.push('/create-company-2');
+					break;
+				default:
+					break;
+			}
 		}
 	}
 
@@ -33,6 +46,7 @@ class RegistrationForm extends React.Component {
 				<Textfield type="text" placeholder="Last Name" onChange={this.handleChange.bind(this)} currentText={this.props.last_name} fieldName="last_name" />
 				<Textfield type="text" placeholder="Username" onChange={this.handleChange.bind(this)} currentText={this.props.username} fieldName="username" />
 				<Textfield type="text" placeholder="Email" onChange={this.handleChange.bind(this)} currentText={this.props.email} fieldName="email" />
+				<SelectGroup defaultOption="Reason For Joining" options={['Creating New Contracting Company', 'Joining Existing Contracting Company', 'Joining As Client']} onChange={this.handleChange.bind(this)} fieldName="user_type" />
 				<Textfield type="password" placeholder="Password" onChange={this.handleChange.bind(this)} currentText={this.props.password} fieldName="password" />
 				<Textfield type="password" placeholder="Confirm Password" onChange={this.handleChange.bind(this)} currentText={this.props.password_confirmation} fieldName="password_confirmation" />
 				<div className="form-group">
@@ -40,7 +54,7 @@ class RegistrationForm extends React.Component {
 						Sign Up
 					</button>
 				</div>
-				<LinkContainer to="/login" className="registration-form-no-account" onClick={this.props.handleReset.bind(this)}>
+				<LinkContainer to="/" className="registration-form-no-account" onClick={this.props.handleReset.bind(this)}>
                     <p>Already have an account? <Link className="link-normal">Login here.</Link></p>
                 </LinkContainer>
 			</form>
@@ -61,7 +75,8 @@ const mapStateToProps = (state) => {
 		password: state.password,
 		password_confirmation: state.password_confirmation,
 		registration_errors: state.registration_errors,
-		registration_success: state.registration_success
+		registration_success: state.registration_success,
+		user_type: state.user_type
 	};
 };
 

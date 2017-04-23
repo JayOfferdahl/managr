@@ -9,7 +9,7 @@ class EnsureAuthenticated extends React.Component {
 	componentWillMount() {
 		const session_token = localStorage.getItem('managr_session_token');
 		if (session_token == null) {
-			this.context.router.push('/login');
+			this.context.router.push('/');
 		} else {
 			this.props.authenticateWithServer(session_token);
 		}

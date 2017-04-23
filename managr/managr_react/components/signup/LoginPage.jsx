@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import LoginForm from './LoginForm'
-import Overview from '../project/Overview'
+import Summary from '../project/Summary'
 
 import { authenticateWithManagrServer, setAuthenticatedState } from '../../actions/AuthenticationActions';
 
@@ -13,7 +13,7 @@ class LoginPage extends React.Component {
 	componentWillMount() {
 		if (this.props.location == null) {
 			// Component rendered as redirect
-			this.context.router.push('/login');
+			this.context.router.push('/');
 		}
 
 		const session_token = localStorage.getItem('managr_session_token');
@@ -27,7 +27,7 @@ class LoginPage extends React.Component {
 	render() {
 		if (this.props.is_authenticated == true) {
 			return (
-				<Overview />
+				<Summary />
 			);
 		} else if (this.props.is_authenticated == false) {
 			return (
