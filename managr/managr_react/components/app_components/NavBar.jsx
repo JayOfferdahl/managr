@@ -4,6 +4,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { connect } from 'react-redux';
 
 import '../../assets/css/App.css';
+import NavBidLinks from './NavBidLinks';
 import NavProposalLinks from './NavProposalLinks';
 import NavProjectLinks from './NavProjectLinks';
 
@@ -18,23 +19,13 @@ class NavBar extends React.Component {
                 <NavProposalLinks />
 
                 {/* Bids section */}
-                <div className="nav-main-category" data-toggle="collapse" data-target="#bids">
-                    <p>Bids</p><span className="glyphicon glyphicon-chevron-down"></span>
-                </div>
-                <div id="bids" className="collapse nav-secondary-category">
-                    <LinkContainer className="nav-secondary-link" to="/create-bid">
-                        <a className="nav-secondary-link">
-                            <span className="glyphicon glyphicon-plus"></span>
-                            Create New Bid
-                        </a>
-                    </LinkContainer>
-                </div>
+                <NavBidLinks />
 
                 {/* Past projects section */}
                 <div className="nav-main-category" data-toggle="collapse" data-target="#past-projects">
                     <p>Past Projects</p><span className="glyphicon glyphicon-chevron-down"></span>
                 </div>
-                <div id="past-projects" className="collapse nav-secondary-category">
+                <div id="past-projects" className="nav-secondary-category collapse in">
                     <LinkContainer className="nav-secondary-link" to="/past-projects">
                         <a className="nav-secondary-link">
                             <span className="glyphicon glyphicon-folder-close"></span>
@@ -42,8 +33,6 @@ class NavBar extends React.Component {
                         </a>
                     </LinkContainer>
                 </div>
-                <br/>
-                <p>Note: Projects/past projects need to have a list of projects associated with the user, and they should link to that project page which shows relevant information about the project.</p>
             </Nav>
         );
     }

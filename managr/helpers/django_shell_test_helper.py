@@ -15,6 +15,10 @@ from documents.app_managers.document import DocumentManager
 # Import from project_management application
 from project_management.app_models.project import Project
 from project_management.app_managers.project import ProjectManager
+from project_management.app_models.milestone import Milestone
+from project_management.app_managers.milestone import MilestoneManager
+from project_management.app_models.milestone_link import MilestoneLink
+from project_management.app_managers.milestone_link import MilestoneLinkManager
 
 # Import from project_proposal application
 from project_proposal.app_models.bid import Bid

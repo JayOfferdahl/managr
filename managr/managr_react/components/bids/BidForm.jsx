@@ -1,28 +1,24 @@
 import React from 'react';
 
 import { connect } from 'react-redux';
-import { getSessionToken } from '../../assets/js/app.jsx';
-import { submitProposal,
-         updateProposal,
-         updateProposalForm,
-         resetProposalForm } from '../../actions/ProposalActions';
+import { submitBid,
+         updateBid,
+         cancelBidProcess,
+         updateBidForm,
+         resetBidForm } from '../../actions/BidActions';
+import { getSessionToken } from '../../assets/js/app';
 
 import ErrorsList from '../app_components/ErrorsList';
 
-class ProposalForm extends React.Component {
-    // Pushes the router to the proposal page of the newly created/updated proposal.
+class BidForm extends React.Component {
     componentDidUpdate(previous_props, previous_state) {
-        if(this.props.proposal_form_success.success && !previous_props.proposal_form_success.success) {
-            this.context.router.push("/proposal/" + this.props.proposal_form_success.proposal_uuid);
-        }
+        if(this.props.bid_form_success.success && !previous_props.bid_form_success.success)
+            this.props.cancelBidProcess();
     }
 
-    // When remounting the form, populate data if it's of type update. If not, clean it.
-    // TODO: If you're trying to fix the "wrong data after hitting the back/foward button" problem
-    // here by using componentWillRecieveProps or whatever, good luck. I could not get it fixed.
     componentWillMount() {
         if(this.props.update)
-            this.populateProposalData.bind(this)(this.props.proposal_data);
+            this.populateBidData.bind(this)(this.props.bid_data);
     }
 
     componentWillUnmount() {
@@ -30,12 +26,12 @@ class ProposalForm extends React.Component {
     }
 
     // Populates initial proposal form data. This method assumes the form supports an update function.
-    populateProposalData(proposal_data) {
+    populateBidData(bid_data) {
         // Setup dummy onChange event
         let fieldUpdate = {};
         fieldUpdate.target = {};
         
-        _.forEach(proposal_data, (value, key) => {
+        _.forEach(bid_data, (value, key) => {
             fieldUpdate.target.name = key;
             fieldUpdate.target.value = value;
 
@@ -50,13 +46,13 @@ class ProposalForm extends React.Component {
     // Submits the form for new proposal creation
     handleSubmit(submitEvent) {
         submitEvent.preventDefault();
-        this.props.submitNewProposal(this.props);
+        this.props.submitBid(this.props, this.props.proposal_uuid);
     }
 
     // Submits the form for existing proposal update.
     handleUpdate(submitEvent) {
         submitEvent.preventDefault();
-        this.props.updateProposal(this.props);
+        this.props.updateBid(this.props, this.props.proposal_uuid);
     }
 
     render() {
@@ -64,27 +60,13 @@ class ProposalForm extends React.Component {
 
         return (
             <form onSubmit={submitMethod} className="proposal-form">
-                <ErrorsList errors={this.props.proposal_form_errors} />
+                <ErrorsList errors={this.props.bid_form_errors} />
                 <div className="proposal-form-section proposal-form-section-left">
-                    <div className="form-group">   
-                        <label htmlFor="title">Title</label>
-                        <input type="text" name="title" maxLength="255" required 
-                            onChange={this.handleChange.bind(this)} value={this.props.title} />
-                    </div>
-                    {/* TODO: Accept address, city/state, & zip code for easy project searching. */}  
-                    <div className="form-group">
-                        <label htmlFor="address">Location/Address</label>
-                        <input type="text" name="address" maxLength="255" required 
-                            onChange={this.handleChange.bind(this)} value={this.props.address} />
-                    </div>
                     <div className="form-group">
                         <label htmlFor="contact_number">Contact Number</label>
                         <input type="text" name="contact_number" placeholder="(xxx) xxx-xxxx" maxLength="14" required 
                             onChange={this.handleChange.bind(this)} value={this.props.contact_number} />
                     </div>
-                </div>
-
-                <div className="proposal-form-section">
                     <div className="form-group budget-form-group">
                         <label htmlFor="budget">Budget</label>
                         <div className="input-group">
@@ -94,6 +76,9 @@ class ProposalForm extends React.Component {
                             <div className="input-group-addon">.00</div>
                         </div>
                     </div>
+                </div>
+
+                <div className="proposal-form-section">
                     <div className="form-group">
                         <label htmlFor="start_date">Project Start Date</label>
                         <input type="date" name="start_date" required 
@@ -120,31 +105,30 @@ class ProposalForm extends React.Component {
     }
 }
 
-ProposalForm.contextTypes = {
+BidForm.contextTypes = {
     router: React.PropTypes.object.isRequired
 }
 
 const mapStateToProps = (state) => {
     return {
-        title: state.proposal_form_title,
-        address: state.proposal_form_address,
-        contact_number: state.proposal_form_contact_number,
-        budget: state.proposal_form_budget,
-        start_date: state.proposal_form_start_date,
-        end_date: state.proposal_form_end_date,
-        description: state.proposal_form_description,
-        proposal_form_errors: state.proposal_form_errors,
-        proposal_form_success: state.proposal_form_success,
+        contact_number: state.bid_form_contact_number,
+        budget: state.bid_form_budget,
+        start_date: state.bid_form_start_date,
+        end_date: state.bid_form_end_date,
+        description: state.bid_form_description,
+        bid_form_errors: state.bid_form_errors,
+        bid_form_success: state.bid_form_success,
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        updateField: (field_name, field_value) => dispatch(updateProposalForm(field_name, field_value)),
-        updateProposal: (form_fields_info) => dispatch(updateProposal(form_fields_info, getSessionToken())),
-        submitNewProposal: (form_fields_info) => dispatch(submitProposal(form_fields_info, getSessionToken())),
-        handleReset: () => dispatch(resetProposalForm()),
+        updateField: (field_name, field_value) => dispatch(updateBidForm(field_name, field_value)),
+        updateBid: (form_fields_info, proposal_uuid) => dispatch(updateBid(form_fields_info, proposal_uuid, getSessionToken())),
+        submitBid: (form_fields_info, proposal_uuid) => dispatch(submitBid(form_fields_info, proposal_uuid, getSessionToken())),
+        cancelBidProcess: () => dispatch(cancelBidProcess()),
+        handleReset: () => dispatch(resetBidForm()),
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProposalForm);
+export default connect(mapStateToProps, mapDispatchToProps)(BidForm);

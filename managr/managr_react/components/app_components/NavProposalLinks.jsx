@@ -3,21 +3,28 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { connect } from 'react-redux';
 
 import { loadUserProposalMetadata } from '../../actions/AppActions';
-import '../../assets/css/App.css';
+import { getSessionToken } from '../../assets/js/app.jsx';
 
 class NavProposalLinks extends React.Component {
     componentWillMount() {
-        var token = localStorage.getItem("managr_session_token");
-        this.props.loadUserProposalMetadata(token);
+        this.props.loadUserProposalMetadata();
+    }
+
+    componentWillReceiveProps(next_props) {
+        // If we detect a proposal deletion, update the navbar.
+        if(next_props.proposal_deleted != this.props.proposal_deleted && next_props.proposal_deleted == true) {
+            this.props.loadUserProposalMetadata();
+        }
     }
 
     generateProposalTuples(proposal_metadata) {
         let tuples = [];
 
-        _.forEach(proposal_metadata, (value, key) => {
+        _.forEach(proposal_metadata, (metadata, key) => {
             let proposal = {}
             proposal['title'] = key;
-            proposal['link'] = value;
+            proposal['link'] = metadata.proposal_uuid;
+            proposal['flagged'] = metadata.flagged;
 
             tuples.push(proposal);
         })
@@ -31,14 +38,18 @@ class NavProposalLinks extends React.Component {
                 <div className="nav-main-category" data-toggle="collapse" data-target="#proposals">
                         <p>Proposals</p><span className="glyphicon glyphicon-chevron-down"></span>
                 </div>
-                <div id="proposals" className="collapse nav-secondary-category">
+                <div id="proposals" className="nav-secondary-category collapse in">
                 {
                     _.map(this.generateProposalTuples(this.props.proposal_metadata),
-                        (proposal) => {
+                        (proposal, index) => {
+                        let notification;
+                        if(proposal.flagged)
+                            notification = <span className="glyphicon glyphicon-exclamation-sign nav-status-icon icon-success" />
                         return (
-                            <LinkContainer className="nav-secondary-link" to={"/proposal/" + proposal.link}>
+                            <LinkContainer key={index} className="nav-secondary-link" to={"/proposal/" + proposal.link}>
                                 <a className="nav-secondary-link">
                                     {proposal.title}
+                                    {notification}
                                 </a>
                             </LinkContainer>
                         );
@@ -58,6 +69,7 @@ class NavProposalLinks extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
+        proposal_deleted: state.proposal_deleted,
         proposal_metadata: state.proposal_metadata,
         proposal_metadata_load_errors: state.proposal_metadata_load_errors,
     };
@@ -65,7 +77,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        loadUserProposalMetadata: (session_token) => dispatch(loadUserProposalMetadata(session_token)),
+        loadUserProposalMetadata: () => dispatch(loadUserProposalMetadata(getSessionToken())),
     };
 };
 

@@ -1,19 +1,61 @@
 import React from 'react';
 
-class UpdateProposal extends React.Component {
-    render () {
-        return (
-            <div>
-                <h2>This is the update proposal page.</h2>
-                <p>We need to complete the following tasks here:</p>
-                <ul>
-                    <li>Add an element which displays current proposals and their statuses.</li>
-                    <li>Connect the form from the front end to the server (which will update the proposal object.</li>
-                    <li>Style the page.</li>
-                </ul>
-            </div>
-        )
-    };
-}
+import { connect } from 'react-redux';
+import { loadProposalFromServer, beginUpdateProposal } from '../../actions/ProposalActions';
+import { getSessionToken } from '../../assets/js/app.jsx';
 
-export default UpdateProposal;
+import ForbiddenErrorMessage from './../errors/ForbiddenErrorMessage';
+import ProposalLoadFailureMessage from './ProposalLoadFailureMessage';
+import ProposalForm from './ProposalForm';
+import ProposalToolBar from './ProposalToolBar';
+
+class UpdateProposal extends React.Component {
+    componentWillMount() {
+        this.props.loadProposalFromServer(this.props.params.proposal_uuid);
+        this.props.beginUpdateProposal();
+    };
+
+    componentWillReceiveProps(next_props) {
+        if(next_props.params.proposal_uuid != this.props.params.proposal_uuid) {
+            this.props.loadProposalFromServer(next_props.params.proposal_uuid);
+        }
+    }
+
+    render () {
+        if(this.props.proposal_load_failure) {
+            return <ProposalLoadFailureMessage />;
+        } else if(!this.props.proposal_owner) {
+            return <ForbiddenErrorMessage />
+        } else {
+            return (
+                <div className="default-content">
+                    <ProposalToolBar proposal_uuid={this.props.params.proposal_uuid} update={true} />
+                    <h2>Update Project Proposal: <b>{this.props.proposal.title}</b></h2><br/>
+                    <ProposalForm 
+                        update={true}
+                        proposal_data={this.props.proposal}
+                        submitMessage="Update Project Proposal"
+                        proposal_uuid={this.props.params.proposal_uuid}
+                    />
+                </div>
+            );
+        }
+    }
+};
+
+const mapStateToProps = (state) => {
+    return {
+        proposal: state.proposal_load_success,
+        proposal_load_failure: state.proposal_load_failure,
+        proposal_owner: state.proposal_owner,
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        loadProposalFromServer: (proposal_uuid) => dispatch(loadProposalFromServer(proposal_uuid, getSessionToken())),
+        beginUpdateProposal: () => dispatch(beginUpdateProposal()),
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(UpdateProposal);

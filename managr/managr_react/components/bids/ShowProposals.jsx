@@ -1,8 +1,10 @@
 import React from 'react';
+
 import { connect } from 'react-redux';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
-
-import { loadProposalsFromServer } from '../../actions/ShowProposalsActions';
+import { Router, browserHistory } from 'react-router';
+import { loadProposalsFromServer } from '../../actions/BidActions';
+import { getSessionToken } from '../../assets/js/app.jsx';
 
 import '../../assets/css/App.css';
 
@@ -19,14 +21,6 @@ class ShowProposals extends React.Component {
         this.props.loadProposalsFromServer();
     };
 
-    /*constructor(props) {
-        super(props);
-        this.options = {
-            defaultSortName: 'name',  // default sort column name
-            defaultSortOrder: 'desc',  // default sort order
-        };
-    };*/
-
     handleSubmit(submitEvent) {
         submitEvent.preventDefault();
         this.props.loadProposalFromServer(this.props);
@@ -34,27 +28,25 @@ class ShowProposals extends React.Component {
 
     render () {
         return (
-            <BootstrapTable data = { this.props.proposals } options = { options } striped hover pagination>
-                <TableHeaderColumn isKey = { true } dataSort={ true } filter={ { type: 'TextFilter'} } dataField='name'>Name</TableHeaderColumn>
-                <TableHeaderColumn dataSort={ true } filter={ { type: 'TextFilter'} } dataField='location'>Location</TableHeaderColumn>
-                <TableHeaderColumn dataSort={ true } sortFunc={ numericSortFunc } dataField='budget'>Budget</TableHeaderColumn>
-                <TableHeaderColumn dataSort={ true } dataField='start'>Start Date</TableHeaderColumn>
-                <TableHeaderColumn dataSort={ true } dataField='end'>End Date</TableHeaderColumn>
-            </BootstrapTable>
+            <div className="default-content show-proposals-table">
+                <h2>Search for a New Project</h2>
+                <br/>
+                <BootstrapTable data={this.props.proposals} options={options} striped hover pagination>
+                    <TableHeaderColumn isKey={true} dataSort={true} filter={{type: 'TextFilter'}} dataField='name'>Name</TableHeaderColumn>
+                    <TableHeaderColumn dataSort={true} filter={{type: 'TextFilter'}} dataField='location'>Location</TableHeaderColumn>
+                    <TableHeaderColumn dataSort={true} sortFunc={numericSortFunc} dataField='budget'>Budget</TableHeaderColumn>
+                    <TableHeaderColumn dataSort={true} dataField='start'>Start Date</TableHeaderColumn>
+                    <TableHeaderColumn dataSort={true} dataField='end'>End Date</TableHeaderColumn>
+                </BootstrapTable>
+            </div>
         );
     }
 };
 
-ShowProposals.contextTypes = {
-    router: React.PropTypes.object.isRequired
-}
-
 const options = {
-    onRowClick: function(row) {
-        //this.context.router.push('/proposals/:' + row.uuid);
-        //console.log(row.uuid);
-        fetch('http://managr.dev.biz:8000/proposals/proposal', {method : 'post', body : row.uuid});
-    }
+  onRowClick: function(row) {
+    browserHistory.push('/proposal/' + row.uuid);
+  }
 };
 
 const mapStateToProps = (state) => {
@@ -65,8 +57,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        loadProposalsFromServer: () => dispatch(loadProposalsFromServer()),
-        // loadProposalFromServer: (proposalID) => dispatch(loadProposalFromServer(proposalID))
+        loadProposalsFromServer: () => dispatch(loadProposalsFromServer(getSessionToken())),
     };
 };
 

@@ -1,34 +1,19 @@
 import React from 'react';
-import { Row, Col} from 'react-bootstrap';
 
 import '../../assets/dhtmlx/dhtmlxgantt.css'
 import '../../assets/dhtmlx/dhtmlxgantt.js'
 import '../../assets/css/milestones.css';
 
 class Milestones extends React.Component {
-    constructor(props) {
-        super(props);
-    }
     componentDidMount() {
-        const tasks =  {
-            data:[
-                {id:1, text:"Project #2", start_date:"01-04-2013", duration:18,order:10,
-                    progress:0.4, open: true},
-                {id:2, text:"Task #1",    start_date:"02-04-2013", duration:8, order:10,
-                    progress:0.6, parent:1},
-                {id:3, text:"Task #2",    start_date:"11-04-2013", duration:8, order:20,
-                    progress:0.6, parent:1}
-            ],
-            links:[
-                { id:1, source:1, target:2, type:"1"},
-                { id:2, source:2, target:3, type:"0"},
-                { id:3, source:3, target:4, type:"0"},
-                { id:4, source:2, target:5, type:"2"},
-            ]
-        };
-
+        gantt.config.xml_date = "%Y-%m-%d %H:%i";
         gantt.init("gantt_chart");
-        gantt.parse(tasks);
+        gantt.load("http://managr.dev.biz:8000/milestones/get");
+        // TODO: hit this link: "http://managr.dev.biz:8000/milestones/get/:project_uuid" to send the project uuid.
+
+        let dp = new gantt.dataProcessor("http://managr.dev.biz:8000/milestones/data-processor");
+        dp.init(gantt);
+        dp.setTransactionMode("POST", false);
     }
 
     render () {

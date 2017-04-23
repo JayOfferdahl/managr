@@ -1,22 +1,24 @@
 import { loadUserProposalMetadata } from './AppActions';
+import { bidLoadData, bidExistsOnProposal, cancelBidProcess } from './BidActions';
 
 export function updateProposalFormField(field_name, field_value) {
     return {
-        type: 'UPDATE_PROPOSAL_' + field_name.toUpperCase() + '_FIELD',
+        type: 'PROPOSAL_FORM_UPDATE_' + field_name.toUpperCase() + '_FIELD',
         field_value
     }
 }
 
-export function createProposalSuccess(success = true) {
+export function createProposalSuccess(proposal_uuid) {
     return {
-        type: 'NEW_PROPOSAL_SUCCESS',
-        success
+        type: 'PROPOSAL_FORM_CREATION_SUCCESS',
+        success: true,
+        proposal_uuid: proposal_uuid,
     }
 }
 
 export function createProposalFailure(failure) {
     return {
-        type: 'NEW_PROPOSAL_FAILURE',
+        type: 'PROPOSAL_FORM_CREATION_FAILURE',
         failure
     }
 }
@@ -29,7 +31,7 @@ export function updateProposalForm(field_name, field_value) {
 
 export function cleanProposalForm() {
     return {
-        type: 'CLEAN_PROPOSAL_FORM'
+        type: 'PROPOSAL_FORM_CLEAN_FORM'
     }
 }
 
@@ -47,25 +49,78 @@ export function submitProposal(proposal_data, session_token) {
     const request_params = { method: 'POST', body: JSON.stringify(data)};
     return (dispatch) => {
         fetch('http://managr.dev.biz:8000/proposals/new', request_params)
-            .then((response) => {
-                if (!response.ok) {
-                    // Server response was not okay
-                }
-                return response;
-            })
-            .then((response) => response.json())
-            .then((data) => {
-                if (data['success']) {
-                    console.log("Proposal successfully submitted. (Debug statement - ProposalActions.jsx)");
-                    dispatch(createProposalSuccess());
+        .then((response) => {
+            if (!response.ok) {
+                // Server response was not okay
+            }
+            return response;
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            if (data['success']) {
+                dispatch(createProposalSuccess(data['success']));
 
-                    // Refresh the proposal list in the navigation bar
-                    dispatch(loadUserProposalMetadata(session_token));
-                } else {
-                    console.log("Error: %o (Debug statement - ProposalActions.jsx)", data);
-                    dispatch(createProposalFailure(data));
-                }
-            });
+                // Refresh the proposal list in the navigation bar
+                dispatch(loadUserProposalMetadata(session_token));
+            } else {
+                dispatch(createProposalFailure(data));
+            }
+        });
+    };
+}
+
+export function beginUpdateProposalProcess() {
+    return {
+        type: 'PROPOSAL_BEGIN_UPDATE_PROCESS'
+    };
+}
+
+export function cancelUpdateProposalProcess() {
+    return {
+        type: 'PROPOSAL_CANCEL_UPDATE_PROCESS'
+    };
+}
+
+export function beginUpdateProposal() {
+    return (dispatch) => {
+        dispatch(resetProposalForm());
+        dispatch(beginUpdateProposalProcess());
+    };
+}
+
+export function cancelUpdateProposal() {
+    return (dispatch) => {
+        dispatch(cancelUpdateProposalProcess());
+        dispatch(resetProposalForm());
+    };
+}
+
+export function updateProposal(proposal_data, session_token) {
+    // Add the session token to the request body
+    var data = JSON.parse(JSON.stringify(proposal_data))
+    data.token = session_token;
+
+    const request_params = { method: 'POST', body: JSON.stringify(data)};
+    return (dispatch) => {
+        fetch('http://managr.dev.biz:8000/proposals/update', request_params)
+        .then((response) => {
+            if (!response.ok) {
+                // Server response was not okay
+            }
+            return response;
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            // We can piggyback on createproposal actions since we forward to the same page.
+            if (data['success']) {
+                dispatch(createProposalSuccess(data['success']));
+
+                // Refresh the proposal list in the navigation bar
+                dispatch(loadUserProposalMetadata(session_token));
+            } else {
+                dispatch(createProposalFailure(data));
+            }
+        });
     };
 }
 
@@ -76,30 +131,191 @@ export function proposalLoadSuccess(data) {
     }
 }
 
-export function proposalLoadFailure(error) {
+export function proposalLoadFailure() {
     return {
-        type: 'PROPOSAL_LOAD_FAILURE',
-        error
+        type: 'PROPOSAL_LOAD_FAILURE'
     }
 }
 
-export function loadProposalFromServer(proposalID) {
-  const request_params = { method: 'POST', body: proposalID };
+export function proposalLoadOwner(owner) {
+    return {
+        type: 'PROPOSAL_LOADED_BY_OWNER',
+        owner
+    }
+}
+
+export function loadProposalFromServer(proposal_uuid, session_token) {
+    let data = {};
+    data.proposal_uuid = proposal_uuid;
+    data.session_token = session_token;
+    
+    const request_params = { method: 'POST', body: JSON.stringify(data) };
     return (dispatch) => {
         fetch('http://managr.dev.biz:8000/proposals/proposal', request_params)
-            .then((response) => {
-                if(!response.ok) {
-                    console.log("Server response error: " + response.ok);
+        .then((response) => {
+            if(!response.ok) {
+                dispatch(proposalLoadFailure());
+            }
+            return response;
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            if(data['success']) {
+                dispatch(proposalLoadSuccess(data['proposal']));
+                dispatch(proposalLoadOwner(data['owner']));
+
+                // If the requesting user doesn't own the proposal, check for an existing bid
+                if(!data['owner'] && data['bid']['exists']) {
+                    dispatch(bidExistsOnProposal(data['bid']['exists']));
+                    dispatch(bidLoadData(data['bid']));
+                } else if(data['owner']) {
+                    dispatch(loadBidsFromServer(proposal_uuid, session_token));
                 }
-                return response;
-            })
-            .then((response) => response.json())
-            .then((data) => {
-                if(data['success']) {
-                    dispatch(proposalLoadSuccess(data['proposal']));
-                } else {
-                    dispatch(proposalLoadFailure("There was an error loading data from the server."));
-                }
-            });
+            } else {
+                dispatch(proposalLoadFailure());
+            }
+        });
+    };
+}
+
+export function proposalDeleteSuccess() {
+    return {
+        type: 'PROPOSAL_DELETE_SUCCESS'
+    }
+}
+
+export function proposalDeleteFailure() {
+    return {
+        type: 'PROPOSAL_DELETE_FAILURE'
+    }
+}
+
+export function deleteProposal(proposal_uuid, session_token) {
+    let data = {};
+    data.proposal_uuid = proposal_uuid;
+    data.session_token = session_token;
+    
+    const request_params = { method: 'POST', body: JSON.stringify(data) };
+    return (dispatch) => {
+        fetch('http://managr.dev.biz:8000/proposals/delete', request_params)
+        .then((response) => {
+            if(!response.ok) {
+                console.log("Server response error: " + response.ok);
+            }
+            return response;
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            if(data['success']) {
+                dispatch(proposalDeleteSuccess());
+            } else {
+                dispatch(proposalDeleteFailure());
+            }
+        });
+    };
+}
+
+export function cleanProposalView() {
+    return {
+        type: 'PROPOSAL_RESET_VIEW'
+    }
+}
+
+export function resetProposalView() {
+    return (dispatch) => {
+        dispatch(cancelBidProcess());
+        dispatch(cancelUpdateProposal());
+        dispatch(bidExistsOnProposal(false));
+        dispatch(cleanProposalView());
+    };
+}
+
+export function bidsLoadSuccess(data) {
+    return {
+        type: 'BIDS_LOAD_SUCCESS',
+        data
+    }
+}
+
+export function bidsLoadFailure() {
+    return {
+        type: 'BIDS_LOAD_FAILURE'
+    }
+}
+
+export function loadBidsFromServer(proposal_uuid, session_token) {
+    let data = {};
+    data.proposal_uuid = proposal_uuid;
+    data.session_token = session_token;
+
+    const request_params = { method: 'POST', body: JSON.stringify(data) };
+    return (dispatch) => {
+        fetch('http://managr.dev.biz:8000/proposals/load-bids', request_params)
+        .then((response) => {
+            if(!response.ok) {
+                console.log("Server response error: " + response.ok);
+            }
+            return response;
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            if(data['success']) {
+                dispatch(bidsLoadSuccess(data['data']));
+            }
+            else {
+                dispatch(bidsLoadFailure());
+            }
+        });
+    };
+}
+
+export function declineBid(proposal_uuid, bid_uuid, session_token) {
+    let data = {};
+    data.proposal_uuid = proposal_uuid;
+    data.bid_uuid = bid_uuid;
+    data.session_token = session_token;
+
+    const request_params = { method: 'POST', body: JSON.stringify(data) };
+    return (dispatch) => {
+        fetch('http://managr.dev.biz:8000/proposals/decline-bid', request_params)
+        .then((response) => {
+            if(!response.ok) {
+                console.log("Server response error: " + response.ok);
+            }
+            return response;
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            if(data['success']) {
+                // Reload bids into bid table
+                dispatch(loadBidsFromServer(proposal_uuid, session_token));
+                dispatch(loadUserProposalMetadata(session_token));
+            }
+        });
+    };
+}
+
+export function acceptBid(proposal_uuid, bid_uuid, session_token) {
+    let data = {};
+    data.proposal_uuid = proposal_uuid;
+    data.bid_uuid = bid_uuid;
+    data.session_token = session_token;
+
+    const request_params = { method: 'POST', body: JSON.stringify(data) };
+    return (dispatch) => {
+        fetch('http://managr.dev.biz:8000/proposals/accept-bid', request_params)
+        .then((response) => {
+            if(!response.ok) {
+                console.log("Server response error: " + response.ok);
+            }
+            return response;
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            if(data['success']) {
+                console.log("Just accepted a bid.");
+                dispatch(loadUserProposalMetadata(session_token));
+            }
+        });
     };
 }
