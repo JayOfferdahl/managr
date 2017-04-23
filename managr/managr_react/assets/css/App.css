@@ -89,11 +89,20 @@ html, body, #app, .App {
 .icon-success {
     color: LawnGreen;
 }
+.icon-red {
+    color: red;
+}
+.icon-blank {
+    color: transparent;
+}
 .nav-tertiary-category {
     background-color: #6584A2;
 }
 .nav-sub-link {
     font-size: 14px;
+}
+.text-center {
+    text-align: center;
 }
 /* End side nav bar styles */
 
@@ -201,6 +210,17 @@ html, body, #app, .App {
 /* End general content styles */
 
 /* Miscellaneous */
-.show-proposals-table .react-bs-container-body table>tbody>tr:hover {
+.show-proposals-table .react-bs-container-body table>tbody>tr:hover,
+.dashboard-content .react-bs-container-body table>tbody>tr:hover {
     cursor: pointer;
+}
+.dashboard-content .dashboard-section {
+    width: 50%;
+    float: left;
+}
+.dashboard-content .dashboard-section:nth-child(odd) {
+    padding-left: 15px;
+}
+.dashboard-content .dashboard-section:nth-child(even) {
+    padding-right: 15px;
 }

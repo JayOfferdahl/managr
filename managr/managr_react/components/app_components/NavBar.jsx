@@ -12,6 +12,11 @@ class NavBar extends React.Component {
     render() {
         return (
             <div className="nav-links-container">
+                {/* Dashboard */}
+                <LinkContainer to="/dashboard">
+                    <div className="nav-main-category">Dashboard</div>
+                </LinkContainer>
+
                 {/* Projects section */}
                 <NavProjectLinks />
 
