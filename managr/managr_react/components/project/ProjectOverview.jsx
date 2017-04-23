@@ -1,10 +1,11 @@
 import React from 'react';
+
 import { connect } from 'react-redux';
 import { Nav, NavItem, Row, Col, Button, Grid } from 'react-bootstrap';
+import { fetchProjectInfoFromServer } from '../../actions/ProjectActions';
+import { getSessionToken } from '../../assets/js/app.jsx';
 
 import NestedNavBar from './NestedNavBar';
-
-import { fetchProjectInfoFromServer } from '../../actions/ProjectActions';
 
 import '../../assets/css/App.css';
 
@@ -47,7 +48,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        fetchProjectInformation: (project_uuid) => dispatch(fetchProjectInfoFromServer(project_uuid, localStorage.getItem('managr_session_token'))),
+        fetchProjectInformation: (project_uuid) => dispatch(fetchProjectInfoFromServer(project_uuid, getSessionToken())),
     };
 };
 

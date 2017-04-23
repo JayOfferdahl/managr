@@ -1,4 +1,3 @@
-
 export function company_name(state = '', action) {
     switch(action.type) {
         case 'UPDATE_COMPANY_CREATION_COMPANY_NAME_FIELD':

@@ -1,12 +1,13 @@
 import React from 'react';
+
 import { connect } from 'react-redux';
+import { updateCompanyForm, joinExistingCompany } from '../../actions/CompanyCreationActions';
+import { getSessionToken } from '../../assets/js/app';
 
 import ErrorsList from '../app_components/ErrorsList';
 import SelectGroup from '../app_components/SelectGroup';
 import Textfield from '../app_components/Textfield';
 import TextareaField from '../app_components/TextareaField';
-
-import { updateCompanyForm, joinExistingCompany } from '../../actions/CompanyCreationActions';
 
 class JoinCompanyForm extends React.Component {
     componentDidUpdate(prevProps, prevState) {
@@ -55,7 +56,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         updateField: (field_name, field_value) => dispatch(updateCompanyForm(field_name, field_value)),
-        submitJoinCompanyForm: (form_fields_info, session_token) => dispatch(joinExistingCompany(form_fields_info, session_token))
+        submitJoinCompanyForm: (form_fields_info) => dispatch(joinExistingCompany(form_fields_info, getSessionToken()))
     };
 };
 

@@ -226,20 +226,19 @@ export function loadProposalsFromServer(sessionToken) {
 
     return (dispatch) => {
         fetch('http://managr.dev.biz:8000/bids/show-proposals', request_params)
-            .then((response) => {
-                if(!response.ok) {
-                    console.log("Server response error: " + response.ok);
-                }
-                return response;
-            })
-            .then((response) => response.json())
-            .then( (data) => {
-                if(data) {
-                    dispatch(proposalsLoadSuccess(data));
-                  }
-               else {
-                    dispatch(proposalsLoadFailure("There was an error loading data from the server."));
-                }
-            });
+        .then((response) => {
+            if(!response.ok) {
+                console.log("Server response error: " + response.ok);
+            }
+            return response;
+        })
+        .then((response) => response.json())
+        .then( (data) => {
+            if(data) {
+                dispatch(proposalsLoadSuccess(data));
+            } else {
+                dispatch(proposalsLoadFailure("There was an error loading data from the server."));
+            }
+        });
     };
 }

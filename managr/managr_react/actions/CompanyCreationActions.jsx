@@ -69,21 +69,21 @@ export function createContractorCompany(form_fields_info, session_token) {
     request_params = { method: 'POST', body: JSON.stringify(request_params) };
     return (dispatch) => {
         fetch('http://managr.dev.biz:8000/companies/create-contractor-company', request_params)
-            .then((response) => {
-                if (!response.ok) {
-                    // Server response was not okay
-                }
-                return response;
-            })
-            .then((response) => response.json())
-            .then((data) => {
-                if (data['success']) {
-                    dispatch(companyCreationSuccess());
-                    dispatch(cleanCompanyCreationForm());
-                } else {
-                    dispatch(companyCreationFailure(data));
-                }
-            });
+        .then((response) => {
+            if (!response.ok) {
+                // Server response was not okay
+            }
+            return response;
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            if (data['success']) {
+                dispatch(companyCreationSuccess());
+                dispatch(cleanCompanyCreationForm());
+            } else {
+                dispatch(companyCreationFailure(data));
+            }
+        });
     };
 }
 
@@ -93,21 +93,21 @@ export function createClientCompany(form_fields_info, session_token) {
     request_params = { method: 'POST', body: JSON.stringify(request_params) };
     return (dispatch) => {
         fetch('http://managr.dev.biz:8000/companies/create-client-company', request_params)
-            .then((response) => {
-                if (!response.ok) {
-                    // Server response was not okay
-                }
-                return response;
-            })
-            .then((response) => response.json())
-            .then((data) => {
-                if (data['success']) {
-                    dispatch(companyCreationSuccess());
-                    dispatch(cleanCompanyCreationForm());
-                } else {
-                    dispatch(companyCreationFailure(data));
-                }
-            });
+        .then((response) => {
+            if (!response.ok) {
+                // Server response was not okay
+            }
+            return response;
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            if (data['success']) {
+                dispatch(companyCreationSuccess());
+                dispatch(cleanCompanyCreationForm());
+            } else {
+                dispatch(companyCreationFailure(data));
+            }
+        });
     };
 }
 
@@ -117,20 +117,20 @@ export function joinExistingCompany(form_fields_info, session_token) {
     request_params = { method: 'POST', body: JSON.stringify(request_params) };
     return (dispatch) => {
         fetch('http://managr.dev.biz:8000/companies/join-company', request_params)
-            .then((response) => {
-                if (!response.ok) {
-                    // Server response was not okay
-                }
-                return response;
-            })
-            .then((response) => response.json())
-            .then((data) => {
-                if (data['success']) {
-                    dispatch(joinCompanySuccess());
-                    dispatch(cleanJoinCompanyForm());
-                } else {
-                    dispatch(joinCompanyFailure(data));
-                }
-            });
+        .then((response) => {
+            if (!response.ok) {
+                // Server response was not okay
+            }
+            return response;
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            if (data['success']) {
+                dispatch(joinCompanySuccess());
+                dispatch(cleanJoinCompanyForm());
+            } else {
+                dispatch(joinCompanyFailure(data));
+            }
+        });
     };
 }

@@ -1,7 +1,7 @@
 import React from 'react';
-import { LinkContainer } from 'react-router-bootstrap';
-import { connect } from 'react-redux';
 
+import { connect } from 'react-redux';
+import { LinkContainer } from 'react-router-bootstrap';
 import { loadUserProposalMetadata } from '../../actions/AppActions';
 import { getSessionToken } from '../../assets/js/app.jsx';
 

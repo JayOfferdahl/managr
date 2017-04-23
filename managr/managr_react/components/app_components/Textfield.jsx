@@ -1,14 +1,15 @@
 import React from 'react';
+
 import { connect } from 'react-redux';
 
 class Textfield extends React.Component {
-	render() {
-		return (
-			<div className="form-group">
-				<input type={this.props.type} value={this.props.current_text} placeholder={this.props.placeholder} name={this.props.field_name} onChange={this.props.onChange} />
-			</div>
-		);
-	}
+    render() {
+        return (
+            <div className="form-group">
+                <input type={this.props.type} value={this.props.current_text} placeholder={this.props.placeholder} name={this.props.field_name} onChange={this.props.onChange} />
+            </div>
+        );
+    }
 }
 
 const mapStateToProps = (state, ownProps) => {

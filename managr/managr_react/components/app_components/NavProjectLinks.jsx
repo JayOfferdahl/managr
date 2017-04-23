@@ -1,14 +1,15 @@
 import React from 'react';
-import { LinkContainer } from 'react-router-bootstrap';
-import { connect } from 'react-redux';
 
+import { connect } from 'react-redux';
+import { LinkContainer } from 'react-router-bootstrap';
 import { loadUserProjectMetadata } from '../../actions/AppActions';
+import { getSessionToken } from '../../assets/js/app.jsx';
+
 import '../../assets/css/App.css';
 
 class NavProjectLinks extends React.Component {
     componentWillMount() {
-        var token = localStorage.getItem("managr_session_token");
-        this.props.loadUserProjectMetadata(token);
+        this.props.loadUserProjectMetadata();
     }
 
     generateProjectTuples(project_metadata) {
@@ -29,14 +30,14 @@ class NavProjectLinks extends React.Component {
         return (
             <div>
                 <div className="nav-main-category" data-toggle="collapse" data-target="#projects">
-                        <p>Projects</p><span className="glyphicon glyphicon-chevron-down"></span>
+                    <p>Projects</p><span className="glyphicon glyphicon-chevron-down"></span>
                 </div>
-                <div id="projects" className="collapse nav-secondary-category">
+                <div id="projects" className="nav-secondary-category collapse in">
                 {
                     _.map(this.generateProjectTuples(this.props.project_metadata),
-                        (project) => {
+                        (project, index) => {
                         return (
-                            <LinkContainer className="nav-secondary-link" to={"/project/" + project.link}>
+                            <LinkContainer key={index} className="nav-secondary-link" to={"/project/" + project.link}>
                                 <a className="nav-secondary-link">
                                     {project.title}
                                 </a>
@@ -65,7 +66,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        loadUserProjectMetadata: (session_token) => dispatch(loadUserProjectMetadata(session_token)),
+        loadUserProjectMetadata: () => dispatch(loadUserProjectMetadata(getSessionToken())),
     };
 };
 

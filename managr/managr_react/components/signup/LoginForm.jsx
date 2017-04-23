@@ -1,12 +1,12 @@
 import React from 'react';
+
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { LinkContainer } from 'react-router-bootstrap';
+import { updateLoginForm, loginWithServer, resetLoginForm } from '../../actions/LoginActions';
 
 import ErrorsList from '../app_components/ErrorsList'
 import Textfield from '../app_components/Textfield';
-
-import { updateLoginForm, loginWithServer, resetLoginForm } from '../../actions/LoginActions';
 
 class LoginForm extends React.Component {
     componentDidUpdate(prevProps, prevState) {
@@ -35,7 +35,7 @@ class LoginForm extends React.Component {
                 <Textfield type="password" placeholder="Password" onChange={this.handleChange.bind(this)} currentText={this.props.password} fieldName="password" />
                 <div className="form-group">
                     <button className="btn registration-submit-button">
-                    Login
+                        Login
                     </button>
                 </div>
                 <LinkContainer to="/signup" className="registration-form-no-account" onClick={this.props.handleReset.bind(this)}>

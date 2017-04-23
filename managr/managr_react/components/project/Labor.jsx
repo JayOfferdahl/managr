@@ -1,5 +1,7 @@
 import React from 'react';
+
 import { Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
+
 import LaborTable from './LaborTable'
 
 import '../../assets/css/App.css';
@@ -24,12 +26,11 @@ const MOCK_DATA_ROWS = [{ 'Employee Name': 'Richard Smith Jr.',
                       ]
 
 class Labor extends React.Component {
-
     render () {
         return (
-          <LaborTable headers={MOCK_HEADERS} rows={MOCK_DATA_ROWS} />
-        )
-      }
+            <LaborTable headers={MOCK_HEADERS} rows={MOCK_DATA_ROWS} />
+        );
+    }
 }
 
 export default Labor;

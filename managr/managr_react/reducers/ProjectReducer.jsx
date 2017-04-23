@@ -1,4 +1,3 @@
-
 export function create_project_name(state = '', action) {
     switch(action.type) {
         case 'UPDATE_PROJECT_CREATION_CREATE_PROJECT_NAME_FIELD':

@@ -41,20 +41,20 @@ class ProposalBidsList extends React.Component {
 
     render () {
         return (
-                <div>
-                    <hr/>
-                    <h3>Bids on your project</h3>
-                    <br/>
-                    <BootstrapTable data={this.props.bids} striped hover pagination>
-                        <TableHeaderColumn isKey={true} dataSort={true} dataField='budget'>Budget</TableHeaderColumn>
-                        <TableHeaderColumn dataSort={true} dataField='start_date'>Start Date</TableHeaderColumn>
-                        <TableHeaderColumn dataSort={true} dataField='end_date'>End Date</TableHeaderColumn>
-                        <TableHeaderColumn dataField='contact_number'>Contact</TableHeaderColumn>
-                        <TableHeaderColumn dataField='description'>Description</TableHeaderColumn>
-                        <TableHeaderColumn dataField="buttons" width="123" dataFormat={this.bidTableButtons.bind(this)}>Accept/Decline</TableHeaderColumn>
-                    </BootstrapTable>
-                </div>
-            );
+            <div>
+                <hr/>
+                <h3>Bids on your project</h3>
+                <br/>
+                <BootstrapTable data={this.props.bids} striped hover pagination>
+                    <TableHeaderColumn isKey={true} dataSort={true} dataField='budget'>Budget</TableHeaderColumn>
+                    <TableHeaderColumn dataSort={true} dataField='start_date'>Start Date</TableHeaderColumn>
+                    <TableHeaderColumn dataSort={true} dataField='end_date'>End Date</TableHeaderColumn>
+                    <TableHeaderColumn dataField='contact_number'>Contact</TableHeaderColumn>
+                    <TableHeaderColumn dataField='description'>Description</TableHeaderColumn>
+                    <TableHeaderColumn dataField="buttons" width="123" dataFormat={this.bidTableButtons.bind(this)}>Accept/Decline</TableHeaderColumn>
+                </BootstrapTable>
+            </div>
+        );
     }
 };
 

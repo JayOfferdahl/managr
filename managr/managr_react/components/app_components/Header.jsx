@@ -1,14 +1,13 @@
 import React from 'react';
+
 import { connect } from 'react-redux';
-
 import { Row } from 'react-bootstrap';
-
-import LogoutButton from '../signup/LogoutButton'
-
-import '../../assets/css/App.css';
 
 import logo from '../../assets/img/logo.png';
 import avatar from '../../assets/img/avatar.png';
+import LogoutButton from '../signup/LogoutButton';
+
+import '../../assets/css/App.css';
 
 class Header extends React.Component {
     render() {
@@ -34,8 +33,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-    return {
-    };
+    return {};
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

@@ -1,14 +1,13 @@
 import React from 'react';
+
 import { connect } from 'react-redux';
+import { updateCompanyForm, createContractorCompany } from '../../actions/CompanyCreationActions';
+import { states_array } from '../../assets/js/StatesArray';
 
 import ErrorsList from '../app_components/ErrorsList';
 import SelectGroup from '../app_components/SelectGroup';
 import Textfield from '../app_components/Textfield';
 import TextareaField from '../app_components/TextareaField';
-
-import { updateCompanyForm, createContractorCompany } from '../../actions/CompanyCreationActions';
-
-import { states_array } from '../../assets/js/StatesArray';
 
 // import { updateRegistrationForm, registerWithServer, loginAfterRegistration, resetRegistrationForm } from '../../actions/RegistrationActions';
 
@@ -26,7 +25,7 @@ class ContractorCompanyCreationForm extends React.Component {
 
     handleSubmit(submitEvent) {
         submitEvent.preventDefault();
-        this.props.submitCompanyCreation(this.props, localStorage.getItem('managr_session_token'));
+        this.props.submitCompanyCreation(this.props);
     }
 
     render() {
@@ -71,7 +70,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         updateField: (field_name, field_value) => dispatch(updateCompanyForm(field_name, field_value)),
-        submitCompanyCreation: (form_fields_info, session_token) => dispatch(createContractorCompany(form_fields_info, session_token))
+        submitCompanyCreation: (form_fields_info) => dispatch(createContractorCompany(form_fields_info, getSessionToken()))
     };
 };
 

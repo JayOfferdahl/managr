@@ -32,6 +32,7 @@ html, body, #app, .App {
 .row {
     margin: 0;
 }
+/* End application structure */
 
 /* Side nav bar styles */
 .nav-main-category {
@@ -74,6 +75,21 @@ html, body, #app, .App {
 .nav-secondary-link:hover {
     text-decoration: underline;
 }
+.nav-links-container a {
+    color: white;
+}
+.nav-status-icon {
+    float: right;
+    margin-top: 3px;
+    margin-right: 3px !important;
+}
+.icon-danger {
+    color: yellow;
+}
+.icon-success {
+    color: LawnGreen;
+}
+/* End side nav bar styles */
 
 /* Header styles */
 .app-header {
@@ -101,12 +117,14 @@ html, body, #app, .App {
 .avatar-text {
     display: inline-block;
     margin-top: 5px;
+    text-transform: capitalize;
 }
 .logout-container {
-  display: inline-block;
+    display: inline-block;
 }
+/* End header styles */
 
-/* Content styles */
+/* Project styles */
 .project-content-section {
     width: 100%;
     padding: 20px 0px 20px 40px;
@@ -128,80 +146,55 @@ html, body, #app, .App {
     background-color: #FFF;
     margin-bottom: 20px;
 }
-
-.nav a {
-  color: white;
-}
-
 .nav-tabs.nav-justified>li>a {
-  color: black;
+    color: black;
 }
-
 .create-new-icon {
-  background: url('../img/create-new-icon.svg') center right no-repeat;
-  padding:0 16px 0 0;
+    background: url('../img/create-new-icon.svg') center right no-repeat;
+    padding:0 16px 0 0;
 }
-
 .item-overview-tab {
-  height: 50px;
+    height: 50px;
 }
-
 .graph-section {
-  display: inline-block;
+    display: inline-block;
 }
-
 .overview-body {
-  padding-top: 20px;
-  height: 200px;
+    padding-top: 20px;
+    height: 200px;
 }
-
 .summary-section {
-  background-color: #F0F0F0;
+    background-color: #F0F0F0;
 }
-
 .summary-table {
-  margin: 30px 10px 10px 10px;
+    margin: 30px 10px 10px 10px;
 }
-
 .left {
     position: fixed;
     top:0; left:0;
     height:100%;
     width: 300px;
 }
-
 .right {
     position:relative;
     margin-left: 290px;
 }
+/* End project styles */
 
+/* General content styles */
 .errors-list {
     margin: 0px 0px 10px 0px;
     padding: 10px;
 }
-
 .default-content {
     padding: 30px;
 }
-
 .default-content h2 {
     margin-top: 0px;
 }
+/* End general content styles */
 
-.nav-status-icon {
-    float: right;
-    margin-top: 3px;
-    margin-right: 3px !important;
-}
-
-.icon-danger {
-    color: yellow;
-}
-
-.icon-success {
-    color: LawnGreen;
-}
-
+/* Miscellaneous */
 .show-proposals-table .react-bs-container-body table>tbody>tr:hover {
-  cursor: pointer;
+    cursor: pointer;
 }

@@ -44,9 +44,9 @@ class ShowProposals extends React.Component {
 };
 
 const options = {
-  onRowClick: function(row) {
-    browserHistory.push('/proposal/' + row.uuid);
-  }
+    onRowClick: function(row) {
+        browserHistory.push('/proposal/' + row.uuid);
+    }
 };
 
 const mapStateToProps = (state) => {

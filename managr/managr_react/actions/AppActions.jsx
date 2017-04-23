@@ -30,20 +30,20 @@ export function loadUserProposalMetadata(session_token) {
     const request_params = { method: 'POST', body: JSON.stringify(session_token) };
     return (dispatch) => {
         fetch('http://managr.dev.biz:8000/proposals/get-metadata', request_params)
-            .then((response) => {
-                if (!response.ok) {
-                    // Server response was not okay
-                }
-                return response;
-            })
-            .then((response) => response.json())
-            .then((data) => {
-                if (data['success']) {
-                    dispatch(proposalMetadataLoadSuccess(data['data']));
-                } else {
-                    dispatch(proposalMetadataLoadFailure(data['error']));
-                }
-            });
+        .then((response) => {
+            if (!response.ok) {
+                // Server response was not okay
+            }
+            return response;
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            if (data['success']) {
+                dispatch(proposalMetadataLoadSuccess(data['data']));
+            } else {
+                dispatch(proposalMetadataLoadFailure(data['error']));
+            }
+        });
     };
 }
 
@@ -51,20 +51,20 @@ export function loadUserProjectMetadata(session_token) {
     const request_params = { method: 'POST', body: JSON.stringify(session_token) };
     return (dispatch) => {
         fetch('http://managr.dev.biz:8000/projects/get-user-project-metadata', request_params)
-            .then((response) => {
-                if (!response.ok) {
-                    // Server response was not okay
-                }
-                return response;
-            })
-            .then((response) => response.json())
-            .then((data) => {
-                if (data['success']) {
-                    dispatch(projectMetadataLoadSuccess(data['data']));
-                } else {
-                    dispatch(projectMetadataLoadFailure(data['error']));
-                }
-            });
+        .then((response) => {
+            if (!response.ok) {
+                // Server response was not okay
+            }
+            return response;
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            if (data['success']) {
+                dispatch(projectMetadataLoadSuccess(data['data']));
+            } else {
+                dispatch(projectMetadataLoadFailure(data['error']));
+            }
+        });
     };
 }
         
@@ -86,19 +86,19 @@ export function loadUserBidMetadata(session_token) {
     const request_params = { method: 'POST', body: JSON.stringify(session_token) };
     return (dispatch) => {
         fetch('http://managr.dev.biz:8000/bids/get-metadata', request_params)
-            .then((response) => {
-                if (!response.ok) {
-                    // Server response was not okay
-                }
-                return response;
-            })
-            .then((response) => response.json())
-            .then((data) => {
-                if (data['success']) {
-                    dispatch(bidMetadataLoadSuccess(data['data']));
-                } else {
-                    dispatch(bidMetadataLoadFailure(data['error']));
-                }
-            });
+        .then((response) => {
+            if (!response.ok) {
+                // Server response was not okay
+            }
+            return response;
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            if (data['success']) {
+                dispatch(bidMetadataLoadSuccess(data['data']));
+            } else {
+                dispatch(bidMetadataLoadFailure(data['error']));
+            }
+        });
     };
 }

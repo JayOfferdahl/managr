@@ -1,13 +1,13 @@
 import React from 'react';
-import { LinkContainer } from 'react-router-bootstrap';
-import { connect } from 'react-redux';
 
+import { connect } from 'react-redux';
+import { LinkContainer } from 'react-router-bootstrap';
 import { loadUserBidMetadata } from '../../actions/AppActions';
+import { getSessionToken } from '../../assets/js/app';
 
 class NavBidLinks extends React.Component {
     componentWillMount() {
-        var token = localStorage.getItem("managr_session_token");
-        this.props.loadUserBidMetadata(token);
+        this.props.loadUserBidMetadata();
     }
 
     componentWillReceiveProps(next_props) {
@@ -78,7 +78,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        loadUserBidMetadata: (session_token) => dispatch(loadUserBidMetadata(session_token)),
+        loadUserBidMetadata: () => dispatch(loadUserBidMetadata(getSessionToken())),
     };
 };
 

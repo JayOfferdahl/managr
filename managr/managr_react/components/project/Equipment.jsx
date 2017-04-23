@@ -1,5 +1,7 @@
 import React from 'react';
+
 import { Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
+
 import EquipmentTable from './EquipmentTable'
 
 import '../../assets/css/App.css';
@@ -20,9 +22,8 @@ const MOCK_DATA_ROWS = [{ 'Equipment Name': 'JCT9000 Backhoe',
                         }]
 
 class Equipment extends React.Component {
-
     render () {
-      return <EquipmentTable headers={MOCK_HEADERS} rows={MOCK_DATA_ROWS}/>
+        return <EquipmentTable headers={MOCK_HEADERS} rows={MOCK_DATA_ROWS}/>
     }
 }
 

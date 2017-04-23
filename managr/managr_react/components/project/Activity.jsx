@@ -1,7 +1,10 @@
 import React from 'react';
-import ActivityTable from './ActivityTable'
-import '../../assets/css/App.css';
+
 import moment from 'moment';
+
+import ActivityTable from './ActivityTable'
+
+import '../../assets/css/App.css';
 
 const MOCK_HEADERS = ['Result','Message','Timestamp']
 

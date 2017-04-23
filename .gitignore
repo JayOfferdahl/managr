@@ -4,3 +4,5 @@ node_modules
 bundles
 
 managr/npm-debug\.log
+
+*.log

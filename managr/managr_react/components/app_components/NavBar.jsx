@@ -1,17 +1,17 @@
 import React from 'react';
-import { Nav, NavItem } from 'react-bootstrap';
+
 import { LinkContainer } from 'react-router-bootstrap';
-import { connect } from 'react-redux';
+
+import NavBidLinks from './NavBidLinks';
+import NavProjectLinks from './NavProjectLinks';
+import NavProposalLinks from './NavProposalLinks';
 
 import '../../assets/css/App.css';
-import NavBidLinks from './NavBidLinks';
-import NavProposalLinks from './NavProposalLinks';
-import NavProjectLinks from './NavProjectLinks';
 
 class NavBar extends React.Component {
     render() {
         return (
-            <Nav className="nav-links-container">
+            <div className="nav-links-container">
                 {/* Projects section */}
                 <NavProjectLinks />
 
@@ -33,7 +33,7 @@ class NavBar extends React.Component {
                         </a>
                     </LinkContainer>
                 </div>
-            </Nav>
+            </div>
         );
     }
 }

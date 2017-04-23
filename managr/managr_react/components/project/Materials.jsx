@@ -1,5 +1,7 @@
 import React from 'react';
+
 import MaterialsTable from './MaterialsTable'
+
 import '../../assets/css/App.css';
 
 const MOCK_HEADERS = ['Result','Material Name','Unit','Cost Per Unit','Total Usage','Total Expense']

@@ -1,11 +1,12 @@
 import React from 'react';
+
 import { connect } from 'react-redux';
+import { updateCreateProjectForm, createNewProject } from '../../actions/ProjectActions';
+import { getSessionToken } from '../../assets/js/app.jsx';
 
 import ErrorsList from '../app_components/ErrorsList'
 import Textfield from '../app_components/Textfield';
 import TextareaField from '../app_components/TextareaField';
-
-import { updateCreateProjectForm, createNewProject } from '../../actions/ProjectActions';
 
 class CreateProjectForm extends React.Component {
     componentDidUpdate(prevProps, prevState) {
@@ -20,7 +21,7 @@ class CreateProjectForm extends React.Component {
 
     handleSubmit(submitEvent) {
         submitEvent.preventDefault();
-        this.props.submitNewProject(this.props, localStorage.getItem('managr_session_token'));
+        this.props.submitNewProject(this.props);
     }
 
     render() {
@@ -66,7 +67,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         updateField: (field_name, field_value) => dispatch(updateCreateProjectForm(field_name, field_value)),
-        submitNewProject: (project_data, session_token) => dispatch(createNewProject(project_data, session_token)),
+        submitNewProject: (project_data) => dispatch(createNewProject(project_data, getSessionToken())),
     };
 };
 
