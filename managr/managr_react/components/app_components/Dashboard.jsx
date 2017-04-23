@@ -97,7 +97,7 @@ const linkToProposal = {
 
 const linkToProject = {
     onRowClick: function(row) {
-        browserHistory.push('/summary/' + row.link);
+        browserHistory.push('/project/' + row.link);
     }
 };
 

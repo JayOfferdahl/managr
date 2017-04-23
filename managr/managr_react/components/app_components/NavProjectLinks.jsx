@@ -45,7 +45,7 @@ class NavProjectLinks extends React.Component {
                                     </a>
                                 </div>
                                 <div id={project.link} className="nav-tertiary-category collapse in">
-                                    <LinkContainer className="nav-sub-link" to={"/summary/" + project.link}>
+                                    <LinkContainer className="nav-sub-link" to={"/project/" + project.link}>
                                         <a>
                                             <span className="glyphicon glyphicon-home"></span>
                                             Project Overview
