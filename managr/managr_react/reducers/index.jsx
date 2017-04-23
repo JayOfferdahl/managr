@@ -110,5 +110,5 @@ export default combineReducers ({
     bid_deleted,
     bid_declined,
     proposal_removed,
-    proposals
+    proposals,
 });
