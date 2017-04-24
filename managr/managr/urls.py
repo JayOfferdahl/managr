@@ -33,6 +33,9 @@ urlpatterns = [
     url(r'^accounts/logout', managr_entities_views.logout, name='logout'),
     url(r'^accounts/signup', managr_entities_views.register, name='register'),
     url(r'^accounts/ensure-auth', managr_entities_views.ensureAuth, name='ensure_auth'),
+    url(r'^accounts/clock-in', managr_entities_views.clockIn, name='clock_in'),
+    url(r'^accounts/clock-out', managr_entities_views.clockOut, name='clock_out'),
+    url(r'^accounts/shifts', managr_entities_views.getShifts, name='get_shifts'),
 
     url(r'^companies/create-contractor-company', managr_entities_views.createContractorCompany, name='create_contractor_company'),
     url(r'^companies/create-client-company', managr_entities_views.createClientCompany, name='create_client_company'),
