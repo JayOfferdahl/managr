@@ -11,6 +11,7 @@ class CreateProject extends React.Component {
         return (
             <Row className="default-content">
                 <h2>Create a new project</h2>
+                <br/>
                 <CreateProjectForm />
             </Row>
         )

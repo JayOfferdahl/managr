@@ -26,7 +26,6 @@ import Activity from './components/project/Activity'
 import Finance from './components/reports/Finance'
 import Milestones from './components/project/Milestones'
 import DocumentsList from './components/documents/DocumentsList'
-import ProjectSettings from './components/project/ProjectSettings'
 import CreateProject from './components/project/CreateProject'
 
 import PastProjectsList from './components/project_history/PastProjectsList'
@@ -52,7 +51,6 @@ export default (
             <Route path="project/:project_uuid/documents" component={DocumentsList}/>
             <Route path="project/:project_uuid/finance" component={Finance}/>
             <Route path="project/:project_uuid/milestones" component={Milestones}/>
-            <Route path="project/:project_uuid/project-settings" component={ProjectSettings}/>
             <Route path="create-project" component={CreateProject} />
 
             {/* Proposal/Bid Routes */}

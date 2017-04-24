@@ -4,9 +4,7 @@ import { connect } from 'react-redux';
 import { updateCreateProjectForm, createNewProject } from '../../actions/ProjectActions';
 import { getSessionToken } from '../../assets/js/app.jsx';
 
-import ErrorsList from '../app_components/ErrorsList'
-import Textfield from '../app_components/Textfield';
-import TextareaField from '../app_components/TextareaField';
+import ErrorsList from '../app_components/ErrorsList';
 
 class CreateProjectForm extends React.Component {
     componentDidUpdate(prevProps, prevState) {
@@ -26,11 +24,18 @@ class CreateProjectForm extends React.Component {
 
     render() {
         return (
-            <form onSubmit={this.handleSubmit.bind(this)} className="project-form">
-                <ErrorsList errors={{}} />
-                <div className="project-form-section project-form-section-left">
-                    <Textfield type="text" placeholder="Project Name" onChange={this.handleChange.bind(this)} currentText={this.props.create_project_name} fieldName="create_project_name" />
-                    <div className="form-group budget-form-group">
+            <form onSubmit={this.handleSubmit.bind(this)} className="proposal-form">
+                <ErrorsList errors={this.props.create_project_errors} />
+                <div className="proposal-form-section proposal-form-section-left">
+                    <div className="form-group">
+                        <label htmlFor="title">Title</label>
+                        <input type="text" name="create_project_name" maxLength="255" required 
+                                onChange={this.handleChange.bind(this)} value={this.props.create_project_name} />
+                    </div>
+                </div>
+
+                <div className="proposal-form-section proposal-form-section-right">
+                    <div className="form-group">
                         <label htmlFor="budget">Budget</label>
                         <div className="input-group">
                             <div className="input-group-addon">$</div>
@@ -39,8 +44,14 @@ class CreateProjectForm extends React.Component {
                             <div className="input-group-addon">.00</div>
                         </div>
                     </div>
-                    <TextareaField placeholder="Description" onChange={this.handleChange.bind(this)} currentText={this.props.create_project_description} fieldName="create_project_description" />
                 </div>
+
+                <div className="form-group" className="proposal-form-description">
+                    <label htmlFor="create_project_description">Description</label>
+                    <textarea name="create_project_description" placeholder="Write your project description here" required
+                        onChange={this.handleChange.bind(this)} value={this.props.create_project_description}></textarea>
+                </div>
+
                 <button className="btn btn-warning project-form-submit">
                     Create Project
                 </button>
