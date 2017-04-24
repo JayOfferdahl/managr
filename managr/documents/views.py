@@ -1,3 +1,5 @@
+import base64
+
 from django.http import JsonResponse
 from django.utils.six import BytesIO
 from django.views.decorators.csrf import csrf_exempt
@@ -44,3 +46,13 @@ def newGoogleProjectDocument(request):
     document.save()
 
     return JsonResponse({'success': 'New Google Document Success'})
+
+@csrf_exempt
+def newUploadedProjectDocument(request):
+    data = JSONParser().parse(BytesIO(request.body))
+    encoded_file = data['doc_file'].split('base64,',1)[1]
+    decoded_file = base64.b64decode(encoded_file)
+    print(decoded_file)
+
+    return JsonResponse({'success': 'New Uploaded Document Success'})
+

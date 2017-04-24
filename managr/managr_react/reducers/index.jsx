@@ -87,7 +87,9 @@ import { google_documents,
          document_management_view_controller,
          new_google_doc_link,
          new_google_doc_title,
-         create_new_google_doc_link } from './DocumentsReducer';
+         create_new_google_doc_link,
+         new_uploaded_doc_title,
+         new_uploaded_doc_file } from './DocumentsReducer';
 
 export default combineReducers ({
     // Registration reducers
@@ -188,4 +190,6 @@ export default combineReducers ({
     new_google_doc_link,
     new_google_doc_title,
     create_new_google_doc_link,
+    new_uploaded_doc_title,
+    new_uploaded_doc_file,
 });

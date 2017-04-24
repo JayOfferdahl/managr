@@ -19,9 +19,22 @@ export function displayNewGoogleDocForm() {
     }
 }
 
+export function displayNewUploadedDocForm() {
+    return {
+        type: 'SHOW_NEW_UPLOADED_DOC_FORM',
+    }
+}
+
 export function updateNewGoogleDocForm(field_name, field_value) {
     return {
         type: 'UPDATE_NEW_GOOGLE_DOC_FORM_' + field_name.toUpperCase() + '_FIELD',
+        field_value
+    };
+}
+
+export function updateNewUploadedDocForm(field_name, field_value) {
+    return {
+        type: 'UPDATE_NEW_UPLOADED_DOC_FORM_' + field_name.toUpperCase() + '_FIELD',
         field_value
     };
 }
@@ -34,7 +47,6 @@ export function createNewGoogleDocSuccess(document_link) {
 }
 
 export function pushNewDocLinkAndFrame(new_doc_link) {
-    console.log(new_doc_link);
     return {
         type: 'PUSH_NEW_DOC_LINK_AND_FRAME',
         new_doc_link
@@ -62,6 +74,38 @@ export function submitNewGoogleDocToServer(form_information, session_token) {
                 // Failed
             }
         });
+    };
+}
+
+export function submitNewUploadedDocToServer(form_information, session_token) {
+    let file_reader = new FileReader()
+    let data = JSON.parse(JSON.stringify({'project_uuid': form_information.projectUUID, 'session_token': session_token, 'doc_title': form_information['new_uploaded_doc_title']}));
+
+    return (dispatch) => {
+        file_reader.onload = function (event) {
+            data.doc_file = event.target.result;
+            const request_params = { method: 'POST', body: JSON.stringify(data)};
+            console.log(request_params);
+
+            fetch('http://managr.dev.biz:8000/documents/new-uploaded-document', request_params)
+            .then((response) => {
+                if (!response.ok) {
+                    // Server response was not okay
+                }
+                return response;
+            })
+            .then((response) => response.json())
+            .then((data) => {
+                if (data['success']) {
+                    // do something else
+                    dispatch(createNewUploadedDocumentSuccess());
+                } else {
+                    // Failed document upload
+                }
+            });
+        }
+
+        file_reader.readAsDataURL(form_information['new_uploaded_doc_file']);
     };
 }
 

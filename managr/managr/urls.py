@@ -69,5 +69,6 @@ urlpatterns = [
     # Begin documents_views
     url(r'^documents/get-project-documents', documents_views.getProjectDocuments, name='get_project_documents'),
     url(r'^documents/new-google-document', documents_views.newGoogleProjectDocument, name='new_google_project_document'),
+    url(r'^documents/new-uploaded-document', documents_views.newUploadedProjectDocument, name='new_uploaded_project_document'),
     # End documents_views
 ]

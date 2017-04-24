@@ -36,6 +36,8 @@ export function document_management_view_controller(state = 0, action) {
             return 1;
         case 'SHOW_NEW_GOOGLE_DOC_FORM':
             return 2;
+        case 'SHOW_NEW_UPLOADED_DOC_FORM':
+            return 3;
         default:
             return state;
     }
@@ -67,6 +69,24 @@ export function create_new_google_doc_link(state = '', action) {
     switch(action.type) {
         case 'CREATE_NEW_GOOGLE_DOC_SUCCESS':
             return action.document_link;
+        default:
+            return state;
+    }
+}
+
+export function new_uploaded_doc_title(state = '', action) {
+    switch(action.type) {
+        case 'UPDATE_NEW_UPLOADED_DOC_FORM_NEW_UPLOADED_DOC_TITLE_FIELD':
+            return action.field_value;
+        default:
+            return state;
+    }
+}
+
+export function new_uploaded_doc_file(state = '', action) {
+    switch(action.type) {
+        case 'UPDATE_NEW_UPLOADED_DOC_FORM_NEW_UPLOADED_DOC_FILE_FIELD':
+            return action.field_value;
         default:
             return state;
     }

@@ -106,3 +106,35 @@
 #new-google-doc-link, #new-google-doc-submit {
     display: inline-block;
 }
+
+#new-uploaded-doc-form {
+    width: 100%;
+}
+
+#new-uploaded-doc-link {
+    width: 94%;
+}
+
+#new-uploaded-doc-link input {
+    width: 100%;
+    height: 40px;
+    margin-top: 6px;
+}
+
+#new-uploaded-doc-submit {
+    width: 20%;
+    margin-left: 5px;
+}
+
+#new-uploaded-doc-file {
+    width: 73.5%;
+}
+
+#new-uploaded-doc-submit button {
+    height: 41px;
+    margin-top: -2px;
+}
+
+#new-uploaded-doc-link, #new-uploaded-doc-submit, #new-uploaded-doc-file {
+    display: inline-block;
+}

@@ -36,7 +36,7 @@ class DocumentsList extends React.Component {
                         }
                     </div>
                     <div className="new-doc-link" id="new-uploaded-doc-link">
-                        <a><span className="glyphicon glyphicon-plus" /> Upload New Document</a>
+                        <a onClick={this.props.new_uploaded_doc_click}><span className="glyphicon glyphicon-plus" /> Upload New Document</a>
                     </div>
                 </div>
             </div>
