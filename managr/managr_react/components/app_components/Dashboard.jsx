@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { connect } from 'react-redux';
+import { Row, Col } from 'react-bootstrap';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import { browserHistory } from 'react-router';
 import { loadUserProposalMetadata,
@@ -64,26 +65,30 @@ class Dashboard extends React.Component {
         return (
             <div className="default-content dashboard-content">
                 <h2>Account Dashboard</h2>
-                <div className="dashboard-section">
-                    <h3>Active projects:</h3>
-                    <BootstrapTable data={this.generateProjectTuples(this.props.project_metadata)} options={linkToProject} striped hover>
-                        <TableHeaderColumn isKey={true} dataSort={true} dataField='title'>Title</TableHeaderColumn>
-                    </BootstrapTable>
-                </div>
-                <div className="dashboard-section">
-                    <h3>Active proposals:</h3>
-                    <BootstrapTable data={this.generateBidProposalTuples(this.props.proposal_metadata)} options={linkToProposal} striped hover>
-                        <TableHeaderColumn isKey={true} dataSort={true} dataField='title'>Title</TableHeaderColumn>
-                        <TableHeaderColumn dataField="buttons" width="128" dataFormat={this.bidProposalFlagged} columnClassName={this.getAlertStatus}>Requires Action</TableHeaderColumn>
-                    </BootstrapTable>
-                </div>
-                <div className="dashboard-section">
-                    <h3>Active bids:</h3>
-                    <BootstrapTable data={this.generateBidProposalTuples(this.props.bid_metadata)} options={linkToProposal} striped hover>
-                        <TableHeaderColumn isKey={true} dataSort={true} dataField='title'>Title</TableHeaderColumn>
-                        <TableHeaderColumn dataField="buttons" width="128" dataFormat={this.bidProposalFlagged} columnClassName={this.getAlertStatus}>Requires Action</TableHeaderColumn>
-                    </BootstrapTable>
-                </div>
+                <Row>
+                    <div className="dashboard-section full">
+                        <h3>Active projects:</h3>
+                        <BootstrapTable data={this.generateProjectTuples(this.props.project_metadata)} options={linkToProject} striped hover>
+                            <TableHeaderColumn isKey={true} dataSort={true} dataField='title'>Title</TableHeaderColumn>
+                        </BootstrapTable>
+                    </div>
+                </Row>
+                <Row>
+                    <div className="dashboard-section">
+                        <h3>Active proposals:</h3>
+                        <BootstrapTable data={this.generateBidProposalTuples(this.props.proposal_metadata)} options={linkToProposal} striped hover>
+                            <TableHeaderColumn isKey={true} dataSort={true} dataField='title'>Title</TableHeaderColumn>
+                            <TableHeaderColumn dataField="buttons" width="128" dataFormat={this.bidProposalFlagged} columnClassName={this.getAlertStatus}>Requires Action</TableHeaderColumn>
+                        </BootstrapTable>
+                    </div>
+                    <div className="dashboard-section">
+                        <h3>Active bids:</h3>
+                        <BootstrapTable data={this.generateBidProposalTuples(this.props.bid_metadata)} options={linkToProposal} striped hover>
+                            <TableHeaderColumn isKey={true} dataSort={true} dataField='title'>Title</TableHeaderColumn>
+                            <TableHeaderColumn dataField="buttons" width="128" dataFormat={this.bidProposalFlagged} columnClassName={this.getAlertStatus}>Requires Action</TableHeaderColumn>
+                        </BootstrapTable>
+                    </div>
+                </Row>
             </div>
         );
     }

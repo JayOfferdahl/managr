@@ -217,9 +217,13 @@ html, body, #app, .App {
     width: 50%;
     float: left;
 }
-.dashboard-content .dashboard-section:nth-child(odd) {
+.dashboard-content .dashboard-section:nth-child(even) {
     padding-left: 15px;
 }
-.dashboard-content .dashboard-section:nth-child(even) {
+.dashboard-content .dashboard-section:nth-child(odd) {
     padding-right: 15px;
+}
+.dashboard-section.full {
+    width: 100%;
+    padding: 0px !important;
 }
