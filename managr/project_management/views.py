@@ -67,7 +67,7 @@ def createNewProject(request):
 @csrf_exempt
 def getProjectInfo(request):
     data = JSONParser().parse(BytesIO(request.body))
-    print(data)
+    
     if 'session_token' in data:
         try:
             managr_user = ManagrUser.objects.get(session_token=data['session_token'])

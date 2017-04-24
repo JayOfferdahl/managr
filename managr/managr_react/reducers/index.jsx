@@ -81,6 +81,14 @@ import { proposal_metadata_load_errors,
 
 import { reload_milestones } from './MilestonesReducer';
 
+import { google_documents,
+         uploaded_documents,
+         currently_shown_doc_link,
+         document_management_view_controller,
+         new_google_doc_link,
+         new_google_doc_title,
+         create_new_google_doc_link } from './DocumentsReducer';
+
 export default combineReducers ({
     // Registration reducers
     first_name,
@@ -171,4 +179,13 @@ export default combineReducers ({
 
     // Milestones reducers
     reload_milestones,
+
+    // Documents reducers
+    google_documents,
+    uploaded_documents,
+    currently_shown_doc_link,
+    document_management_view_controller,
+    new_google_doc_link,
+    new_google_doc_title,
+    create_new_google_doc_link,
 });

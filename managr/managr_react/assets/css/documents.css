@@ -1,0 +1,108 @@
+.documents-page {
+    height: 100%;
+}
+
+.documents-section {
+    display: inline-block;
+    height: 100%;
+}
+
+.documents-list {
+    margin-left: 10px;
+    margin-top: -10px;
+    width: 12%;
+    white-space: nowrap;
+    
+}
+
+.new-doc-link {
+    margin-left: 10px;
+    margin-top: 5px;
+    font-size: 16px;
+}
+
+.docs-list {
+    color: white;
+    border-radius: 10px;
+    background-color: #4B6A88;
+}
+
+.docs-list h3 {
+    margin-left: 5px;
+}
+
+.docs-list a {
+    color: white;
+}
+
+.google-docs-list, .uploaded-docs-list {
+    border-style: solid;
+    border-width: 0px 0px 1px 0px;
+}
+
+.google-docs-list h3 {
+    padding-top: 5px;
+}
+
+.uploaded-docs-list h3 {
+    margin-top: 10px;
+}
+
+#new-uploaded-doc-link {
+    padding-bottom: 5px;
+}
+
+.managr_document {
+    font-size: 17px;
+    border-style: solid;
+    border-width: 1px 0px 0px 0px;
+}
+
+.managr_document-title {
+    margin-left: 15px;
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
+
+#google-doc-viewing-frame {
+    vertical-align: top;
+    margin-left: 10px;
+    margin-top: 10px;
+    height: 97%;
+    width: 86.5%;
+}
+
+.documents-default-view {
+    vertical-align: top;
+    margin-top: 10px;
+    margin-left: 10px;
+    font-size: 20px;
+}
+
+#new-google-doc-form {
+    width: 100%;
+}
+
+#new-google-doc-link {
+    width: 81%;
+}
+
+#new-google-doc-link input {
+    width: 100%;
+    height: 40px;
+    margin-top: 6px;
+}
+
+#new-google-doc-submit {
+    width: 18%;
+    margin-left: 5px;
+}
+
+#new-google-doc-submit button {
+    height: 41px;
+    margin-top: -2px;
+}
+
+#new-google-doc-link, #new-google-doc-submit {
+    display: inline-block;
+}

@@ -51,6 +51,6 @@ export function authenticateWithManagrServer(managr_session_token) {
 
 export function setAuthenticatedState(authState) {
     return (dispatch) => {
-        dispatch(setAuthenticatedStateToParam(false));
+        dispatch(setAuthenticatedStateToParam(authState));
     };
 }
