@@ -1,11 +1,11 @@
 import React from 'react';
 
 import { connect } from 'react-redux';
-import { Nav, NavItem, Row, Col, Button, Grid } from 'react-bootstrap';
+import { Row, Col } from 'react-bootstrap';
 import { fetchProjectInfoFromServer } from '../../actions/ProjectActions';
 import { getSessionToken } from '../../assets/js/app.jsx';
 
-import NestedNavBar from './NestedNavBar';
+import OverviewContent from './OverviewContent';
 
 import '../../assets/css/App.css';
 
@@ -21,39 +21,43 @@ class ProjectOverview extends React.Component {
     }
 
     render () {
+        let clientInformation = <Col xs={6} md={6} />;
+
+        if(this.props.project.client_exists) {
+            clientInformation = (
+                <Col xs={6} md={6}>
+                    <p><b>Client:</b> {this.props.project.client_name}</p>
+                    <p><b>Point of Contact:</b> {this.props.project.client_contact}</p>
+                </Col>
+            );
+        }
+
         return (
-            <Row className="project-content-section">
-                <Row className="project-overview-section">
-                    <p className="project-name">{this.props.project_overview_name}</p>
-                    <p className="project-description">Description: {this.props.project_overview_description}</p>
-                    <p className="project-budget">Budget: {this.props.project_overview_budget}</p>
-                    <Col className="" xs={6} md={6}>
-                        <p>Overall Project Progress: <b>TODO</b></p>
+            <Row className="default-content">
+                <Row className="project-header">
+                    <h2>Project: <b>{this.props.project.name}</b></h2>
+                    <br/>
+                    <Col xs={6} md={6}>
+                        <p><b>Contractor:</b> {this.props.project.contractor_name}</p>
+                        <p><b>Point of Contact:</b> {this.props.project.contractor_contact}</p>
                     </Col>
-                    <Col className="" xs={6} md={6}>
-                        <p>Client: <b>CLIENT NAME HERE?</b></p>
-                        <p>Company: <b>CONTRACTOR COMPANY NAME HERE</b></p>
-                    </Col>
+                    {clientInformation}
                 </Row>
-                <NestedNavBar />
                 <Row>
-                    {this.props.children}
+                    <Col>
+                        <p><b>Description:</b> {this.props.project.description}</p>
+                    </Col>
                 </Row>
+                <br/>
+                <OverviewContent project_uuid={this.props.params.project_uuid} />
             </Row>
         )
     }
 }
 
-ProjectOverview.contextTypes = {
-    router: React.PropTypes.object.isRequired
-}
-
 const mapStateToProps = (state) => {
     return {
-        project_overview_name: state.project_overview_name,
-        project_overview_description: state.project_overview_description,
-        project_overview_budget: state.project_overview_budget,
-
+        project: state.project_data,
     };
 };
 

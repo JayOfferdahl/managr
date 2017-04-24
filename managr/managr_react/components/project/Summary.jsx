@@ -12,7 +12,7 @@ class Summary extends React.Component {
     render () {
         return (
             <div>
-                <Row className="project-3col-section">
+                <Row>
                     <Col md={4}>
                         <ItemOverview active="4" total="17" type="Milestones" />
                     </Col>

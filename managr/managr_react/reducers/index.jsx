@@ -55,9 +55,7 @@ import { create_project_name,
          create_project_success,
          create_project_errors,
          new_project_uuid,
-         project_overview_name,
-         project_overview_description,
-         project_overview_budget } from './ProjectReducer';
+         project_data } from './ProjectReducer';
 
 import { company_name,
          company_email,
@@ -165,9 +163,7 @@ export default combineReducers ({
     create_project_success,
     create_project_errors,
     new_project_uuid,
-    project_overview_name,
-    project_overview_description,
-    project_overview_budget,
+    project_data,
 
     // Milestones reducers
     reload_milestones,
