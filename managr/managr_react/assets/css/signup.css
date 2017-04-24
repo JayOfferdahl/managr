@@ -28,7 +28,9 @@
 
 }
 
-.registration-form input {
+.registration-form input,
+.registration-form textarea,
+.registration-form select {
     width: 100%;
     padding: 8px;
     font-size: 18px;
@@ -38,6 +40,7 @@
     background-color: #FDB713;
     width: 100%;
     padding: 10px 20px;
+    margin-bottom: -15px;
     font-size: 16px;
 }
 
@@ -47,7 +50,8 @@
 
 .registration-form-no-account {
     text-align: center;
-    margin-bottom: -6px;
+    margin-top: 25px;
+    margin-bottom: -10px;
 }
 
 .link-normal {

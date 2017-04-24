@@ -425,6 +425,7 @@ def acceptBid(request):
             user.save()
             bidUser.projects.add(new_project)
             bidUser.save()
+            bid.delete()
             Bid.objects.deactivate_proposal(proposal)
             Proposal.objects.deactivate(proposal)
 

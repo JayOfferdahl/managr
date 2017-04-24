@@ -31,7 +31,7 @@ class ClientCompanyCreationForm extends React.Component {
 
     render() {
         return (
-            <form className="client-company-creation-form" onSubmit={this.handleSubmit.bind(this)}>
+            <form className="registration-form" onSubmit={this.handleSubmit.bind(this)}>
                 <ErrorsList errors={this.props.company_creation_errors} />
                 <Textfield type="text" placeholder="Company Name" onChange={this.handleChange.bind(this)} currentText={this.props.company_name} fieldName="company_name" />
                 <Textfield type="text" placeholder="Company Email" onChange={this.handleChange.bind(this)} currentText={this.props.company_email} fieldName="company_email" />
@@ -41,8 +41,8 @@ class ClientCompanyCreationForm extends React.Component {
                 <Textfield type="text" placeholder="Postal Code" onChange={this.handleChange.bind(this)} currentText={this.props.company_postal_code} fieldName="company_postal_code" />
                 <TextareaField placeholder="Description" onChange={this.handleChange.bind(this)} currentText={this.props.company_description} fieldName="company_description" />
                 <div className="form-group">
-                    <button className="btn company-creation-submit-button">
-                        Create
+                    <button className="btn registration-submit-button">
+                        Create Client Company
                     </button>
                 </div>
             </form>
