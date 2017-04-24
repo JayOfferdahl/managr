@@ -4,9 +4,9 @@ from Crypto import Random
 from django.db import models
 
 class ProposalManager(models.Manager):
-    def create_proposal(self, user, proposal_data):
+    def create_proposal(self, company, proposal_data):
         proposal = self.create(
-            owner = user,
+            owner = company,
             title = proposal_data['title'],
             address = proposal_data['address'],
             contact_number = proposal_data['contact_number'],

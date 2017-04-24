@@ -11,7 +11,7 @@ import TextareaField from '../app_components/TextareaField';
 class CreateProjectForm extends React.Component {
     componentDidUpdate(prevProps, prevState) {
         if (this.props.create_project_success == true && prevProps.create_project_success == false) {
-            this.context.router.push("/project/" + this.props.new_project_uuid);
+            this.context.router.push("/project-overview/" + this.props.new_project_uuid);
         }
     }
 

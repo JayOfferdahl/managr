@@ -60,8 +60,6 @@ def createNewProject(request):
         else:
             errors = dict([(key, [str(error) for error in value]) for key, value in create_project_form.errors.items()])
             return JsonResponse(errors)
-
-        
     else:
         return JsonResponse({'error': 'No session token provided.'})
 
@@ -92,7 +90,6 @@ def getProjectInfo(request):
                 clientExists = True
         except ObjectDoesNotExist:
             return JsonResponse({'error': 'Invalid request.'})
-        print(client.first_name)
 
         return JsonResponse({
             'success': 'Project fetch success',
@@ -100,9 +97,9 @@ def getProjectInfo(request):
             'budget': project.budget,
             'description': project.description,
             'contractor_name': contractorCompany.name,
-            'contractor_contact': contractor.first_name + " " + contractor.last_name, #contractor.contact_number,
+            'contractor_contact': contractor.first_name + " " + contractor.last_name + ", " + project.contractor_contact_number,
             'client_name': clientCompany.name,
-            'client_contact': client.first_name + " " + client.last_name, #client.contact_number,
+            'client_contact': client.first_name + " " + client.last_name + ", " + project.client_contact_number,
             'client_exists': clientExists,
         })
     else:

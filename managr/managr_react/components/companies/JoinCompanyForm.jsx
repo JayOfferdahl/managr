@@ -27,13 +27,14 @@ class JoinCompanyForm extends React.Component {
 
     render() {
         return (
-            <form className="join-company-form" onSubmit={this.handleSubmit.bind(this)}>
+            <form className="registration-form" onSubmit={this.handleSubmit.bind(this)}>
                 <ErrorsList errors={this.props.company_join_errors} />
                 <div className="join-company-helper-text">Enter the company key of the company you wish to join</div>
+                <br/>
                 <Textfield type="text" placeholder="Company Key" onChange={this.handleChange.bind(this)} currentText={this.props.company_key} fieldName="company_key" />
                 <div className="form-group">
-                    <button className="btn join-company-submit-button">
-                        Join
+                    <button className="btn registration-submit-button">
+                        Join Company
                     </button>
                 </div>
             </form>
