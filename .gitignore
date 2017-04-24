@@ -6,3 +6,5 @@ bundles
 managr/npm-debug\.log
 
 *.log
+
+managr/documents/companies_directory/
