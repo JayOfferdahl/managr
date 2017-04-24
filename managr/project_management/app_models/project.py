@@ -2,6 +2,9 @@ import uuid
 
 from django.db import models
 
+from helpers.hstore_helper import *
+from django.contrib.postgres.fields import HStoreField
+
 from managr_entities.app_models.company import Company
 from project_management.app_managers.project import ProjectManager
 
@@ -11,7 +14,10 @@ class Project(models.Model):
     user_owner = models.ForeignKey('managr_entities.ManagrUser', on_delete = models.SET_NULL, null = True)
     name = models.CharField(max_length = 255)
     project_uuid = models.UUIDField(default = uuid.uuid4, editable = False)
-    budget = models.IntegerField(null = True)
+    budget = models.DecimalField(max_digits = 10, decimal_places = 0)
     description = models.TextField(blank = True)
+
+    client_contact_number = models.CharField(max_length = 14, blank = True)
+    contractor_contact_number = models.CharField(max_length = 14, blank = True)
 
     objects = ProjectManager()

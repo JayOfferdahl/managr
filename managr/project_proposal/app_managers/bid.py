@@ -4,10 +4,10 @@ from Crypto import Random
 from django.db import models
 
 class BidManager(models.Manager):
-    def create_bid(self, user, proposal, bid_data):
+    def create_bid(self, company, proposal, bid_data):
         bid = self.create(
             corresponding_proposal = proposal,
-            owner = user,
+            owner = company,
             contact_number = bid_data['contact_number'],
             start_date = bid_data['start_date'],
             end_date = bid_data['end_date'],
