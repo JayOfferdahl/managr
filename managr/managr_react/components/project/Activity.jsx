@@ -44,7 +44,9 @@ const MOCK_DATA_ROWS = [{ 'Event': 'John Smith logged 8.5 hours onto the project
 function randomDate(start, end) {
     return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
 }
-
+function dateDiff(a, b){
+  return parseFloat(a['Timestamp'] - b['Timestamp']);
+}
 function _addDate(row) {
   row['Timestamp'] = randomDate(new Date(2017, 1, 1), new Date(2017,5,5));
   return row;
@@ -54,7 +56,8 @@ class Activity extends React.Component {
     render () {
       MOCK_DATA_ROWS.map(_addDate)
       MOCK_DATA_ROWS.push({'Event': 'The Undertaker threw Mankind off Hell In A Cell, and plummeted 16 ft through an announcer’s table',
-                              'Timestamp': 'Sun June 28 1998 20:43:33 GMT-0500 (CDT)'});
+                              'Timestamp': new Date(1998, 5, 28) });//'Sun June 28 1998 20:43:33 GMT-0500 (CDT)'});
+      MOCK_DATA_ROWS.sort(dateDiff)
       return (
       <BootstrapTable data={MOCK_DATA_ROWS} striped hover pagination>
            <TableHeaderColumn isKey={true} dataSort={true} dataField='Timestamp'>Timestamp</TableHeaderColumn>
