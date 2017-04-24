@@ -4,6 +4,10 @@ from django.http import JsonResponse
 from django.utils.six import BytesIO
 from django.views.decorators.csrf import csrf_exempt
 
+import os
+
+from django.core.files import File
+
 from rest_framework import serializers
 from rest_framework.parsers import JSONParser
 
@@ -52,7 +56,22 @@ def newUploadedProjectDocument(request):
     data = JSONParser().parse(BytesIO(request.body))
     encoded_file = data['doc_file'].split('base64,',1)[1]
     decoded_file = base64.b64decode(encoded_file)
-    print(decoded_file)
+    
+    document = Document()
+    document.title = data['doc_title']
+    document.project = Project.objects.get(project_uuid = data['project_uuid'])
+    document.project_name = Project.objects.get(project_uuid = data['project_uuid']).name
+    document.creator = ManagrUser.objects.get(session_token=data['session_token'])
+    document.company = ManagrUser.objects.get(session_token=data['session_token']).company
+    document.company_name = ManagrUser.objects.get(session_token=data['session_token']).company.name
+
+    temp_managr_file = open('/home/bdavidson/dev/managr/managr/documents/temp_uploaded_documents/temp_written_documents/' + document.title.replace(' ', '_') + '.txt', 'wb')
+    temp_managr_file.write(decoded_file)
+    temp_managr_file.close()
+
+    document.uploaded_file = File(open('/home/bdavidson/dev/managr/managr/documents/temp_uploaded_documents/temp_written_documents/' + document.title.replace(' ', '_') + '.txt'), document.title.replace(' ', '_') + '.txt')
+    document.save()
+    os.remove('/home/bdavidson/dev/managr/managr/documents/temp_uploaded_documents/temp_written_documents/' + document.title.replace(' ', '_') + '.txt')
 
     return JsonResponse({'success': 'New Uploaded Document Success'})
 
