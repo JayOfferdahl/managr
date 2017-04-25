@@ -14,19 +14,18 @@ class Summary extends React.Component {
             <div>
                 <Row>
                     <Col md={4}>
-                        <ItemOverview active="4" total="17" type="Milestones" />
+                        <ItemOverview active="0" total="0" type="Milestones" />
                     </Col>
                     <Col md={4}>
-                        <ItemOverview active="24" total="119" type="Workers" />
+                        <ItemOverview active="0" total="0" type="Workers" />
                     </Col>
                     <Col md={4}>
-                        <ItemOverview active="19" total="88" type="Equipment" />
+                        <ItemOverview active="0" total="0" type="Equipment" />
                     </Col>
                 </Row>
                 <Row className="graph-section">
                     <h3>Weekly Summary Graph</h3>
                     <SimpleLineChart />
-                    <SimplePieChart />
                 </Row>
             </div>
         );

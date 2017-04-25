@@ -38,6 +38,8 @@ export function document_management_view_controller(state = 0, action) {
             return 2;
         case 'SHOW_NEW_UPLOADED_DOC_FORM':
             return 3;
+        case 'CREATE_NEW_UPLOADED_DOC_SUCCESS':
+            return 0;
         default:
             return state;
     }

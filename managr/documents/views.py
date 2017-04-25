@@ -65,13 +65,13 @@ def newUploadedProjectDocument(request):
     document.company = ManagrUser.objects.get(session_token=data['session_token']).company
     document.company_name = ManagrUser.objects.get(session_token=data['session_token']).company.name
 
-    temp_managr_file = open('/home/bdavidson/dev/managr/managr/documents/temp_uploaded_documents/temp_written_documents/' + document.title.replace(' ', '_') + '.txt', 'wb')
+    temp_managr_file = open('/home/jofferda/dev/managr/managr/documents/temp_uploaded_documents/temp_written_documents/' + document.title.replace(' ', '_') + '.txt', 'wb')
     temp_managr_file.write(decoded_file)
     temp_managr_file.close()
 
-    document.uploaded_file = File(open('/home/bdavidson/dev/managr/managr/documents/temp_uploaded_documents/temp_written_documents/' + document.title.replace(' ', '_') + '.txt'), document.title.replace(' ', '_') + '.txt')
+    document.uploaded_file = File(open('/home/jofferda/dev/managr/managr/documents/temp_uploaded_documents/temp_written_documents/' + document.title.replace(' ', '_') + '.txt'), document.title.replace(' ', '_') + '.txt')
     document.save()
-    os.remove('/home/bdavidson/dev/managr/managr/documents/temp_uploaded_documents/temp_written_documents/' + document.title.replace(' ', '_') + '.txt')
+    os.remove('/home/jofferda/dev/managr/managr/documents/temp_uploaded_documents/temp_written_documents/' + document.title.replace(' ', '_') + '.txt')
 
     return JsonResponse({'success': 'New Uploaded Document Success'})
 

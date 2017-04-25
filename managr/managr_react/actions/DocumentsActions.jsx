@@ -46,6 +46,12 @@ export function createNewGoogleDocSuccess(document_link) {
     }
 }
 
+export function createNewUploadedDocumentSuccess() {
+    return {
+        type: 'CREATE_NEW_UPLOADED_DOC_SUCCESS'
+    }
+}
+
 export function pushNewDocLinkAndFrame(new_doc_link) {
     return {
         type: 'PUSH_NEW_DOC_LINK_AND_FRAME',
@@ -98,6 +104,7 @@ export function submitNewUploadedDocToServer(form_information, session_token) {
             .then((data) => {
                 if (data['success']) {
                     // do something else
+                    dispatch(fetchProjectDocuments(form_information.projectUUID, session_token));
                     dispatch(createNewUploadedDocumentSuccess());
                 } else {
                     // Failed document upload
