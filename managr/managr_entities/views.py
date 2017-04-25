@@ -4,6 +4,7 @@ from django.contrib.auth import login as django_login, authenticate
 from django.http import JsonResponse
 from django.utils.six import BytesIO
 from django.views.decorators.csrf import csrf_exempt
+import ast
 
 from rest_framework import serializers
 from rest_framework.parsers import JSONParser
@@ -127,3 +128,66 @@ def joinCompany(request):
 	else:
 		errors = dict([(key, [str(error) for error in value]) for key, value in join_company_form.errors.items()])
 		return JsonResponse(errors)
+
+@csrf_exempt
+def clockIn(request):
+	session_token = JSONParser().parse(BytesIO(request.body))
+	print("\nClock-in requested: " + session_token)
+
+	try:
+		user = ManagrUser.objects.get(session_token = session_token)
+	except ManagrUser.DoesNotExist:
+		return JsonResponse({'success': False})
+
+	if user.is_clocked_in:
+		print("Error: User already clocked in.\n")
+		return JsonResponse({'success': False})
+	else:
+		print("User is not clocked in, clocking them in.")
+	
+	user.is_clocked_in = True
+	today = datetime.now().strftime("%m/%d/%Y")
+	currentTime = datetime.now(timezone(timedelta(hours=-5))).strftime("%H:%M:%S")
+	user.shifts[today] = [currentTime]
+	user.save()
+	print("Shift started: " + today + " " + currentTime + "\n")
+	return JsonResponse({'success': True})
+
+@csrf_exempt
+def clockOut(request):
+	session_token = JSONParser().parse(BytesIO(request.body))
+	print("\nClock-out requested: " + session_token)
+
+	try:
+		user = ManagrUser.objects.get(session_token = session_token)
+	except ManagrUser.DoesNotExist:
+		return JsonResponse({'success': False})
+
+	if user.is_clocked_in:
+		print("User is clocked in, clocking them out.")
+	else:
+		print("Error: User not clocked in.\n")
+		return JsonResponse({'success': False})
+
+	user.is_clocked_in = False
+	today = datetime.now().strftime("%m/%d/%Y")
+	currentTime = datetime.now(timezone(timedelta(hours=-5))).strftime("%H:%M:%S")
+	currentShift = ast.literal_eval(user.shifts[today])
+	currentShift.append(currentTime)
+	user.shifts[today] = currentShift
+	user.save()
+	print("Shift complete: " + today + " " + currentShift[0] + " - " + currentShift[1] + "\n")
+	return JsonResponse({'success': True})
+
+@csrf_exempt
+def getShifts(request):
+	session_token = JSONParser().parse(BytesIO(request.body))
+	print("\nShifts requested: " + session_token)
+
+	try:
+		user = ManagrUser.objects.get(session_token = session_token)
+	except ManagrUser.DoesNotExist:
+		return JsonResponse({'success': False})
+
+	print(user.shifts)
+	return JsonResponse({'success': True, 'shifts': user.shifts})

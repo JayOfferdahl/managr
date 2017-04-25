@@ -6,6 +6,7 @@ from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
 from django.utils.six import BytesIO
+from django.core.exceptions import ObjectDoesNotExist
 
 from managr_entities.app_models.managr_user import ManagrUser
 from project_management.app_models.project import Project
@@ -59,8 +60,6 @@ def createNewProject(request):
         else:
             errors = dict([(key, [str(error) for error in value]) for key, value in create_project_form.errors.items()])
             return JsonResponse(errors)
-
-        
     else:
         return JsonResponse({'error': 'No session token provided.'})
 
@@ -75,8 +74,34 @@ def getProjectInfo(request):
             # Session token given does not belong to any user
             return JsonResponse({'failure': 'Unable to authenticate'})
 
-        project = Project.objects.get(project_uuid = data['project_uuid'])
-        return JsonResponse({'success': 'Project fetch success', 'project_name': project.name, 'project_budget': project.budget, 'project_description': project.description})
+        clientExists = False
+
+        try:
+            project = Project.objects.get(project_uuid = data['project_uuid'])
+            contractorCompany = project.company_owner
+            contractor = contractorCompany.owner_or_creator
+
+            clientCompany = contractorCompany
+            client = contractor
+            
+            if project.client != None:
+                clientCompany = project.client
+                client = clientCompany.owner_or_creator
+                clientExists = True
+        except ObjectDoesNotExist:
+            return JsonResponse({'error': 'Invalid request.'})
+
+        return JsonResponse({
+            'success': 'Project fetch success',
+            'name': project.name,
+            'budget': project.budget,
+            'description': project.description,
+            'contractor_name': contractorCompany.name,
+            'contractor_contact': contractor.first_name + " " + contractor.last_name + ", " + project.contractor_contact_number,
+            'client_name': clientCompany.name,
+            'client_contact': client.first_name + " " + client.last_name + ", " + project.client_contact_number,
+            'client_exists': clientExists,
+        })
     else:
         return JsonResponse({'error': 'No session token provided.'})
 

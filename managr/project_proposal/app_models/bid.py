@@ -3,8 +3,7 @@ from django.core.exceptions import ValidationError
 from django.db import models
 
 from helpers.hstore_helper import *
-# from managr_entities.app_models.company import Company
-from managr_entities.app_models.managr_user import ManagrUser
+from managr_entities.app_models.company import Company
 from project_proposal.app_models.proposal import Proposal
 from project_proposal.app_managers.bid import BidManager
 
@@ -12,7 +11,7 @@ import uuid
 
 class Bid(models.Model):
     corresponding_proposal = models.ForeignKey(Proposal, on_delete = models.CASCADE)
-    owner = models.ForeignKey(ManagrUser, on_delete = models.CASCADE)
+    owner = models.ForeignKey(Company, on_delete = models.CASCADE)
     contact_number = models.CharField(max_length = 14)
     start_date = models.DateField()
     end_date = models.DateField()

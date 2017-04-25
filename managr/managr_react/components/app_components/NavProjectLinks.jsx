@@ -69,12 +69,6 @@ class NavProjectLinks extends React.Component {
                                             Documents
                                         </a>
                                     </LinkContainer>
-                                    <LinkContainer className="nav-sub-link" to={"/project/" + project.link + "/project-settings"}>
-                                        <a>
-                                            <span className="glyphicon glyphicon-cog"></span>
-                                            Settings
-                                        </a>
-                                    </LinkContainer>
                                 </div>
                             </div>
                         );

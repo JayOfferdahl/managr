@@ -3,11 +3,13 @@ from django.core.exceptions import ValidationError
 from django.db import models
 
 from helpers.hstore_helper import *
-from managr_entities.app_models.managr_user import ManagrUser
+from managr_entities.app_models.company import Company
 from project_proposal.app_managers.proposal import ProposalManager
+
 import uuid
+
 class Proposal(models.Model):
-	owner = models.ForeignKey(ManagrUser, on_delete = models.CASCADE)
+	owner = models.ForeignKey(Company, on_delete = models.CASCADE)
 
 	title = models.CharField(max_length = 255)
 	address = models.CharField(max_length = 255)
@@ -33,6 +35,5 @@ class Proposal(models.Model):
 				super(Proposal, self).clean(*args, **kwargs)
 			else:
 				raise ValidationError('Invalid proposal detail(s): (' + has_valid_details +')')
-
 
 	objects = ProposalManager()

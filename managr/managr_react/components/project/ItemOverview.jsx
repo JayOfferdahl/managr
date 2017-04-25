@@ -17,7 +17,7 @@ export default class ItemOverview extends Component {
 
     render() {
         return (
-            <Panel className="item-overview-container">
+            <Panel>
                 <Nav bsStyle="tabs" justified activeKey={this.state.activeKey} onSelect={this.handleSelect.bind(this)}>
                     <NavItem className="item-overview-tab" eventKey={1} >{this.props.active} Active {this.props.type}</NavItem>
                     <NavItem className="item-overview-tab" eventKey={2} >{this.props.total} Total {this.props.type}</NavItem>
