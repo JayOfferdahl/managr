@@ -1,0 +1,11 @@
+.td-column-overbudget {
+  background-color: rgba(179,58,58,0.3);
+}
+
+.td-column-underbudget {
+  background-color: rgba(45,181,120,0.3);
+}
+
+.finance-header {
+  margin-bottom: 20px;
+}
