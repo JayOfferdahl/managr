@@ -19,6 +19,7 @@ from django.contrib import admin
 from django.views.generic import TemplateView
 
 from . import views as managr_views
+from documents import views as documents_views
 from managr_entities import views as managr_entities_views
 from project_management import views as project_management_views
 from project_proposal import views as project_proposal_views
@@ -67,4 +68,10 @@ urlpatterns = [
     url(r'^projects/create-new-project', project_management_views.createNewProject, name='create_new_project'),
     url(r'^projects/get-project-info', project_management_views.getProjectInfo, name='get_project_info'),
     # End project_management_views
+
+    # Begin documents_views
+    url(r'^documents/get-project-documents', documents_views.getProjectDocuments, name='get_project_documents'),
+    url(r'^documents/new-google-document', documents_views.newGoogleProjectDocument, name='new_google_project_document'),
+    url(r'^documents/new-uploaded-document', documents_views.newUploadedProjectDocument, name='new_uploaded_project_document'),
+    # End documents_views
 ]

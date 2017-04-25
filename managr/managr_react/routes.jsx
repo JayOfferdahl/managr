@@ -25,7 +25,7 @@ import Materials from './components/project/Materials'
 import Activity from './components/project/Activity'
 import Finance from './components/reports/Finance'
 import Milestones from './components/project/Milestones'
-import DocumentsList from './components/documents/DocumentsList'
+import DocumentsPage from './components/documents/DocumentsPage'
 import CreateProject from './components/project/CreateProject'
 
 import PastProjectsList from './components/project_history/PastProjectsList'
@@ -48,7 +48,7 @@ export default (
                 <Route component={Activity}/>
             </Route>
 
-            <Route path="project/:project_uuid/documents" component={DocumentsList}/>
+            <Route path="project/:project_uuid/documents" component={DocumentsPage}/>
             <Route path="project/:project_uuid/finance" component={Finance}/>
             <Route path="project/:project_uuid/milestones" component={Milestones}/>
             <Route path="create-project" component={CreateProject} />
